@@ -3,3 +3,4 @@ build.xml
 /build/
 /dist/
 /.settings/
+/bin/
