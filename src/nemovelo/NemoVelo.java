@@ -5,7 +5,6 @@
 package nemovelo;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *
@@ -27,5 +26,4 @@ public class NemoVelo {
 		jf.setVisible(true);
 		// TODO code application logic here
 	}
-	//Test initialisation Valentin
 }
