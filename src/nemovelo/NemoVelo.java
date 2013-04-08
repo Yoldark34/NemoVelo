@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Admin
+ * @author Yohan Sanchez (yohan.sanchez34@gmail.com)
  */
 public class NemoVelo {
 
