@@ -6,7 +6,7 @@
  ----------------------------------------------------------------------------
      Nom de la base : NemoVelo
      Projet : NemoVelo
-     Auteur : Yohan Sanchez
+     Auteur : Yoldark34 <yoldark@gmail.com>
      Date de dernière modification : 10/4/2013 21:33:10
  ----------------------------------------------------------------------------
 */
