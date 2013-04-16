@@ -65,7 +65,7 @@ public class DataBaseElementNames {
 	public static final String STORAGE = "storage";
 	public static final String STORAGE_ID = "id";
 	public static final String STORAGE_ID_STOCK = "id_stock";
-	public static final String STORAGE_ID_STORAGE_TYPE = "id_sorage_type";
+	public static final String STORAGE_ID_STORAGE_TYPE = "id_storage_type";
 	public static final String STORAGE_TYPE = "storage_type";
 	public static final String STORAGE_TYPE_ID = "id";
 	public static final String STORAGE_TYPE_CODE = "code";
