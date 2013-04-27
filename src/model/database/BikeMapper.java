@@ -4,31 +4,29 @@
  */
 package model.database;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
+
 
 /**
  *
  * @author Yoldark34 <yoldark@gmail.com>
  */
-public class BikeMapper {
+public class BikeMapper extends AbstractMapper {
 
-	public Collection<Bike> getAllBikes() throws SQLException {
+	public ArrayList<Bike> getAllBikes() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = new DbConnection();
 		adapter.executeQuery("Select * from " + DataBaseElementNames.BIKE);
-		return this.populateModels(adapter);
+		return (ArrayList<Bike>) adapter.getModelsFromRequest(this);
 	}
 
-	private Collection<Bike> populateModels(DbConnection adapter) throws SQLException {
-		Collection<Bike> bikes = new ArrayList<>();
-		while (adapter.getResults().next()) {
-			Bike bike = new Bike();
-			if (adapter.hasColumn(DataBaseElementNames.BIKE_ID)) {
-				bike.setId(adapter.getResults().getInt(DataBaseElementNames.BIKE_ID));
-			}
-			bikes.add(bike);
-		}
-		return bikes;
+	@Override
+	public Object populateModel(ResultSet row) throws SQLException {
+		Bike obj = new Bike();
+		if (this.hasColumn(DataBaseElementNames.BIKE_ID, row)) {
+			obj.setId(row.getInt(DataBaseElementNames.BIKE_ID));
+		 }
+		return obj;
 	}
 }

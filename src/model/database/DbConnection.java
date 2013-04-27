@@ -4,8 +4,8 @@
  */
 package model.database;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -17,7 +17,9 @@ public class DbConnection {
 	private Connection connection;
 	private ResultSet results;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+		/*BikeMapper bm = new BikeMapper();
+		 ArrayList<Bike> test = bm.getAllBikes();If you want to test*/
 	}
 
 	public DbConnection() {
@@ -59,14 +61,13 @@ public class DbConnection {
 		return false;
 	}
 
-	public boolean hasColumn(String columnName) throws SQLException {
-		ResultSetMetaData rsmd = this.results.getMetaData();
-		int columns = rsmd.getColumnCount();
-		for (int x = 1; x <= columns; x++) {
-			if (columnName.equals(rsmd.getColumnName(x))) {
-				return true;
-			}
+
+
+	public Collection<?> getModelsFromRequest(AbstractMapper callClass) throws SQLException, ClassNotFoundException {
+		ArrayList<Object> myCol = new ArrayList<>();
+		while (this.results.next()) {
+			myCol.add(callClass.populateModel(this.results));
 		}
-		return false;
+		return myCol;
 	}
 }
