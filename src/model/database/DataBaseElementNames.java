@@ -94,4 +94,16 @@ public class DataBaseElementNames {
 	public static final String USER_TYPE_CODE = "code";
 	public static final String USER_TYPE_NAME = "name";
 	public static final String USER_TYPE_DESCRIPTION = "description";
+
+	public class PriceDurationUnit{
+		public static final String MINUTE = "minute";
+		public static final String HOUR = "hour";
+		public static final String WEEK = "week";
+		public static final String MONTH = "month";
+	}
+
+	public class PriceType{
+		public static final String GUARANTEE = "guarantee";
+		public static final String RENT = "rent";
+	}
 }
