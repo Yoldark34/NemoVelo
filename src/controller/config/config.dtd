@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+		An example how to use this DTD from your XML document:
+
+		<?xml version="1.0"?>
+
+		<!DOCTYPE config SYSTEM "config.dtd">
+
+		<config>
+		...
+		</config>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT config (section)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT section (param)*>
+<!ATTLIST section
+	name ID #REQUIRED
+>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT param EMPTY>
+<!ATTLIST param
+		value CDATA #REQUIRED
+		name CDATA #REQUIRED
+>
