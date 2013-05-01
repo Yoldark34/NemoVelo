@@ -4,6 +4,9 @@
  */
 package model.database;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yoldark34 (yoldark@gmail.com)
@@ -36,10 +39,11 @@ public class BikeUsageType {
 	}
 
 	public void setName(String name) {
-		if (name.length() <= 20) {
+		if (name.length() <= DataBaseElements.SIZEOF_BIKEUSAGETYPE_NAME) {
 			this.name = name;
 		} else {
-			System.out.println("The size of the name can't have a length > 20");
+			Logger.getLogger(BikeUsageType.class.getName()).log(Level.WARNING,
+					String.format("The size of the name can't have a length > %1$d", DataBaseElements.SIZEOF_BIKEUSAGETYPE_NAME));
 		}
 	}
 
@@ -48,10 +52,11 @@ public class BikeUsageType {
 	}
 
 	public void setDescription(String description) {
-		if (description.length() <= 20) {
+		if (description.length() <= DataBaseElements.SIZEOF_BIKEUSAGETYPE_DESCRIPTION) {
 			this.description = description;
 		} else {
-			System.out.println("The size of the description can't have a length > 20");
+			Logger.getLogger(BikeUsageType.class.getName()).log(Level.WARNING,
+					String.format("The size of the description can't have a length >%1$d", DataBaseElements.SIZEOF_BIKEUSAGETYPE_DESCRIPTION));
 		}
 	}
 }

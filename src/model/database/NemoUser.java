@@ -5,6 +5,8 @@
 package model.database;
 
 import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,10 +35,11 @@ public class NemoUser {
 	}
 
 	public void setLastName(String lastName) {
-		if (lastName.length() <= 128) {
+		if (lastName.length() <= DataBaseElements.SIZEOF_NEMOUSER_LASTNAME) {
 			this.lastName = lastName;
 		} else {
-			System.out.println("The size of the last name can't have a length > 128");
+			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+					String.format("The size of the last name can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_LASTNAME));
 		}
 	}
 
@@ -45,10 +48,11 @@ public class NemoUser {
 	}
 
 	public void setFirstName(String firstName) {
-		if (firstName.length() <= 128) {
+		if (firstName.length() <= DataBaseElements.SIZEOF_NEMOUSER_FIRSTNAME) {
 			this.firstName = firstName;
 		} else {
-			System.out.println("The size of the first name can't have a length > 128");
+			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+					String.format("The size of the first name can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_FIRSTNAME));
 		}
 	}
 
@@ -57,10 +61,11 @@ public class NemoUser {
 	}
 
 	public void setEmail(String email) {
-		if (email.length() <= 60) {
+		if (email.length() <= DataBaseElements.SIZEOF_NEMOUSER_EMAIL) {
 			this.email = email;
 		} else {
-			System.out.println("The size of the email can't have a length > 60");
+			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+					String.format("The size of the email can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_EMAIL));
 		}
 	}
 
@@ -69,10 +74,11 @@ public class NemoUser {
 	}
 
 	public void setCryptedPassword(String cryptedPassword) {
-		if (cryptedPassword.length() <= 40) {
+		if (cryptedPassword.length() <= DataBaseElements.SIZEOF_NEMOUSER_CRYPTEDPASSWORD) {
 			this.cryptedPassword = cryptedPassword;
 		} else {
-			System.out.println("The size of the crypted password can't have a length > 40");
+			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+					String.format("The size of the crypted password can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_CRYPTEDPASSWORD));
 		}
 	}
 

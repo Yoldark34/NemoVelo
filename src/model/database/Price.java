@@ -4,6 +4,9 @@
  */
 package model.database;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yoldark34 (yoldark@gmail.com)
@@ -47,10 +50,11 @@ public class Price {
 	}
 
 	public void setName(String name) {
-		if (name.length() <= 128) {
+		if (name.length() <= DataBaseElements.SIZEOF_PRICE_NAME) {
 			this.name = name;
 		} else {
-			System.out.println("The size of the name can't have a length > 128");
+			Logger.getLogger(Price.class.getName()).log(Level.WARNING,
+					String.format("The size of the name can't have a length > %1$d", DataBaseElements.SIZEOF_PRICE_NAME));
 		}
 	}
 
@@ -59,10 +63,11 @@ public class Price {
 	}
 
 	public void setDescription(String description) {
-		if (description.length() <= 512) {
+		if (description.length() <= DataBaseElements.SIZEOF_PRICE_DESCRIPTION) {
 			this.description = description;
 		} else {
-			System.out.println("The size of the description can't have a length > 128");
+			Logger.getLogger(Price.class.getName()).log(Level.WARNING,
+					String.format("The size of the description can't have a length > %1$d", DataBaseElements.SIZEOF_PRICE_DESCRIPTION));
 		}
 	}
 

@@ -17,15 +17,15 @@ public class BikeMapper extends AbstractMapper {
 
 	public ArrayList<Bike> getAllBikes() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = new DbConnection();
-		adapter.executeQuery("Select * from " + DataBaseElementNames.BIKE);
+		adapter.executeSelectQuery("Select * from " + DataBaseElements.BIKE);
 		return (ArrayList<Bike>) adapter.getModelsFromRequest(this);
 	}
 
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Bike obj = new Bike();
-		if (this.hasColumn(DataBaseElementNames.BIKE_ID, row)) {
-			obj.setId(row.getInt(DataBaseElementNames.BIKE_ID));
+		if (this.hasColumn(DataBaseElements.BIKE_ID, row)) {
+			obj.setId(row.getInt(DataBaseElements.BIKE_ID));
 		 }
 		return obj;
 	}

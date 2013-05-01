@@ -4,9 +4,12 @@
  */
 package model.database;
 
+import controller.config.Configuration;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,22 +34,28 @@ public class DbConnection {
 		return results;
 	}
 
-	public boolean executeQuery(String select) {
+	public boolean executeSelectQuery(String select) {
 		/* Connexion à la base de données */
-		String url = "jdbc:mysql://localhost:3306/nemovelo";
-		String utilisateur = "root";
-		String motDePasse = "";
-		
-		
-		try {
-			this.connection = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
-			Statement statement = this.connection.createStatement();
-			this.results = statement.executeQuery(select);
-			return true;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		boolean resultat;
+		String url = Configuration.getParam(Configuration.CONFIGSECTION_DB, Configuration.CONFIGPARAM_DB_URL);
+		String utilisateur = Configuration.getParam(Configuration.CONFIGSECTION_DB, Configuration.CONFIGPARAM_DB_USER);
+		String motDePasse = Configuration.getParam(Configuration.CONFIGSECTION_DB, Configuration.CONFIGPARAM_DB_PASSWORD);
+
+		resultat = (url != null && utilisateur != null && motDePasse != null);
+		if (resultat) {
+			try {
+				this.connection = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
+				Statement statement = this.connection.createStatement();
+				this.results = statement.executeQuery(select);
+				resultat = true;
+			} catch (SQLException e) {
+				this.connection = null;
+				this.results = null;
+				Logger.getLogger(DbConnection.class.getName()).log(Level.WARNING,
+						String.format("Erreur d'exécution de la requête '%1$s'", select), e);
+			}
 		}
-		return false;
+		return resultat;
 	}
 
 	public boolean closeConnection() {
@@ -55,13 +64,11 @@ public class DbConnection {
 				this.connection.close();
 				this.connection = null;
 				return true;
-			} catch (SQLException ignore) {
+			} catch (SQLException e) {
 			}
 		}
 		return false;
 	}
-
-
 
 	public Collection<?> getModelsFromRequest(AbstractMapper callClass) throws SQLException, ClassNotFoundException {
 		ArrayList<Object> myCol = new ArrayList<>();

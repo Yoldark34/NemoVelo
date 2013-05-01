@@ -4,6 +4,9 @@
  */
 package model.database;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yoldark34 (yoldark@gmail.com)
@@ -37,10 +40,11 @@ public class UserType {
 	}
 
 	public void setCode(String code) {
-		if (code.length() <= 128) {
+		if (code.length() <= DataBaseElements.SIZEOF_USERTYPE_CODE) {
 			this.code = code;
 		} else {
-			System.out.println("The size of the code can't have a length > 128");
+			Logger.getLogger(UserType.class.getName()).log(Level.WARNING,
+					String.format("The size of the code can't have a length > %1$d", DataBaseElements.SIZEOF_USERTYPE_CODE));
 		}
 	}
 
@@ -49,10 +53,11 @@ public class UserType {
 	}
 
 	public void setName(String name) {
-		if (name.length() <= 20) {
+		if (name.length() <= DataBaseElements.SIZEOF_USERTYPE_NAME) {
 			this.name = name;
 		} else {
-			System.out.println("The size of the name can't have a length > 20");
+			Logger.getLogger(UserType.class.getName()).log(Level.WARNING,
+					String.format("The size of the name can't have a length > %1$s", DataBaseElements.SIZEOF_USERTYPE_NAME));
 		}
 	}
 

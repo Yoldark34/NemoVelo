@@ -5,6 +5,8 @@
 package model.database;
 
 import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -82,10 +84,11 @@ public class BikeUsage {
 	}
 
 	public void setComments(String comments) {
-		if (comments.length() <= 512) {
+		if (comments.length() <= DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS) {
 			this.comments = comments;
 		} else {
-			System.out.println("The size of the comments can't have a length > 512");
+			Logger.getLogger(BikeUsage.class.getName()).log(Level.WARNING,
+					String.format("The size of the comments can't have a length > %1$d", DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS));
 		}
 	}
 }

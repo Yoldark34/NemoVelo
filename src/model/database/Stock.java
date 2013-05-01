@@ -4,6 +4,9 @@
  */
 package model.database;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yoldark34 (yoldark@gmail.com)
@@ -30,10 +33,11 @@ public class Stock {
 	}
 
 	public void setCode(String code) {
-		if (code.length() <= 128) {
+		if (code.length() <= DataBaseElements.SIZEOF_STOCK_CODE) {
 			this.code = code;
 		} else {
-			System.out.println("The size of the code can't have a length > 128");
+			Logger.getLogger(Stock.class.getName()).log(Level.WARNING,
+					String.format("The size of the code can't have a length > %1$d", DataBaseElements.SIZEOF_STOCK_CODE));
 		}
 	}
 
@@ -42,10 +46,11 @@ public class Stock {
 	}
 
 	public void setName(String name) {
-		if (name.length() <= 128) {
+		if (name.length() <= DataBaseElements.SIZEOF_STOCK_NAME) {
 			this.name = name;
 		} else {
-			System.out.println("The size of the name can't have a length > 128");
+			Logger.getLogger(Stock.class.getName()).log(Level.WARNING,
+					String.format("The size of the name can't have a length > %1$d", DataBaseElements.SIZEOF_STOCK_NAME));
 		}
 	}
 
@@ -54,10 +59,11 @@ public class Stock {
 	}
 
 	public void setDescription(String description) {
-		if (description.length() <= 512) {
+		if (description.length() <= DataBaseElements.SIZEOF_STOCK_DESCRIPTION) {
 			this.description = description;
 		} else {
-			System.out.println("The size of the description can't have a length > 512");
+			Logger.getLogger(Stock.class.getName()).log(Level.WARNING,
+					String.format("The size of the description can't have a length > %1$d", DataBaseElements.SIZEOF_STOCK_DESCRIPTION));
 		}
 	}
 

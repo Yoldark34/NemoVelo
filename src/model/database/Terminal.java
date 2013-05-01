@@ -4,6 +4,9 @@
  */
 package model.database;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yoldark34 (yoldark@gmail.com)
@@ -35,10 +38,11 @@ public class Terminal {
 	}
 
 	public void setIp(String ip) {
-		if (ip.length() <= 20) {
+		if (ip.length() <= DataBaseElements.SIZEOF_TERMINAL_IP) {
 			this.ip = ip;
 		} else {
-			System.out.println("The size of the ip can't have a length > 20");
+			Logger.getLogger(Terminal.class.getName()).log(Level.WARNING,
+					String.format("The size of the ip can't have a length > %1$d", DataBaseElements.SIZEOF_TERMINAL_IP));
 		}
 	}
 }

@@ -4,6 +4,9 @@
  */
 package model.database;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yoldark34 (yoldark@gmail.com)
@@ -39,10 +42,11 @@ public class Contact {
 	}
 
 	public void setStreetName(String streetName) {
-		if (streetName.length() <= 128) {
+		if (streetName.length() <= DataBaseElements.SIZEOF_CONTACT_STREETNAME) {
 			this.streetName = streetName;
 		} else {
-			System.out.println("The size of the street name can't have a length > 128");
+			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+					String.format("The size of the street name can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_STREETNAME));
 		}
 	}
 
@@ -51,10 +55,11 @@ public class Contact {
 	}
 
 	public void setZipCode(String zipCode) {
-		if (zipCode.length() <= 5) {
+		if (zipCode.length() <= DataBaseElements.SIZEOF_CONTACT_ZIPCODE) {
 			this.zipCode = zipCode;
 		} else {
-			System.out.println("The size of the zip code can't have a length > 5");
+			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+					String.format("The size of the zip code can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_ZIPCODE));
 		}
 	}
 
@@ -63,10 +68,11 @@ public class Contact {
 	}
 
 	public void setCity(String city) {
-		if (city.length() <= 128) {
+		if (city.length() <= DataBaseElements.SIZEOF_CONTACT_CITY) {
 			this.city = city;
 		} else {
-			System.out.println("The size of the city can't have a length > 128");
+			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+					String.format("The size of the city can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_CITY));
 		}
 	}
 
@@ -75,10 +81,11 @@ public class Contact {
 	}
 
 	public void setCountry(String country) {
-		if (country.length() <= 128) {
+		if (country.length() <= DataBaseElements.SIZEOF_CONTACT_COUNTRY) {
 			this.country = country;
 		} else {
-			System.out.println("The size of the country can't have a length > 128");
+			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+					String.format("The size of the country can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_COUNTRY));
 		}
 	}
 
