@@ -2,14 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.interfacesGUI;
 
 /**
  *
  * @author valentin.seitz
  */
-public class Main {
-
-	public static void main(String[] args) {
-	}
+public interface BikeVue {
 }
