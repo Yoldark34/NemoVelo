@@ -5,6 +5,7 @@
 package vue;
 
 import controller.interfacesGUI.BikeVue;
+import controller.interfacesGUI.MainVue;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
