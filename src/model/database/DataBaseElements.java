@@ -20,7 +20,7 @@ public class DataBaseElements {
 	public static final String BIKEUSAGETYPE = "bike_usage_type";
 	public static final String BIKEUSAGETYPE_ID = "id";
 	public static final String BIKEUSAGETYPE_IDPARENT = "id_parent_bike_usage_type";
-	public static final String BIKEUSAGE_TYPENAME = "name";
+	public static final String BIKEUSAGETYPE_NAME = "name";
 	public static final String BIKEUSAGETYPE_DESCRIPTION = "description";
 	public static final String CONTACT = "contact";
 	public static final String CONTACT_ID = "id";
