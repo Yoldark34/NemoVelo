@@ -4,6 +4,7 @@
  */
 package model.database;
 
+import model.object.Subscription;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

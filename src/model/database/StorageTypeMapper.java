@@ -4,6 +4,7 @@
  */
 package model.database;
 
+import model.object.StorageType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

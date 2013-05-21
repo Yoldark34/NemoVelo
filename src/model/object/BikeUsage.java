@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.database;
+package model.object;
 
 import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.database.DataBaseElements;
 
 /**
  *
