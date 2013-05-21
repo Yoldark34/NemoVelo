@@ -2,14 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package vue;
+package controller.managment;
 
-import javax.swing.JPanel;
 import controller.interfacesGUI.BikeVue;
+import controller.interfacesGUI.NemoUserVue;
 
 /**
  *
  * @author valentin.seitz
  */
-public class BikePanel extends JPanel implements BikeVue {
+public interface ManagmentMainVue {
+
+	public BikeVue getBikeVue();
+
+	public NemoUserVue getNemoUserVue();
 }

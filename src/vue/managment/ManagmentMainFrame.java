@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package vue;
+package vue.managment;
 
 import controller.interfacesGUI.BikeVue;
 import controller.interfacesGUI.MainVue;
+import controller.interfacesGUI.NemoUserVue;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
@@ -14,34 +15,43 @@ import javax.swing.JFrame;
  *
  * @author valentin.seitz
  */
-public class MainFrame extends JFrame implements MainVue {
+public class ManagmentMainFrame extends JFrame implements MainVue {
 
 	private BikePanel bikePanel;
+	private NemoUserPanel nemoUserPanel;
 
-	public MainFrame() throws HeadlessException {
+	public ManagmentMainFrame() throws HeadlessException {
 		super();
 		this.initialize();
 	}
 
-	public MainFrame(GraphicsConfiguration gc) {
+	public ManagmentMainFrame(GraphicsConfiguration gc) {
 		super(gc);
 		this.initialize();
 	}
 
-	public MainFrame(String title) throws HeadlessException {
+	public ManagmentMainFrame(String title) throws HeadlessException {
 		super(title);
 		this.initialize();
 	}
 
-	public MainFrame(String title, GraphicsConfiguration gc) {
+	public ManagmentMainFrame(String title, GraphicsConfiguration gc) {
 		super(title, gc);
 		this.initialize();
 	}
 
 	private void initialize() {
+		this.bikePanel = new BikePanel();
+		this.nemoUserPanel = new NemoUserPanel();
 	}
 
+	@Override
 	public BikeVue getBikeVue() {
 		return this.bikePanel;
+	}
+
+	@Override
+	public NemoUserVue getNemoUserVue() {
+		return this.nemoUserPanel;
 	}
 }
