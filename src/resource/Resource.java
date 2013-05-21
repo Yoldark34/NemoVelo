@@ -4,7 +4,7 @@
  */
 package resource;
 
-import controller.config.Configuration;
+import controller.common.config.Configuration;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
