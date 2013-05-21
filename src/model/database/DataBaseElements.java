@@ -20,7 +20,7 @@ public class DataBaseElements {
 	public static final String BIKEUSAGETYPE = "bike_usage_type";
 	public static final String BIKEUSAGETYPE_ID = "id";
 	public static final String BIKEUSAGETYPE_IDPARENT = "id_parent_bike_usage_type";
-	public static final String BIKEUSAGE_TYPENAME = "name";
+	public static final String BIKEUSAGETYPE_NAME = "name";
 	public static final String BIKEUSAGETYPE_DESCRIPTION = "description";
 	public static final String CONTACT = "contact";
 	public static final String CONTACT_ID = "id";
@@ -83,7 +83,7 @@ public class DataBaseElements {
 	public static final String TERMINAL_IDSTOCK = "id_stock";
 	public static final String TERMINAL_IP = "ip";
 	public static final String USAGEPOSSIBILITY = "usage_possibility";
-	public static final String USAGEPOSSIBILITY_ID = "id";
+	public static final String USAGEPOSSIBILITY_IDBIKEUSAGETYPE = "id_bike_usage_type";
 	public static final String USAGEPOSSIBILITY_IDUSERTYPE = "id_user_type";
 	public static final String USAGEPOSSIBILITY_IDSTORAGETYPE = "id_storage_type";
 	public static final String USAGEPOSSIBILITY_IDRENT = "id_rent";
