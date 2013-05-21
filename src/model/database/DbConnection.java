@@ -17,15 +17,19 @@ import java.util.logging.Logger;
  */
 public class DbConnection {
 
+	private static DbConnection dbConnect;
+
 	private Connection connection;
 	private ResultSet results;
 
-	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		/*BikeMapper bm = new BikeMapper();
-		 ArrayList<Bike> test = bm.getAllBikes();If you want to test*/
+	public static final DbConnection getDbConnection() {
+		if (dbConnect == null) {
+			dbConnect = new DbConnection();
+		}
+		return dbConnect;
 	}
 
-	public DbConnection() {
+	private DbConnection() {
 		this.connection = null;
 		this.results = null;
 	}
@@ -71,7 +75,7 @@ public class DbConnection {
 	}
 
 	public Collection<?> getModelsFromRequest(AbstractMapper callClass) throws SQLException, ClassNotFoundException {
-		ArrayList<Object> myCol = new ArrayList<>();
+		ArrayList<Object> myCol = new ArrayList<Object>();
 		while (this.results.next()) {
 			myCol.add(callClass.populateModel(this.results));
 		}

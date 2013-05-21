@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class BikeMapper extends AbstractMapper {
 
 	public ArrayList<Bike> getAllBikes() throws SQLException, ClassNotFoundException {
-		DbConnection adapter = new DbConnection();
+		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.BIKE);
 		return (ArrayList<Bike>) adapter.getModelsFromRequest(this);
 	}
