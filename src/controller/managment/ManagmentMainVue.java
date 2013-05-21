@@ -4,8 +4,8 @@
  */
 package controller.managment;
 
-import controller.interfacesGUI.BikeVue;
-import controller.interfacesGUI.NemoUserVue;
+import controller.common.interfacesGUI.BikeVue;
+import controller.common.interfacesGUI.NemoUserVue;
 
 /**
  *

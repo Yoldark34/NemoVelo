@@ -4,9 +4,9 @@
  */
 package vue.common;
 
-import javax.swing.JPanel;
-import controller.interfacesGUI.NemoUserVue;
+import controller.common.interfacesGUI.NemoUserVue;
 import java.awt.LayoutManager;
+import javax.swing.JPanel;
 
 /**
  *

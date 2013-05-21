@@ -4,18 +4,20 @@
  */
 package vue.managment;
 
-import controller.interfacesGUI.BikeVue;
-import controller.interfacesGUI.MainVue;
-import controller.interfacesGUI.NemoUserVue;
+import controller.common.interfacesGUI.BikeVue;
+import controller.common.interfacesGUI.NemoUserVue;
+import controller.managment.ManagmentMainVue;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
+import vue.common.BikePanel;
+import vue.common.NemoUserPanel;
 
 /**
  *
  * @author valentin.seitz
  */
-public class ManagmentMainFrame extends JFrame implements MainVue {
+public class ManagmentMainFrame extends JFrame implements ManagmentMainVue {
 
 	private BikePanel bikePanel;
 	private NemoUserPanel nemoUserPanel;

@@ -4,7 +4,7 @@
  */
 package controller.managment;
 
-import controller.interfacesGUI.MainVue;
+import controller.managment.ManagmentMainVue;
 
 /**
  *
@@ -12,17 +12,17 @@ import controller.interfacesGUI.MainVue;
  */
 public class ManagmentController {
 
-	private static MainVue mainVue;
+	private static ManagmentMainVue mainVue;
 
-	public static MainVue getMainVue() {
+	public static ManagmentMainVue getMainVue() {
 		return ManagmentController.mainVue;
 	}
 
-	private static void setMainVue(MainVue mainVue) {
+	private static void setMainVue(ManagmentMainVue mainVue) {
 		ManagmentController.mainVue = mainVue;
 	}
 
-	public ManagmentController(MainVue mainVue) {
+	public ManagmentController(ManagmentMainVue mainVue) {
 		setMainVue(mainVue);
 	}
 }

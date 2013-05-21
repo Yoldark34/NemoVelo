@@ -4,8 +4,8 @@
  */
 package vue.common;
 
+import controller.common.interfacesGUI.BikeVue;
 import javax.swing.JPanel;
-import controller.interfacesGUI.BikeVue;
 
 /**
  *
