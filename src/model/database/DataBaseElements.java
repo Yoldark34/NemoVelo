@@ -83,7 +83,7 @@ public class DataBaseElements {
 	public static final String TERMINAL_IDSTOCK = "id_stock";
 	public static final String TERMINAL_IP = "ip";
 	public static final String USAGEPOSSIBILITY = "usage_possibility";
-	public static final String USAGEPOSSIBILITY_ID = "id";
+	public static final String USAGEPOSSIBILITY_IDBIKEUSAGETYPE = "id_bike_usage_type";
 	public static final String USAGEPOSSIBILITY_IDUSERTYPE = "id_user_type";
 	public static final String USAGEPOSSIBILITY_IDSTORAGETYPE = "id_storage_type";
 	public static final String USAGEPOSSIBILITY_IDRENT = "id_rent";
