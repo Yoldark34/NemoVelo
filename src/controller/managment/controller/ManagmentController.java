@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.managment;
+package controller.managment.controller;
 
-import controller.managment.ManagmentMainVue;
+import controller.managment.interfacesGUI.ManagmentMainVue;
+import controller.managment.interfacesGUI.ManagmentMainVue;
 
 /**
  *

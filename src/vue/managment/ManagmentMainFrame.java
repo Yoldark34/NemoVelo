@@ -6,7 +6,7 @@ package vue.managment;
 
 import controller.common.interfacesGUI.BikeVue;
 import controller.common.interfacesGUI.NemoUserVue;
-import controller.managment.ManagmentMainVue;
+import controller.managment.interfacesGUI.ManagmentMainVue;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
