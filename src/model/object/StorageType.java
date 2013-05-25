@@ -5,8 +5,8 @@
 package model.object;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -35,7 +35,7 @@ public class StorageType {
 		if (code.length() <= DataBaseElements.SIZEOF_STORAGETYPE_CODE) {
 			this.code = code;
 		} else {
-			Logger.getLogger(StorageType.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the code can't have a length > %1$d", DataBaseElements.SIZEOF_STORAGETYPE_CODE));
 		}
 	}
@@ -48,7 +48,7 @@ public class StorageType {
 		if (name.length() <= DataBaseElements.SIZEOF_STORAGETYPE_NAME) {
 			this.name = name;
 		} else {
-			Logger.getLogger(StorageType.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the name can't have a length > %1$d", DataBaseElements.SIZEOF_STORAGETYPE_NAME));
 		}
 	}
@@ -61,7 +61,7 @@ public class StorageType {
 		if (description.length() <= DataBaseElements.SIZEOF_STORAGETYPE_DESCRIPTION) {
 			this.description = description;
 		} else {
-			Logger.getLogger(StorageType.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the description can't have a length > %1$d", DataBaseElements.SIZEOF_STORAGETYPE_DESCRIPTION));
 		}
 	}

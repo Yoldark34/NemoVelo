@@ -5,8 +5,8 @@
 package model.object;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -54,7 +54,7 @@ public class Price {
 		if (name.length() <= DataBaseElements.SIZEOF_PRICE_NAME) {
 			this.name = name;
 		} else {
-			Logger.getLogger(Price.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the name can't have a length > %1$d", DataBaseElements.SIZEOF_PRICE_NAME));
 		}
 	}
@@ -67,7 +67,7 @@ public class Price {
 		if (description.length() <= DataBaseElements.SIZEOF_PRICE_DESCRIPTION) {
 			this.description = description;
 		} else {
-			Logger.getLogger(Price.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the description can't have a length > %1$d", DataBaseElements.SIZEOF_PRICE_DESCRIPTION));
 		}
 	}

@@ -5,8 +5,8 @@
 package model.object;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -43,7 +43,7 @@ public class BikeUsageType {
 		if (name.length() <= DataBaseElements.SIZEOF_BIKEUSAGETYPE_NAME) {
 			this.name = name;
 		} else {
-			Logger.getLogger(BikeUsageType.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the name can't have a length > %1$d", DataBaseElements.SIZEOF_BIKEUSAGETYPE_NAME));
 		}
 	}
@@ -56,7 +56,7 @@ public class BikeUsageType {
 		if (description.length() <= DataBaseElements.SIZEOF_BIKEUSAGETYPE_DESCRIPTION) {
 			this.description = description;
 		} else {
-			Logger.getLogger(BikeUsageType.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the description can't have a length >%1$d", DataBaseElements.SIZEOF_BIKEUSAGETYPE_DESCRIPTION));
 		}
 	}

@@ -2,8 +2,11 @@
 <!DOCTYPE config SYSTEM "config.dtd">
 <config>
 	<section name="db">
-			<param name="url" value="jdbc:mysql://localhost:3306/nemovelo" />
-			<param name="user" value="root" />
-			<param name="password" value="" />
-		</section>
+		<param name="url" value="jdbc:mysql://localhost:3306/nemovelo" />
+		<param name="user" value="root" />
+		<param name="password" value="" />
+	</section>
+	<section name="log">
+		<param name="unique" value="true" />
+	</section>
 </config>

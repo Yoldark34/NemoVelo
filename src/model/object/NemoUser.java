@@ -6,8 +6,8 @@ package model.object;
 
 import java.sql.Date;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -39,7 +39,7 @@ public class NemoUser {
 		if (lastName.length() <= DataBaseElements.SIZEOF_NEMOUSER_LASTNAME) {
 			this.lastName = lastName;
 		} else {
-			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the last name can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_LASTNAME));
 		}
 	}
@@ -52,7 +52,7 @@ public class NemoUser {
 		if (firstName.length() <= DataBaseElements.SIZEOF_NEMOUSER_FIRSTNAME) {
 			this.firstName = firstName;
 		} else {
-			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the first name can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_FIRSTNAME));
 		}
 	}
@@ -65,7 +65,7 @@ public class NemoUser {
 		if (email.length() <= DataBaseElements.SIZEOF_NEMOUSER_EMAIL) {
 			this.email = email;
 		} else {
-			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the email can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_EMAIL));
 		}
 	}
@@ -78,7 +78,7 @@ public class NemoUser {
 		if (cryptedPassword.length() <= DataBaseElements.SIZEOF_NEMOUSER_CRYPTEDPASSWORD) {
 			this.cryptedPassword = cryptedPassword;
 		} else {
-			Logger.getLogger(NemoUser.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the crypted password can't have a length > %1$d", DataBaseElements.SIZEOF_NEMOUSER_CRYPTEDPASSWORD));
 		}
 	}

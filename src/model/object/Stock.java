@@ -5,8 +5,8 @@
 package model.object;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -37,7 +37,7 @@ public class Stock {
 		if (code.length() <= DataBaseElements.SIZEOF_STOCK_CODE) {
 			this.code = code;
 		} else {
-			Logger.getLogger(Stock.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the code can't have a length > %1$d", DataBaseElements.SIZEOF_STOCK_CODE));
 		}
 	}
@@ -50,7 +50,7 @@ public class Stock {
 		if (name.length() <= DataBaseElements.SIZEOF_STOCK_NAME) {
 			this.name = name;
 		} else {
-			Logger.getLogger(Stock.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the name can't have a length > %1$d", DataBaseElements.SIZEOF_STOCK_NAME));
 		}
 	}
@@ -63,7 +63,7 @@ public class Stock {
 		if (description.length() <= DataBaseElements.SIZEOF_STOCK_DESCRIPTION) {
 			this.description = description;
 		} else {
-			Logger.getLogger(Stock.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the description can't have a length > %1$d", DataBaseElements.SIZEOF_STOCK_DESCRIPTION));
 		}
 	}

@@ -5,8 +5,8 @@
 package model.object;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -44,7 +44,7 @@ public class UserType {
 		if (code.length() <= DataBaseElements.SIZEOF_USERTYPE_CODE) {
 			this.code = code;
 		} else {
-			Logger.getLogger(UserType.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the code can't have a length > %1$d", DataBaseElements.SIZEOF_USERTYPE_CODE));
 		}
 	}
@@ -57,7 +57,7 @@ public class UserType {
 		if (name.length() <= DataBaseElements.SIZEOF_USERTYPE_NAME) {
 			this.name = name;
 		} else {
-			Logger.getLogger(UserType.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the name can't have a length > %1$s", DataBaseElements.SIZEOF_USERTYPE_NAME));
 		}
 	}

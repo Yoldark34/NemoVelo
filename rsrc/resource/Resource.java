@@ -7,7 +7,7 @@ package resource;
 import resource.config.Configuration;
 import java.net.URL;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -24,7 +24,7 @@ public class Resource {
 		Resource r = new Resource();
 		URL resourceUrl = r.getClass().getResource(path);
 		if (resourceUrl == null) {
-			Logger.getLogger(Configuration.class.getName()).log(Level.WARNING, null,
+			ProjectLogger.log(new Resource(), Level.WARNING, null,
 					new NullPointerException(String.format("file '%1$s' not found", path)));
 		}
 		return resourceUrl;

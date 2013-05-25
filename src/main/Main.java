@@ -4,6 +4,9 @@
  */
 package main;
 
+import resource.config.Configuration;
+import resource.log.ProjectLogger;
+
 /**
  *
  * @author valentin.seitz
@@ -11,5 +14,12 @@ package main;
 public class Main {
 
 	public static void main(String[] args) {
+
+		ProjectLogger.setUniqueLog(
+				Configuration.getParam(
+				Configuration.CONFIGSECTION_LOG,
+				Configuration.CONFIGPARAM_LOG_UNIQUE)
+				.equals(Configuration.BooleanTrue));
+
 	}
 }

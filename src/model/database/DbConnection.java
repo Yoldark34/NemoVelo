@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -55,7 +55,7 @@ public class DbConnection {
 			} catch (SQLException e) {
 				this.connection = null;
 				this.results = null;
-				Logger.getLogger(DbConnection.class.getName()).log(Level.WARNING,
+				ProjectLogger.log(new DbConnection(), Level.WARNING,
 						String.format("Erreur d'exécution de la requête '%1$s'", select), e);
 			}
 		}

@@ -5,8 +5,8 @@
 package model.object;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -46,7 +46,7 @@ public class Contact {
 		if (streetName.length() <= DataBaseElements.SIZEOF_CONTACT_STREETNAME) {
 			this.streetName = streetName;
 		} else {
-			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the street name can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_STREETNAME));
 		}
 	}
@@ -59,7 +59,7 @@ public class Contact {
 		if (zipCode.length() <= DataBaseElements.SIZEOF_CONTACT_ZIPCODE) {
 			this.zipCode = zipCode;
 		} else {
-			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the zip code can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_ZIPCODE));
 		}
 	}
@@ -72,7 +72,7 @@ public class Contact {
 		if (city.length() <= DataBaseElements.SIZEOF_CONTACT_CITY) {
 			this.city = city;
 		} else {
-			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the city can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_CITY));
 		}
 	}
@@ -85,7 +85,7 @@ public class Contact {
 		if (country.length() <= DataBaseElements.SIZEOF_CONTACT_COUNTRY) {
 			this.country = country;
 		} else {
-			Logger.getLogger(Contact.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the country can't have a length > %1$d", DataBaseElements.SIZEOF_CONTACT_COUNTRY));
 		}
 	}

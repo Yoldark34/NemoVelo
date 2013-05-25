@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,6 +20,7 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import resource.Resource;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -28,10 +28,14 @@ import resource.Resource;
  */
 public final class Configuration {
 
+	public static final String BooleanTrue = Boolean.toString(true);
+	public static final String BooleanFalse = Boolean.toString(false);
 	public static final String CONFIGSECTION_DB = "db";
 	public static final String CONFIGPARAM_DB_URL = "url";
 	public static final String CONFIGPARAM_DB_USER = "user";
 	public static final String CONFIGPARAM_DB_PASSWORD = "password";
+	public static final String CONFIGSECTION_LOG = "log";
+	public static final String CONFIGPARAM_LOG_UNIQUE = "unique";
 	private static Document document = null;
 
 	/**
@@ -79,19 +83,19 @@ public final class Configuration {
 			}
 
 		} catch (URISyntaxException e) {
-			Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE,
+			ProjectLogger.log(new Configuration(), Level.SEVERE,
 					String.format("Error in the url '%1$s'", Resource.CONFIG_FILE), e);
 		} catch (ParserConfigurationException e) {
-			Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE,
+			ProjectLogger.log(new Configuration(), Level.SEVERE,
 					"Error in the configuration of the parser", e);
 		} catch (SAXException e) {
-			Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE,
+			ProjectLogger.log(new Configuration(), Level.SEVERE,
 					"", e);
 		} catch (IOException e) {
-			Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE,
+			ProjectLogger.log(new Configuration(), Level.SEVERE,
 					"", e);
 		} catch (XPathExpressionException e) {
-			Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE,
+			ProjectLogger.log(new Configuration(), Level.SEVERE,
 					String.format("Error in the XPath '%1$s'", xpathText), e);
 		}
 		return value;

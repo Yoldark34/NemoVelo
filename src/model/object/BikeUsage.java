@@ -6,8 +6,8 @@ package model.object;
 
 import java.sql.Date;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.DataBaseElements;
+import resource.log.ProjectLogger;
 
 /**
  *
@@ -88,7 +88,7 @@ public class BikeUsage {
 		if (comments.length() <= DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS) {
 			this.comments = comments;
 		} else {
-			Logger.getLogger(BikeUsage.class.getName()).log(Level.WARNING,
+			ProjectLogger.log(this, Level.WARNING,
 					String.format("The size of the comments can't have a length > %1$d", DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS));
 		}
 	}
