@@ -4,7 +4,7 @@
  */
 package model.database;
 
-import controller.common.config.Configuration;
+import resource.config.Configuration;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
