@@ -46,7 +46,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	}
 
 	private void initialize() {
-		this.welcomeVue = new WelcomePanel();
+		this.welcomeVue = new TerminalWelcomePanel();
 		//TODO : Affect
 	}
 
