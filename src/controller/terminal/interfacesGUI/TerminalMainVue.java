@@ -8,6 +8,11 @@ package controller.terminal.interfacesGUI;
  *
  * @author valentin.seitz
  */
-public class TerminalMainVue {
-    
+public interface TerminalMainVue {
+
+	public TerminalWelcome getTerminalWelcome();
+	public TerminalRent getTerminalRent();
+
+	public void openTerminalRent();
+	public void opentTerminalWelcome();
 }

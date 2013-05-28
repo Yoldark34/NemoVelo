@@ -4,8 +4,10 @@
  */
 package main;
 
+import controller.terminal.controller.TerminalController;
 import resource.config.Configuration;
 import resource.log.ProjectLogger;
+import vue.terminal.TerminalMainFrame;
 
 /**
  *
@@ -14,12 +16,19 @@ import resource.log.ProjectLogger;
 public class Main {
 
 	public static void main(String[] args) {
+		TerminalMainFrame mainFrame;
+		TerminalController controller;
 
 		ProjectLogger.setUniqueLog(
 				Configuration.getParam(
 				Configuration.CONFIGSECTION_LOG,
 				Configuration.CONFIGPARAM_LOG_UNIQUE)
 				.equals(Configuration.BooleanTrue));
+
+		mainFrame = new TerminalMainFrame();
+		controller = new TerminalController(mainFrame);
+
+		mainFrame.setVisible(true);
 
 	}
 }

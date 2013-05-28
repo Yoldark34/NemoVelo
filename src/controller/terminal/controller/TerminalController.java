@@ -4,10 +4,33 @@
  */
 package controller.terminal.controller;
 
+import controller.terminal.interfacesGUI.TerminalMainVue;
+
 /**
  *
  * @author valentin.seitz
  */
 public class TerminalController {
-    
+
+	private static TerminalMainVue mainVue;
+
+	public static TerminalMainVue getMainVue() {
+		return TerminalController.mainVue;
+	}
+
+	private static void setMainVue(TerminalMainVue mainVue) {
+		TerminalController.mainVue = mainVue;
+	}
+
+	public TerminalController(TerminalMainVue mainVue) {
+		setMainVue(mainVue);
+	}
+
+	public void openRent() {
+		getMainVue().openTerminalRent();
+	}
+
+	public void openWelcome() {
+		getMainVue().opentTerminalWelcome();
+	}
 }
