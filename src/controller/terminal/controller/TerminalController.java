@@ -25,12 +25,4 @@ public class TerminalController {
 	public TerminalController(TerminalMainVue mainVue) {
 		setMainVue(mainVue);
 	}
-
-	public void openRent() {
-		getMainVue().openTerminalRent();
-	}
-
-	public void openWelcome() {
-		getMainVue().opentTerminalWelcome();
-	}
 }
