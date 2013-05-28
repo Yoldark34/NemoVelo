@@ -20,10 +20,14 @@ public class TerminalWelcomeController {
 	}
 
 	public void doRent() {
-		//TODO
+		if (TerminalVueStateMachine.change(TerminalVueStateMachine.ACTION_ASK_RENT)) {
+			TerminalController.getMainVue().displayTerminalRent();
+		}
 	}
 
 	public void doReturn() {
-		//TODO
+		if (TerminalVueStateMachine.change(TerminalVueStateMachine.ACTION_ASK_RETURN)) {
+			TerminalController.getMainVue().displayTerminalReturn();
+		}
 	}
 }
