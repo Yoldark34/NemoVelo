@@ -24,5 +24,6 @@ public class TerminalController {
 
 	public TerminalController(TerminalMainVue mainVue) {
 		setMainVue(mainVue);
+		mainVue.displayTerminalWelcome();
 	}
 }

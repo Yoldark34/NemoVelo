@@ -10,9 +10,12 @@ import controller.terminal.interfacesGUI.TerminalRent;
 import controller.terminal.interfacesGUI.TerminalReturn;
 import controller.terminal.interfacesGUI.TerminalReturnSummary;
 import controller.terminal.interfacesGUI.TerminalWelcome;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -20,11 +23,20 @@ import javax.swing.JFrame;
  */
 public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
-	private TerminalWelcome welcomeVue;
-	private TerminalRent rentVue;
-	private TerminalPay payVue;
-	private TerminalReturn returnVue;
-	private TerminalReturnSummary returnSummaryVue;
+	private static final String CARD_WELCOME = "WELCOME";
+	private static final String CARD_RENT = "RENT";
+	private static final String CARD_PAY = "PAY";
+	private static final String CARD_RETURN = "RETURN";
+	private static final String CARD_RETURN_SUMMARY = "RETURN_SUMMARY";
+	//Vues are managed as cards
+	JPanel cards;
+	CardLayout cardsLayout;
+	//Vues
+	private TerminalWelcomePanel welcomeVue;
+	private TerminalRentPanel rentVue;
+	private TerminalPayPanel payVue;
+	private TerminalReturnPanel returnVue;
+	private TerminalReturnSummaryPanel returnSummaryVue;
 
 	public TerminalMainFrame() throws HeadlessException {
 		initialize();
@@ -46,8 +58,58 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	}
 
 	private void initialize() {
-		this.welcomeVue = new TerminalWelcomePanel();
-		//TODO : Affect
+		this.setLayout(new BorderLayout());
+		//Initialize cards
+		this.cards = new JPanel();
+		this.cardsLayout = new CardLayout();
+		this.cards.setLayout(this.cardsLayout);
+		{
+			//Welcome vue
+			this.welcomeVue = new TerminalWelcomePanel();
+			this.cards.add(this.welcomeVue, CARD_WELCOME);
+
+			//Rent vue
+			this.rentVue = new TerminalRentPanel();
+			this.cards.add(this.rentVue, CARD_RENT);
+
+			//Pay vue
+			this.payVue = new TerminalPayPanel();
+			this.cards.add(this.payVue, CARD_PAY);
+
+			//Return vue
+			this.returnVue = new TerminalReturnPanel();
+			this.cards.add(this.returnVue, CARD_RETURN);
+
+			//ReturnSummary vue
+			this.returnSummaryVue = new TerminalReturnSummaryPanel();
+			this.cards.add(this.returnSummaryVue, CARD_RETURN_SUMMARY);
+		}
+		this.add(this.cards);
+	}
+
+	@Override
+	public void displayTerminalWelcome() {
+		this.cardsLayout.show(this.cards, CARD_WELCOME);
+	}
+
+	@Override
+	public void displayTerminalRent() {
+		this.cardsLayout.show(this.cards, CARD_RENT);
+	}
+
+	@Override
+	public void displayTerminalPay() {
+		this.cardsLayout.show(this.cards, CARD_PAY);
+	}
+
+	@Override
+	public void displayTerminalReturn() {
+		this.cardsLayout.show(this.cards, CARD_RETURN);
+	}
+
+	@Override
+	public void displayTerminalReturnSummary() {
+		this.cardsLayout.show(this.cards, CARD_RETURN_SUMMARY);
 	}
 
 	@Override
@@ -73,30 +135,5 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	@Override
 	public TerminalReturnSummary getTerminalReturnSummary() {
 		return returnSummaryVue;
-	}
-
-	@Override
-	public void displayTerminalWelcome() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public void displayTerminalRent() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public void displayTerminalPay() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public void displayTerminalReturn() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public void displayTerminalReturnSummary() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 }

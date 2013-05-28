@@ -27,11 +27,11 @@ public class TerminalRentController {
 	 */
 	public boolean getBikesAreAvailable(int quantity) {
 		boolean result = false;
-		//TODO : Implement
+		//TODO
 		return result;
 	}
 
 	public void doPay() {
-		
+		//TODO
 	}
 }
