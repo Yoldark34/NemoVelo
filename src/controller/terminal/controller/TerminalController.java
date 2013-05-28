@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.using.interfacesGUI;
+package controller.terminal.controller;
 
 /**
  *
  * @author valentin.seitz
  */
-public class UsingMainVue {
+public class TerminalController {
     
 }
