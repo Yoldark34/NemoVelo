@@ -12,7 +12,9 @@ public interface TerminalMainVue {
 
 	public TerminalWelcome getTerminalWelcome();
 	public TerminalRent getTerminalRent();
+	public TerminalPay getTerminalPay();
 
-	public void openTerminalRent();
-	public void opentTerminalWelcome();
+	public void displayTerminalWelcome();
+	public void displayTerminalRent();
+	public void displayTerminalPay();
 }
