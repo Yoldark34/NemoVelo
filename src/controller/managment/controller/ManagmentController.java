@@ -5,7 +5,6 @@
 package controller.managment.controller;
 
 import controller.managment.interfacesGUI.ManagmentMainVue;
-import controller.managment.interfacesGUI.ManagmentMainVue;
 
 /**
  *
