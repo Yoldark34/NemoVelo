@@ -32,8 +32,6 @@ public class TerminalRentController {
 	}
 
 	public void doPay() {
-		if (TerminalVueStateMachine.change(TerminalVueStateMachine.ACTION_ASK_PAYEMENT)) {
-			TerminalController.getMainVue().displayTerminalPay();
-		}
+		
 	}
 }

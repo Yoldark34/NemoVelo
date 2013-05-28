@@ -6,7 +6,7 @@ package controller.common.controller;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public class NemoUserController {
 

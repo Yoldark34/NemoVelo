@@ -6,7 +6,7 @@ package controller.common.interfacesGUI;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public interface BikeVue {
 }

@@ -18,4 +18,12 @@ public class TerminalWelcomeController {
 		}
 		return terminalWelcomeController;
 	}
+
+	public void doRent() {
+		//TODO
+	}
+
+	public void doReturn() {
+		//TODO
+	}
 }

@@ -24,7 +24,7 @@ import resource.log.ProjectLogger;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public final class Configuration {
 

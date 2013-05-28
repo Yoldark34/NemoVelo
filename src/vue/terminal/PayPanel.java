@@ -4,7 +4,7 @@
  */
 package vue.terminal;
 
-import controller.terminal.interfacesGUI.TerminalWelcome;
+import controller.terminal.interfacesGUI.TerminalPay;
 import java.awt.LayoutManager;
 import javax.swing.JPanel;
 
@@ -12,24 +12,24 @@ import javax.swing.JPanel;
  *
  * @author Valentin SEITZ
  */
-public class WelcomePanel extends JPanel implements TerminalWelcome {
+public class PayPanel extends JPanel implements TerminalPay {
 
-	public WelcomePanel(LayoutManager lm, boolean bln) {
+	public PayPanel(LayoutManager lm, boolean bln) {
 		super(lm, bln);
 		initialize();
 	}
 
-	public WelcomePanel(LayoutManager lm) {
+	public PayPanel(LayoutManager lm) {
 		super(lm);
 		initialize();
 	}
 
-	public WelcomePanel(boolean bln) {
+	public PayPanel(boolean bln) {
 		super(bln);
 		initialize();
 	}
 
-	public WelcomePanel() {
+	public PayPanel() {
 		initialize();
 	}
 

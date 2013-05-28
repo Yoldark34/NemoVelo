@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public class BikePanel extends JPanel implements BikeVue {
 }

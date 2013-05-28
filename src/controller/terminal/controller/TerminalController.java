@@ -8,7 +8,7 @@ import controller.terminal.interfacesGUI.TerminalMainVue;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public class TerminalController {
 

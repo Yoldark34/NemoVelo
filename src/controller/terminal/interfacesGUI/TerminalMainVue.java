@@ -6,15 +6,30 @@ package controller.terminal.interfacesGUI;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public interface TerminalMainVue {
 
+	//Get a vue
 	public TerminalWelcome getTerminalWelcome();
+
 	public TerminalRent getTerminalRent();
+
 	public TerminalPay getTerminalPay();
 
+	public TerminalReturn getTerminalReturn();
+
+	public TerminalReturnSummary getTerminalReturnSummary();
+
+	//Display a vue
+
 	public void displayTerminalWelcome();
+
 	public void displayTerminalRent();
+
 	public void displayTerminalPay();
+
+	public void displayTerminalReturn();
+
+	public void displayTerminalReturnSummary();
 }

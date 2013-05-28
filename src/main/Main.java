@@ -11,7 +11,7 @@ import vue.terminal.TerminalMainFrame;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public class Main {
 
