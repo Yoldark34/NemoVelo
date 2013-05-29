@@ -10,9 +10,6 @@ package controller.terminal.controller;
  */
 class TerminalVueStateMachine {
 
-	public static int getState() {
-		return state;
-	}
 	//The vues, first dimensions of possibilites array
 	private static final int IMPOSSIBLE = -2;
 	private static final int VUE_WELCOME = 0;
@@ -25,6 +22,7 @@ class TerminalVueStateMachine {
 	public static final int ACTION_DO_CANCEL = 0;
 	public static final int ACTION_ASK_RENT = 1;
 	public static final int ACTION_ASK_PAY = 2;
+	public static final int ACTION_DO_RENT = ACTION_ASK_PAY;
 	public static final int ACTION_DO_PAY = 3;
 	public static final int ACTION_ASK_RETURN = 4;
 	public static final int ACTION_DO_RETURN = 5;
@@ -39,11 +37,15 @@ class TerminalVueStateMachine {
 	//The state of machine
 	private static int state = VUE_WELCOME;
 
-	public static boolean possible(int action) {
+	public static int getState() {
+		return state;
+	}
+
+	public static boolean possibleAction(int action) {
 		return change(action, false);
 	}
 
-	public static boolean change(int action) {
+	public static boolean doAction(int action) {
 		return change(action, true);
 	}
 
@@ -60,10 +62,40 @@ class TerminalVueStateMachine {
 			//Reading next state, if not impossible
 			nextState = possibilities[state][action];
 			possible = (nextState != IMPOSSIBLE);
-			if (validate && possible) {
+			if (possible) {
+				if (validate) {
 				state = nextState;
+					displayVue(state);
+				}
+			} else {
+				TerminalController.getMainVue().showError("Impossible d'effectuer cette action!");
 			}
 		}
 		return possible;
+	}
+
+	private static void displayVue(int state) {
+		switch (state) {
+			case VUE_WELCOME:
+				//case VUE_END: (Same as welcome)
+				TerminalController.getMainVue().displayTerminalWelcome();
+				break;
+			case VUE_RENT:
+				//case VUE_END: (Same as welcome)
+				TerminalController.getMainVue().displayTerminalRent();
+				break;
+			case VUE_PAY:
+				//case VUE_END: (Same as welcome)
+				TerminalController.getMainVue().displayTerminalPay();
+				break;
+			case VUE_RETURN:
+				TerminalController.getMainVue().displayTerminalReturn();
+				break;
+			case VUE_RETURN_SUMMARY:
+				TerminalController.getMainVue().displayTerminalReturnSummary();
+				break;
+			default:
+				TerminalController.getMainVue().displayTerminalWelcome();
+		}
 	}
 }

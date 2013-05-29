@@ -19,15 +19,11 @@ public class TerminalWelcomeController {
 		return terminalWelcomeController;
 	}
 
-	public void doRent() {
-		if (TerminalVueStateMachine.change(TerminalVueStateMachine.ACTION_ASK_RENT)) {
-			TerminalController.getMainVue().displayTerminalRent();
-		}
+	public void askRent() {
+		TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_RENT);
 	}
 
-	public void doReturn() {
-		if (TerminalVueStateMachine.change(TerminalVueStateMachine.ACTION_ASK_RETURN)) {
-			TerminalController.getMainVue().displayTerminalReturn();
-		}
+	public void askReturn() {
+		TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_RETURN);
 	}
 }

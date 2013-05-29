@@ -32,4 +32,7 @@ public interface TerminalMainVue {
 	public void displayTerminalReturn();
 
 	public void displayTerminalReturnSummary();
+
+	//Other possibilities
+	public void showError(String msg);
 }
