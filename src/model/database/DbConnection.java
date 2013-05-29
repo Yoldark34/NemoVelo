@@ -79,6 +79,7 @@ public class DbConnection {
 		while (this.results.next()) {
 			myCol.add(callClass.populateModel(this.results));
 		}
+		this.closeConnection();
 		return myCol;
 	}
 }
