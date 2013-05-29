@@ -55,7 +55,7 @@ public class TerminalWelcomePanel extends JPanel implements TerminalWelcome {
 				btnRent.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
-						TerminalWelcomeController.getTerminalWelcomeController().doRent();
+						TerminalWelcomeController.getTerminalWelcomeController().askRent();
 					}
 				});
 			}
@@ -67,7 +67,7 @@ public class TerminalWelcomePanel extends JPanel implements TerminalWelcome {
 				btnReturn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
-						TerminalWelcomeController.getTerminalWelcomeController().doReturn();
+						TerminalWelcomeController.getTerminalWelcomeController().askReturn();
 					}
 				});
 			}

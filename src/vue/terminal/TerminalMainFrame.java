@@ -15,6 +15,7 @@ import java.awt.CardLayout;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -85,6 +86,9 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 			this.cards.add(this.returnSummaryVue, CARD_RETURN_SUMMARY);
 		}
 		this.add(this.cards);
+
+		//Just exit application
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
@@ -135,5 +139,11 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	@Override
 	public TerminalReturnSummary getTerminalReturnSummary() {
 		return returnSummaryVue;
+	}
+
+	@Override
+	public void showError(String msg) {
+		//TODO
+		JOptionPane.showConfirmDialog(null, msg);
 	}
 }

@@ -31,7 +31,13 @@ public class TerminalRentController {
 		return result;
 	}
 
-	public void doPay() {
-		//TODO
+	public void doRent() {
+		boolean ok = true;
+		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
+			//TODO : Implement Payment
+			if (ok) {
+				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);
+			}
+		}
 	}
 }
