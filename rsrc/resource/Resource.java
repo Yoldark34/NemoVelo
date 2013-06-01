@@ -17,8 +17,14 @@ public class Resource {
 
 	private static final String FOLDER_SEPARTOR = "/";
 	private static final String RESOURCE_FOLDER = FOLDER_SEPARTOR + "resource";
+	//CONFIG
 	private static final String CONFIG_FOLDER = RESOURCE_FOLDER + FOLDER_SEPARTOR + "config";
 	public static final String CONFIG_FILE = CONFIG_FOLDER + FOLDER_SEPARTOR + "config.xml";
+	//IMAGES
+	private static final String IMAGE_FOLDER = RESOURCE_FOLDER + FOLDER_SEPARTOR + "image";
+	//BANNER
+	private static final String BANNER_FOLDER = IMAGE_FOLDER + FOLDER_SEPARTOR + "banner";
+	public static final String IMAGE_BANNER = BANNER_FOLDER + FOLDER_SEPARTOR + "banner.png";
 
 	public static URL getResource(String path) {
 		Resource r = new Resource();

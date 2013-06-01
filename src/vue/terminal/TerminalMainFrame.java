@@ -12,11 +12,13 @@ import controller.terminal.interfacesGUI.TerminalReturnSummary;
 import controller.terminal.interfacesGUI.TerminalWelcome;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import vue.common.BannerPanel;
 
 /**
  *
@@ -24,11 +26,15 @@ import javax.swing.JPanel;
  */
 public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
+	private static final int BANNER_HEIGHT = 50;
+
 	private static final String CARD_WELCOME = "WELCOME";
 	private static final String CARD_RENT = "RENT";
 	private static final String CARD_PAY = "PAY";
 	private static final String CARD_RETURN = "RETURN";
 	private static final String CARD_RETURN_SUMMARY = "RETURN_SUMMARY";
+	//The banner of application
+	JPanel banner;
 	//Vues are managed as cards
 	JPanel cards;
 	CardLayout cardsLayout;
@@ -60,6 +66,14 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
 	private void initialize() {
 		this.setLayout(new BorderLayout());
+
+		//Initialize banner
+		this.banner = new BannerPanel();
+		{
+			this.banner.setPreferredSize(new Dimension((int) (this.banner.getPreferredSize().getWidth()), BANNER_HEIGHT));
+		}
+		this.add(this.banner, BorderLayout.NORTH);
+
 		//Initialize cards
 		this.cards = new JPanel();
 		this.cardsLayout = new CardLayout();
@@ -85,7 +99,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 			this.returnSummaryVue = new TerminalReturnSummaryPanel();
 			this.cards.add(this.returnSummaryVue, CARD_RETURN_SUMMARY);
 		}
-		this.add(this.cards);
+		this.add(this.cards, BorderLayout.CENTER);
 
 		//Just exit application
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
