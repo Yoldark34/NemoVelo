@@ -46,6 +46,8 @@ public class Main {
 		mainFrame = new TerminalMainFrame();
 		controller = new TerminalController(mainFrame);
 
+		mainFrame.setSize(mainFrame.getPreferredSize());
+
 		//Centering the frame
 		mainFrame.setLocationRelativeTo(null);
 

@@ -66,6 +66,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
 	private void initialize() {
 		this.setLayout(new BorderLayout());
+		this.setPreferredSize(new Dimension(640, 480));
 
 		//Initialize banner
 		this.banner = new BannerPanel();
