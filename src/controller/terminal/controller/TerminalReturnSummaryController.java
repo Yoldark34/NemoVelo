@@ -12,10 +12,14 @@ public class TerminalReturnSummaryController {
 
 	private static TerminalReturnSummaryController terminalReturnSummaryController;
 
-	public TerminalReturnSummaryController getTerminalReturnSummaryController() {
+	public static TerminalReturnSummaryController getTerminalReturnSummaryController() {
 		if (terminalReturnSummaryController == null) {
 			terminalReturnSummaryController = new TerminalReturnSummaryController();
 		}
 		return terminalReturnSummaryController;
+	}
+
+	public void doConfirm() {
+		TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CONFIRM_RETURN);
 	}
 }

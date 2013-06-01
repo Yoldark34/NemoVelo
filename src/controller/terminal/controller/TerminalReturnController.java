@@ -19,7 +19,7 @@ public class TerminalReturnController {
 		return terminalReturnController;
 	}
 
-	void doReturn() {
+	public void doReturn() {
 		boolean payMissing;
 		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)

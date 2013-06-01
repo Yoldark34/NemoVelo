@@ -4,7 +4,6 @@
  */
 package vue.terminal;
 
-import controller.terminal.controller.TerminalPayController;
 import controller.terminal.controller.TerminalRentController;
 import controller.terminal.interfacesGUI.TerminalRent;
 import java.awt.BorderLayout;

@@ -20,6 +20,7 @@ class TerminalVueStateMachine {
 	private static final int VUE_RETURN_SUMMARY = 4;
 	//The actions which can change the vue, second dimension of possibilites
 	public static final int ACTION_DO_CANCEL = 0;
+	public static final int ACTION_DO_CONFIRM_RETURN = ACTION_DO_CANCEL;
 	public static final int ACTION_ASK_RENT = 1;
 	public static final int ACTION_ASK_PAY = 2;
 	public static final int ACTION_DO_RENT = ACTION_ASK_PAY;
