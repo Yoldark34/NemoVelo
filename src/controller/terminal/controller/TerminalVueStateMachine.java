@@ -79,14 +79,13 @@ class TerminalVueStateMachine {
 		switch (state) {
 			case VUE_WELCOME:
 				//case VUE_END: (Same as welcome)
+				//TODO : Reinit all processed data
 				TerminalController.getMainVue().displayTerminalWelcome();
 				break;
 			case VUE_RENT:
-				//case VUE_END: (Same as welcome)
 				TerminalController.getMainVue().displayTerminalRent();
 				break;
 			case VUE_PAY:
-				//case VUE_END: (Same as welcome)
 				TerminalController.getMainVue().displayTerminalPay();
 				break;
 			case VUE_RETURN:

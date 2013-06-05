@@ -27,6 +27,7 @@ import vue.common.BannerPanel;
 public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
 	private static final int BANNER_HEIGHT = 50;
+	private static final int BANNERSOUTH_MARGIN = 10;
 
 	private static final String CARD_WELCOME = "WELCOME";
 	private static final String CARD_RENT = "RENT";
@@ -65,7 +66,9 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	}
 
 	private void initialize() {
-		this.setLayout(new BorderLayout());
+		BorderLayout bdl = new BorderLayout();
+		bdl.setVgap(BANNERSOUTH_MARGIN);
+		this.setLayout(bdl);
 		this.setPreferredSize(new Dimension(640, 480));
 
 		//Initialize banner
