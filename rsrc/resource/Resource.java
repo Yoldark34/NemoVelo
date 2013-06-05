@@ -25,6 +25,10 @@ public class Resource {
 	//BANNER
 	private static final String BANNER_FOLDER = IMAGE_FOLDER + FOLDER_SEPARTOR + "banner";
 	public static final String IMAGE_BANNER = BANNER_FOLDER + FOLDER_SEPARTOR + "banner.png";
+	//STATE
+	private static final String STATE_FOLDER = IMAGE_FOLDER + FOLDER_SEPARTOR + "state";
+	public static final String IMAGE_VALID = STATE_FOLDER + FOLDER_SEPARTOR + "valid.png";
+	public static final String IMAGE_INVALID = STATE_FOLDER + FOLDER_SEPARTOR + "invalid.png";
 
 	public static URL getResource(String path) {
 		Resource r = new Resource();
