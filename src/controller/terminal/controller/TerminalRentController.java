@@ -24,12 +24,12 @@ public class TerminalRentController {
 	 *
 	 * @return quantity of available bikes
 	 */
-	public int getMaxAvailableBikes(boolean doAutoCancel) {
+	public int getMaxAvailableBikes() {
 		int result = 0;
 		//TODO
-		//Must the rental be canceled
-		if (result == 0 && doAutoCancel) {
-			doCancel();
+		//Auto cancel?
+		if (result == 0) {
+			doAutoCancel("No bikes are available on this Terminal");
 		}
 		return result;
 	}
@@ -51,6 +51,15 @@ public class TerminalRentController {
 			if (ok) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CANCEL);
 			}
+		}
+	}
+
+	private void doAutoCancel(String msg) {
+		if (TerminalController.isDoAutoCancel()) {
+			if (TerminalController.isDoAlertBeforeAutoCancel()) {
+				TerminalController.getMainVue().showAlert(msg);
+			}
+			doCancel();
 		}
 	}
 }

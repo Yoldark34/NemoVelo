@@ -41,7 +41,9 @@ public class Main {
 		//Realy instanciate program
 		mainFrame = new TerminalMainFrame();
 		controller = new TerminalController(mainFrame);
-
+		TerminalController.setDoAutoCancel(true);
+		TerminalController.setDoAlertBeforeAutoCancel(true);
+		
 		mainFrame.setSize(mainFrame.getPreferredSize());
 
 		//Centering the frame

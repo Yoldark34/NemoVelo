@@ -164,4 +164,9 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 		//TODO
 		JOptionPane.showConfirmDialog(null, msg);
 	}
+
+	@Override
+	public void showAlert(String msg) {
+		JOptionPane.showMessageDialog(null, msg);
+	}
 }
