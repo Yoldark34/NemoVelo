@@ -4,24 +4,20 @@
  */
 package vue.terminal;
 
-import controller.terminal.controller.TerminalRentController;
 import controller.terminal.controller.TerminalReturnController;
 import controller.terminal.interfacesGUI.TerminalReturn;
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Valentin SEITZ
  */
-public class TerminalReturnPanel extends JPanel implements TerminalReturn {
+public class TerminalReturnPanel extends AbstractTerminalPanel implements TerminalReturn {
 
-	private JPanel panelActions;
 	private JButton btnReturn;
 
 
@@ -45,11 +41,9 @@ public class TerminalReturnPanel extends JPanel implements TerminalReturn {
 	}
 
 	private void initialize() {
-		this.setLayout(new BorderLayout());
 
-		this.panelActions = new JPanel();
-		{
-			this.panelActions.setLayout(new GridLayout(1, 1));
+		{//Actions
+			this.getPanelActions().setLayout(new GridLayout(1, 1));
 
 			this.btnReturn = new JButton("Rendre");
 			{
@@ -60,8 +54,7 @@ public class TerminalReturnPanel extends JPanel implements TerminalReturn {
 					}
 				});
 			}
-			this.panelActions.add(this.btnReturn);
+			this.getPanelActions().add(this.btnReturn);
 		}
-		this.add(this.panelActions, BorderLayout.CENTER);
 	}
 }
