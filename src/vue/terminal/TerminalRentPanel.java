@@ -6,7 +6,6 @@ package vue.terminal;
 
 import controller.terminal.controller.TerminalRentController;
 import controller.terminal.interfacesGUI.TerminalRent;
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -19,26 +18,31 @@ import java.awt.event.ItemListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import vue.common.ValidityPanel;
 
 /**
  *
  * @author Valentin SEITZ
  */
-public class TerminalRentPanel extends JPanel implements TerminalRent {
+public class TerminalRentPanel extends AbstractTerminalPanel implements TerminalRent {
 
 	//Maximal amount of bikes that can be selected
 	private static final int MAXSELECTABLE_NBBIKE = 20;
 	private static final int ROWHEIGHT = 32;
+	private static final int VERTICAL_GAP = 5;
+	private static final int HORIZONTAL_GAP = 5;
 	//Panel to manage informations
-	private JPanel panelInformations;
 	private GridBagLayout gblInformations;
+	//First line (number of bikes
 	private JLabel lblNbBikes;
 	private JComboBox cboNbBikes;
 	private ValidityPanel panelNbBikesValid;
+	//Second line (duration)
+	private JLabel lblDuration;
+	private JComboBox cboDuration;
+	private JComboBox cboDurationUnit;
+	private ValidityPanel panelDurationValid;
 	//Panel to fire actions
-	private JPanel panelActions;
 	private JButton btnRent;
 
 	public TerminalRentPanel(LayoutManager lm, boolean bln) {
@@ -63,82 +67,138 @@ public class TerminalRentPanel extends JPanel implements TerminalRent {
 	private void initialize() {
 		GridBagConstraints gbc;
 
-		this.setLayout(new BorderLayout());
-
-		this.panelInformations = new JPanel();
-		{
+		{//Contenu
 			this.gblInformations = new GridBagLayout();
 			{
-				this.gblInformations.columnWidths = new int[]{0, 0, ROWHEIGHT, 0};
-				this.gblInformations.rowHeights = new int[]{ROWHEIGHT, 0};
-				this.gblInformations.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-				this.gblInformations.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+				this.gblInformations.columnWidths = new int[]{0, 0, 0, ROWHEIGHT, 0};
+				this.gblInformations.rowHeights = new int[]{ROWHEIGHT, ROWHEIGHT, 0};
+				this.gblInformations.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+				this.gblInformations.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 			}
-			this.panelInformations.setLayout(this.gblInformations);
+			this.getPanelContent().setLayout(this.gblInformations);
 
-			//Nb selector
-			this.cboNbBikes = new JComboBox();
-			{
-				for (int i = 0; i <= MAXSELECTABLE_NBBIKE; i++) {
-					this.cboNbBikes.addItem(new Integer(i));
-				}
+			{//First line
+				//Nb selector of bikes
+				this.cboNbBikes = new JComboBox();
 				{
-					this.cboNbBikes.addItemListener(new ItemListener() {
-						@Override
-						public void itemStateChanged(ItemEvent ie) {
-							if (cboNbBikes.getSelectedIndex() == -1) {
-								panelNbBikesValid.setValid(ValidityPanel.NONE);
-							} else {
-								if (TerminalRentController.getTerminalRentController()
-										.getBikesAreAvailable(
-										((Integer) (cboNbBikes.getSelectedItem())).intValue())) {
-									panelNbBikesValid.setValid(ValidityPanel.VALID);
+					for (int i = 1; i <= MAXSELECTABLE_NBBIKE; i++) {
+						this.cboNbBikes.addItem(new Integer(i));
+					}
+					{
+						this.cboNbBikes.addItemListener(new ItemListener() {
+							@Override
+							public void itemStateChanged(ItemEvent ie) {
+								if (cboNbBikes.getSelectedIndex() == -1) {
+									panelNbBikesValid.setValid(ValidityPanel.NONE);
 								} else {
-									panelNbBikesValid.setValid(ValidityPanel.INVALID);
+									if (TerminalRentController.getTerminalRentController()
+											.getBikesAreAvailable(
+											((Integer) (cboNbBikes.getSelectedItem())).intValue())) {
+										panelNbBikesValid.setValid(ValidityPanel.VALID);
+									} else {
+										panelNbBikesValid.setValid(ValidityPanel.INVALID);
+									}
 								}
+								panelNbBikesValid.repaint();
 							}
-							panelNbBikesValid.repaint();
-						}
-					});
+						});
+					}
+					{
+						gbc = new GridBagConstraints();
+						gbc.insets = new Insets(0, 0, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.fill = GridBagConstraints.BOTH;
+						gbc.gridwidth = 2;
+						gbc.gridx = 1;
+						gbc.gridy = 0;
+					}
 				}
+				this.getPanelContent().add(this.cboNbBikes, gbc);
+				//Label for nb bikes
+				this.lblNbBikes = new JLabel("Nombre de vélos");
+				{
+					this.lblNbBikes.setLabelFor(this.cboNbBikes);
+					{
+						gbc = new GridBagConstraints();
+						gbc.fill = GridBagConstraints.VERTICAL;
+						gbc.insets = new Insets(0, HORIZONTAL_GAP, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.anchor = GridBagConstraints.EAST;
+						gbc.gridx = 0;
+						gbc.gridy = 0;
+					}
+				}
+				this.getPanelContent().add(this.lblNbBikes, gbc);
+				//Validity for nb bikes
+				this.panelNbBikesValid = new ValidityPanel();
 				{
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 0, 5);
 					gbc.fill = GridBagConstraints.BOTH;
-					gbc.gridx = 1;
+					gbc.insets = new Insets(0, 0, VERTICAL_GAP, 0);
+					gbc.gridx = 3;
 					gbc.gridy = 0;
 				}
-			}
-			this.panelInformations.add(this.cboNbBikes, gbc);
-			//Label
-			this.lblNbBikes = new JLabel("Nombre de vélos");
-			{
-				this.lblNbBikes.setLabelFor(this.cboNbBikes);
+				this.getPanelContent().add(this.panelNbBikesValid, gbc);
+			}//First line
+
+			{//Second line
+				//Duration selector
+				this.cboDuration = new JComboBox();
+				{
+					{
+						//TODO : Add model / listener
+					}
+					{
+						gbc = new GridBagConstraints();
+						gbc.insets = new Insets(0, 0, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.fill = GridBagConstraints.BOTH;
+						gbc.gridx = 1;
+						gbc.gridy = 1;
+					}
+				}
+				this.getPanelContent().add(this.cboDuration, gbc);
+				//Duration unit selector
+				this.cboDurationUnit = new JComboBox();
+				{
+					{
+						//TODO : Add model / listener
+					}
+					{
+						gbc = new GridBagConstraints();
+						gbc.insets = new Insets(0, 0, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.fill = GridBagConstraints.BOTH;
+						gbc.gridx = 2;
+						gbc.gridy = 1;
+					}
+				}
+				this.getPanelContent().add(this.cboDurationUnit, gbc);
+				//Label for duration selector
+				this.lblDuration = new JLabel("Durée de location");
+				{
+					this.lblDuration.setLabelFor(this.cboDuration);
+					{
+						gbc = new GridBagConstraints();
+						gbc.fill = GridBagConstraints.VERTICAL;
+						gbc.insets = new Insets(0, HORIZONTAL_GAP, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.anchor = GridBagConstraints.EAST;
+						gbc.gridx = 0;
+						gbc.gridy = 1;
+					}
+				}
+				this.getPanelContent().add(this.lblDuration, gbc);
+				//Validity for duration (and duration unit)
+				this.panelDurationValid = new ValidityPanel();
 				{
 					gbc = new GridBagConstraints();
-					gbc.fill = GridBagConstraints.VERTICAL;
-					gbc.insets = new Insets(0, 5, 0, 5);
-					gbc.anchor = GridBagConstraints.EAST;
-					gbc.gridx = 0;
-					gbc.gridy = 0;
+					gbc.fill = GridBagConstraints.BOTH;
+					gbc.insets = new Insets(0, 0, VERTICAL_GAP, 0);
+					gbc.gridx = 3;
+					gbc.gridy = 1;
 				}
-			}
-			this.panelInformations.add(this.lblNbBikes, gbc);
-			//Validity
-			this.panelNbBikesValid = new ValidityPanel();
-			{
-				gbc = new GridBagConstraints();
-				gbc.fill = GridBagConstraints.BOTH;
-				gbc.gridx = 2;
-				gbc.gridy = 0;
-			}
-			this.panelInformations.add(this.panelNbBikesValid, gbc);
+				this.getPanelContent().add(this.panelDurationValid, gbc);
+			}//Second line
 		}
-		this.add(this.panelInformations, BorderLayout.NORTH);
 
-		this.panelActions = new JPanel();
-		{
-			this.panelActions.setLayout(new GridLayout(1, 1));
+		{//Actions
+			this.getPanelActions().setLayout(new GridLayout(1, 1));
 
 			this.btnRent = new JButton("Louer");
 			{
@@ -149,9 +209,8 @@ public class TerminalRentPanel extends JPanel implements TerminalRent {
 					}
 				});
 			}
-			this.panelActions.add(this.btnRent);
+			this.getPanelActions().add(this.btnRent);
 			//TODO : Add Sign in button
 		}
-		this.add(this.panelActions, BorderLayout.CENTER);
 	}
 }
