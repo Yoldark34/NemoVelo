@@ -6,6 +6,21 @@ package model.database;
  */
 public class DataBaseElements {
 
+	public static final String ALIAS_BIKE = "b";
+	public static final String ALIAS_BIKEUSAGE = "bu";
+	public static final String ALIAS_BIKEUSAGETYPE = "but";
+	public static final String ALIAS_CONTACT = "c";
+	public static final String ALIAS_NEMOUSER = "nu";
+	public static final String ALIAS_NEMOUSERTYPE = "nut";
+	public static final String ALIAS_PAYMENT = "p";
+	public static final String ALIAS_PRICE = "pr";
+	public static final String ALIAS_STOCK = "s";
+	public static final String ALIAS_STORAGE = "st";
+	public static final String ALIAS_STORAGETYPE = "stt";
+	public static final String ALIAS_SUBSCRIPTION = "su";
+	public static final String ALIAS_TERMINAL = "t";
+	public static final String ALIAS_USAGEPOSSIBILITY = "up";
+	public static final String ALIAS_USERTYPE = "ut";
 	public static final String BIKE = "bike";
 	public static final String BIKE_ID = "id";
 	public static final String BIKEUSAGE = "bike_usage";
