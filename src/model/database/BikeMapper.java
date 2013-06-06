@@ -22,6 +22,27 @@ public class BikeMapper extends AbstractMapper {
 		return (ArrayList<Bike>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(Bike bike) {
+		int nbRows = 0;
+		String query = "";
+		if (bike.getId() != -1) {
+			//Update do not exist for now because Bike have only one field.
+		} else {
+			query = "INSERT INTO " + DataBaseElements.BIKE + " (";
+			//query += "`" + DataBaseElements.BIKE_ID + "`, `";
+			query += ") VALUES (";
+			//query += "'" + bike.getId() + "'";//Autoincrement
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Bike obj = new Bike();

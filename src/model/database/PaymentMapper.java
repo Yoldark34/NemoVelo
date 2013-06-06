@@ -22,6 +22,52 @@ public class PaymentMapper extends AbstractMapper {
 		return (ArrayList<Payment>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(Payment payment) {
+		int nbRows = 0;
+		String query = "";
+		if (payment.getId() != -1) {
+			query = "UPDATE `" + DataBaseElements.PAYMENT + "` SET ";
+			//query += "`"+DataBaseElements.PAYMENT_ID+"` = '"+payment.getId()+"',";Can't be updated because used in where
+			query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "` = '" + payment.getIdSubscription() + "',";
+			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "` = '" + payment.getAmount() + "',";
+			if (payment.getPaymentDate() == null) {
+				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = " + payment.getPaymentDate() + ",";
+			} else {
+				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = '" + payment.getPaymentDate() + "',";
+			}
+			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` = '" + payment.isValidated() + "' ";
+
+			query += "WHERE `" + DataBaseElements.PAYMENT_ID + "` = '" + payment.getId() + "';";
+		} else {
+			query = "INSERT INTO " + DataBaseElements.PAYMENT + " (";
+			//query +=  "`" + DataBaseElements.PAYMENT_ID + "`,";
+			query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "`,";
+			query += "`" + DataBaseElements.PAYMENT_AMOUNT + " `,";
+			query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "`,";
+			query += "`" + DataBaseElements.PAYMENT_VALIDATED + " ` ";
+
+			query += ") VALUES (";
+			//query += "'" + payment.getId() + "',";
+			query += "'" + payment.getIdSubscription() + "',";
+			query += "'" + payment.getAmount() + "',";
+			if (payment.getPaymentDate() == null) {
+				query += payment.getPaymentDate() + ",";
+			} else {
+				query += "'" + payment.getPaymentDate() + "',";
+			}
+			query += "'" + payment.isValidated() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Payment obj = new Payment();

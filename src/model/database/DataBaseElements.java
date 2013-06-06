@@ -90,7 +90,7 @@ public class DataBaseElements {
 	public static final String USAGEPOSSIBILITY_IDGUARANTEE = "id_guarantee";
 	public static final String USERTYPE = "user_type";
 	public static final String USERTYPE_ID = "id";
-	public static final String USERTYPE_IDPARENT = "id_parent_user_type";
+	public static final String USERTYPE_IDPARENTUSERTYPE = "id_parent_user_type";
 	public static final String USERTYPE_CODE = "code";
 	public static final String USERTYPE_NAME = "name";
 	public static final String USERTYPE_DESCRIPTION = "description";

@@ -22,6 +22,41 @@ public class StorageTypeMapper extends AbstractMapper {
 		return (ArrayList<StorageType>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(StorageType storageType) {
+		int nbRows = 0;
+		String query = "";
+		if (storageType.getId() != -1) {
+			query = "UPDATE `" + DataBaseElements.STORAGETYPE + "` SET ";
+			//query += "`"+DataBaseElements.STORAGETYPE_ID+"` = '"+storageType.getId()+"',";Can't be updated because used in where
+			query += "`" + DataBaseElements.STORAGETYPE_CODE + "` = '" + storageType.getCode() + "',";
+			query += "`" + DataBaseElements.STORAGETYPE_NAME + "` = '" + storageType.getName() + "',";
+			query += "`" + DataBaseElements.STORAGETYPE_DESCRIPTION + "` = '" + storageType.getDescription() + "' ";
+
+			query += "WHERE `" + DataBaseElements.STORAGETYPE_ID + "` = '" + storageType.getId() + "';";
+		} else {
+			query = "INSERT INTO " + DataBaseElements.STORAGETYPE + " (";
+			//query +=  "`" + DataBaseElements.STORAGETYPE_ID + "`,";
+			query += "`" + DataBaseElements.STORAGETYPE_CODE + "`,";
+			query += "`" + DataBaseElements.STORAGETYPE_NAME + "`,";
+			query += "`" + DataBaseElements.STORAGETYPE_DESCRIPTION + "` ";
+
+			query += ") VALUES (";
+			//query += "'" + storageType.getId() + "',";
+			query += "'" + storageType.getCode() + "',";
+			query += "'" + storageType.getName() + "',";
+			query += "'" + storageType.getDescription() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		StorageType obj = new StorageType();

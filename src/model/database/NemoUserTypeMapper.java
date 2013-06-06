@@ -22,6 +22,38 @@ public class NemoUserTypeMapper extends AbstractMapper {
 		return (ArrayList<NemoUserType>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(NemoUserType nemoUserType, boolean updateMode, boolean updateIdUser) {
+		int nbRows = 0;
+		String query = "";
+		if (updateMode && nemoUserType.getIdUser() != -1 && nemoUserType.getIdUserType() != -1) {
+			query = "UPDATE `" + DataBaseElements.NEMOUSERTYPE + "` SET ";
+			query += "`" + DataBaseElements.NEMOUSERTYPE_IDUSER + "` = '" + nemoUserType.getIdUser()+ "',";
+			query += "`" + DataBaseElements.NEMOUSERTYPE_IDUSERTYPE + "` = '" + nemoUserType.getIdUserType()+ "'";
+
+			if (updateIdUser) {
+				query += "WHERE `" + DataBaseElements.NEMOUSERTYPE_IDUSER + "` = '" + nemoUserType.getIdUser() + "';";
+			} else {
+				query += "WHERE `" + DataBaseElements.NEMOUSERTYPE_IDUSERTYPE + "` = '" + nemoUserType.getIdUserType() + "';";
+			}
+		} else if (!updateMode && nemoUserType.getIdUser() != -1 && nemoUserType.getIdUserType() != -1) {
+			query = "INSERT INTO " + DataBaseElements.NEMOUSERTYPE + " (";
+			query += "`" + DataBaseElements.NEMOUSERTYPE_IDUSER + "`,";
+			query += "`" + DataBaseElements.NEMOUSERTYPE_IDUSERTYPE + " ` ";
+			query += ") VALUES (";
+			query += "'" + nemoUserType.getIdUser() + "',";
+			query += "'" + nemoUserType.getIdUserType() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		NemoUserType obj = new NemoUserType();

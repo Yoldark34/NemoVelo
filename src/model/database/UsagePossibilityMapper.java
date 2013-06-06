@@ -22,6 +22,49 @@ public class UsagePossibilityMapper extends AbstractMapper {
 		return (ArrayList<UsagePossibility>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(UsagePossibility usagePossibility, boolean updateMode) {
+		int nbRows = 0;
+		String query = "";
+		if (updateMode && usagePossibility.getIdBikeUsageType() != -1 && usagePossibility.getIdUserType() != -1 && usagePossibility.getIdStorageType() != -1) {
+			query = "UPDATE `" + DataBaseElements.USAGEPOSSIBILITY + "` SET ";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDRENT + "` = '" + usagePossibility.getIdRent() + "',";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDGUARANTEE + "` = '" + usagePossibility.getIdGuarantee() + "' ";
+
+			query += "WHERE ";
+			query += "(";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDBIKEUSAGETYPE + "` = '" + usagePossibility.getIdBikeUsageType() + "'";
+			query += " AND ";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDUSERTYPE + "` = '" + usagePossibility.getIdUserType() + "'";
+			query += " AND ";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDSTORAGETYPE + "` = '" + usagePossibility.getIdStorageType() + "'";
+			query += ")";
+			query += ";";
+		} else if (!updateMode && usagePossibility.getIdBikeUsageType() != -1 && usagePossibility.getIdUserType() != -1 && usagePossibility.getIdStorageType() != -1) {
+			query = "INSERT INTO " + DataBaseElements.USAGEPOSSIBILITY + " (";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDBIKEUSAGETYPE + "`,";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDUSERTYPE + "`,";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDSTORAGETYPE + "`,";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDRENT + "`,";
+			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDGUARANTEE + "` ";
+
+			query += ") VALUES (";
+			query += "'" + usagePossibility.getIdBikeUsageType() + "',";
+			query += "'" + usagePossibility.getIdUserType() + "',";
+			query += "'" + usagePossibility.getIdStorageType() + "',";
+			query += "'" + usagePossibility.getIdRent() + "',";
+			query += "'" + usagePossibility.getIdGuarantee() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		UsagePossibility obj = new UsagePossibility();

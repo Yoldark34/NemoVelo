@@ -22,6 +22,40 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 		return (ArrayList<BikeUsageType>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(BikeUsageType bikeUsageType) {
+		int nbRows = 0;
+		String query = "";
+		if (bikeUsageType.getId() != -1) {
+			query = "UPDATE `" + DataBaseElements.BIKEUSAGETYPE + "` SET ";
+			//query += "`"+DataBaseElements.BIKEUSAGETYPE_ID+"` = '"+bikeUsageType.getId()+"',";Can't be updated because used in where
+			query += "`" + DataBaseElements.BIKEUSAGETYPE_IDPARENT + "` = '" + bikeUsageType.getId_parent_bike_usage_type() + "',";
+			query += "`" + DataBaseElements.BIKEUSAGETYPE_NAME + "` = '" + bikeUsageType.getName() + "',";
+			query += "`" + DataBaseElements.BIKEUSAGETYPE_DESCRIPTION + "` = '" + bikeUsageType.getDescription() + "' ";
+
+			query += "WHERE `" + DataBaseElements.BIKEUSAGETYPE_ID + "` = '" + bikeUsageType.getId() + "';";
+		} else {
+			query = "INSERT INTO " + DataBaseElements.BIKEUSAGETYPE + " (";
+			//query +=  "`" + DataBaseElements.BIKEUSAGETYPE_ID + "`,";
+			query += "`" + DataBaseElements.BIKEUSAGETYPE_IDPARENT + "`,";
+			query += "`" + DataBaseElements.BIKEUSAGETYPE_NAME + " `,";
+			query += "`" + DataBaseElements.BIKEUSAGETYPE_DESCRIPTION + "` ";
+			query += ") VALUES (";
+			//query += "'" + bikeUsageType.getId() + "',";
+			query += "'" + bikeUsageType.getId_parent_bike_usage_type() + "',";
+			query += "'" + bikeUsageType.getName() + "',";
+			query += "'" + bikeUsageType.getDescription() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		BikeUsageType obj = new BikeUsageType();

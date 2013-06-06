@@ -22,6 +22,38 @@ public class StorageMapper extends AbstractMapper {
 		return (ArrayList<Storage>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(Storage storage) {
+		int nbRows = 0;
+		String query = "";
+		if (storage.getId() != -1) {
+			query = "UPDATE `" + DataBaseElements.STORAGE + "` SET ";
+			//query += "`" + DataBaseElements.STORAGE_ID +"` = '"+storage.getId() + "',";Can't be updated because used in where
+			query += "`" + DataBaseElements.STORAGE_IDSTOCK + "` = '" + storage.getIdStock() + "',";
+			query += "`" + DataBaseElements.STORAGE_IDSTORAGETYPE + "` = '" + storage.getIdStorageType() + "' ";
+
+			query += "WHERE `" + DataBaseElements.STORAGE_ID + "` = '" + storage.getId() + "';";
+		} else {
+			query = "INSERT INTO " + DataBaseElements.STORAGE + " (";
+			//query +=  "`" + DataBaseElements.STORAGE_ID + "`,";
+			query += "`" + DataBaseElements.STORAGE_IDSTOCK + "`,";
+			query += "`" + DataBaseElements.STORAGE_IDSTORAGETYPE + "` ";
+
+			query += ") VALUES (";
+			//query += "'" + storage.getId() + "',";
+			query += "'" + storage.getIdStock() + "',";
+			query += "'" + storage.getIdStorageType() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Storage obj = new Storage();

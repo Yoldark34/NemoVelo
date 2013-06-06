@@ -15,7 +15,7 @@ import resource.log.ProjectLogger;
  */
 public class BikeUsage {
 
-	private int id;
+	private int id = -1;
 	private int idNemoUser;
 	private int idBikeUsageType;
 	private int idBike;

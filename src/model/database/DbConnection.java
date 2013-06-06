@@ -62,6 +62,31 @@ public class DbConnection {
 		return resultat;
 	}
 
+	public int executeUpdateQuery(String update) {
+		/* Connexion à la base de données */
+		boolean resultat;
+		String url = Configuration.getParam(Configuration.CONFIGSECTION_DB, Configuration.CONFIGPARAM_DB_URL);
+		String utilisateur = Configuration.getParam(Configuration.CONFIGSECTION_DB, Configuration.CONFIGPARAM_DB_USER);
+		String motDePasse = Configuration.getParam(Configuration.CONFIGSECTION_DB, Configuration.CONFIGPARAM_DB_PASSWORD);
+
+		resultat = (url != null && utilisateur != null && motDePasse != null);
+		if (resultat) {
+			try {
+				this.connection = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
+				Statement statement = this.connection.createStatement();
+				int nbRows = statement.executeUpdate(update);
+				this.closeConnection();
+				return nbRows;
+			} catch (SQLException e) {
+				this.connection = null;
+				this.results = null;
+				ProjectLogger.log(new DbConnection(), Level.WARNING,
+						String.format("Erreur d'exécution de la requête '%1$s'", update), e);
+			}
+		}
+		return -1;
+	}
+
 	public boolean closeConnection() {
 		if (this.connection != null) {
 			try {

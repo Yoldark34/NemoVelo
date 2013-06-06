@@ -22,6 +22,47 @@ public class StockMapper extends AbstractMapper {
 		return (ArrayList<Stock>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(Stock stock) {
+		int nbRows = 0;
+		String query = "";
+		if (stock.getId() != -1) {
+			query = "UPDATE `" + DataBaseElements.STOCK + "` SET ";
+			//query += "`"+DataBaseElements.STOCK_ID+"` = '"+stock.getId()+"',";Can't be updated because used in where
+			query += "`" + DataBaseElements.STOCK_CODE + "` = '" + stock.getCode() + "',";
+			query += "`" + DataBaseElements.STOCK_NAME + "` = '" + stock.getName() + "',";
+			query += "`" + DataBaseElements.STOCK_DESCRIPTION + "` = '" + stock.getDescription() + "',";
+			query += "`" + DataBaseElements.STOCK_LATITUDE + "` = '" + stock.getLatitude() + "',";
+			query += "`" + DataBaseElements.STOCK_LONGITUDE + "` = '" + stock.getLongitude() + "' ";
+
+			query += "WHERE `" + DataBaseElements.STOCK_ID + "` = '" + stock.getId() + "';";
+		} else {
+			query = "INSERT INTO " + DataBaseElements.STOCK + " (";
+			//query +=  "`" + DataBaseElements.STOCK_ID + "`,";
+			query += "`" + DataBaseElements.STOCK_CODE + "`,";
+			query += "`" + DataBaseElements.STOCK_NAME + "`,";
+			query += "`" + DataBaseElements.STOCK_DESCRIPTION + "`,";
+			query += "`" + DataBaseElements.STOCK_LATITUDE + "`,";
+			query += "`" + DataBaseElements.STOCK_LONGITUDE + "` ";
+
+			query += ") VALUES (";
+			//query += "'" + stock.getId() + "',";
+			query += "'" + stock.getCode() + "',";
+			query += "'" + stock.getName() + "',";
+			query += "'" + stock.getDescription() + "',";
+			query += "'" + stock.getLatitude() + "',";
+			query += "'" + stock.getLongitude() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Stock obj = new Stock();

@@ -22,6 +22,63 @@ public class SubscriptionMapper extends AbstractMapper {
 		return (ArrayList<Subscription>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(Subscription subscription) {
+		int nbRows = 0;
+		String query = "";
+		if (subscription.getId() != -1) {
+			query = "UPDATE `" + DataBaseElements.SUBSCRIPTION + "` SET ";
+			//query += "`"+DataBaseElements.SUBSCRIPTION_ID+"` = '"+subscription.getId()+"',";Can't be updated because used in where
+			query += "`" + DataBaseElements.SUBSCRIPTION_IDPRICE + "` = '" + subscription.getIdPrice() + "',";
+			query += "`" + DataBaseElements.SUBSCRIPTION_IDNEMOUSER + "` = '" + subscription.getIdNemoUser() + "',";
+			query += "`" + DataBaseElements.SUBSCRIPTION_AMOUNT + "` = '" + subscription.getAmount() + "',";
+			if (subscription.getStartDate() == null) {
+				query += "`" + DataBaseElements.SUBSCRIPTION_STARTDATE + "` = " + subscription.getStartDate() + ",";
+			} else {
+				query += "`" + DataBaseElements.SUBSCRIPTION_STARTDATE + "` = '" + subscription.getStartDate() + "',";
+			}
+			if (subscription.getEndDate() == null) {
+				query += "`" + DataBaseElements.SUBSCRIPTION_ENDDATE + "` = " + subscription.getEndDate() + " ";
+			} else {
+				query += "`" + DataBaseElements.SUBSCRIPTION_ENDDATE + "` = '" + subscription.getEndDate() + "' ";
+			}
+
+			query += "WHERE `" + DataBaseElements.SUBSCRIPTION_ID + "` = '" + subscription.getId() + "';";
+		} else {
+			query = "INSERT INTO " + DataBaseElements.SUBSCRIPTION + " (";
+			//query +=  "`" + DataBaseElements.SUBSCRIPTION_ID + "`,";
+			query += "`" + DataBaseElements.SUBSCRIPTION_IDPRICE + "`,";
+			query += "`" + DataBaseElements.SUBSCRIPTION_IDNEMOUSER + "`,";
+			query += "`" + DataBaseElements.SUBSCRIPTION_AMOUNT + "`,";
+			query += "`" + DataBaseElements.SUBSCRIPTION_STARTDATE + "`,";
+			query += "`" + DataBaseElements.SUBSCRIPTION_ENDDATE + "` ";
+
+			query += ") VALUES (";
+			//query += "'" + subscription.getId() + "',";
+			query += "'" + subscription.getIdPrice() + "',";
+			query += "'" + subscription.getIdNemoUser() + "',";
+			query += "'" + subscription.getAmount() + "',";
+			if (subscription.getStartDate() == null) {
+				query += subscription.getStartDate() + ",";
+			} else {
+				query += "'" + subscription.getStartDate() + "',";
+			}
+			if (subscription.getEndDate() == null) {
+				query += subscription.getEndDate() + " ";
+			} else {
+				query += "'" + subscription.getEndDate() + "' ";
+			}
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Subscription obj = new Subscription();

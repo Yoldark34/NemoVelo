@@ -10,7 +10,7 @@ package model.object;
  */
 public class Bike {
 
-	private int id;
+	private int id = -1;
 
 	public int getId() {
 		return id;

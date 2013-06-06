@@ -22,6 +22,38 @@ public class TerminalMapper extends AbstractMapper {
 		return (ArrayList<Terminal>) adapter.getModelsFromRequest(this);
 	}
 
+	public int save(Terminal terminal) {
+		int nbRows = 0;
+		String query = "";
+		if (terminal.getId() != -1) {
+			query = "UPDATE `" + DataBaseElements.TERMINAL + "` SET ";
+			//query += "`"+DataBaseElements.TERMINAL_ID+"` = '"+terminal.getId()+"',";Can't be updated because used in where
+			query += "`" + DataBaseElements.TERMINAL_IDSTOCK + "` = '" + terminal.getIdStock() + "',";
+			query += "`" + DataBaseElements.TERMINAL_IP + "` = '" + terminal.getIp() + "' ";
+
+			query += "WHERE `" + DataBaseElements.TERMINAL_ID + "` = '" + terminal.getId() + "';";
+		} else {
+			query = "INSERT INTO " + DataBaseElements.TERMINAL + " (";
+			//query +=  "`" + DataBaseElements.TERMINAL_ID + "`,";
+			query += "`" + DataBaseElements.TERMINAL_IDSTOCK + "`,";
+			query += "`" + DataBaseElements.TERMINAL_IP + "` ";
+
+			query += ") VALUES (";
+			//query += "'" + terminal.getId() + "',";
+			query += "'" + terminal.getIdStock() + "',";
+			query += "'" + terminal.getIp() + "' ";
+
+			query += ")";
+		}
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+		return nbRows;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Terminal obj = new Terminal();
