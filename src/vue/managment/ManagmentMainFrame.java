@@ -15,7 +15,7 @@ import vue.common.NemoUserPanel;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public class ManagmentMainFrame extends JFrame implements ManagmentMainVue {
 

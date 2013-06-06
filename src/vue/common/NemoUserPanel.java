@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public class NemoUserPanel extends JPanel implements NemoUserVue {
 

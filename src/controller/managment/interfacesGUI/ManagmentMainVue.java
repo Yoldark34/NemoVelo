@@ -9,7 +9,7 @@ import controller.common.interfacesGUI.NemoUserVue;
 
 /**
  *
- * @author valentin.seitz
+ * @author Valentin SEITZ
  */
 public interface ManagmentMainVue {
 
