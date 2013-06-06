@@ -4,6 +4,9 @@
  */
 package controller.terminal.controller;
 
+import model.database.BikeMapper;
+import model.object.Terminal;
+
 /**
  *
  * @author Valentin SEITZ
@@ -26,6 +29,9 @@ public class TerminalRentController {
 	 */
 	public int getMaxAvailableBikes() {
 		int result = 0;
+		Terminal terminal = TerminalController.getTerminal();
+		BikeMapper bikeMapper = new BikeMapper();
+		result = bikeMapper.getAvailableBikesForThisTerminal(terminal.getId());
 		//TODO
 		//Auto cancel?
 		if (result == 0) {
