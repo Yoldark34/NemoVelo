@@ -8,6 +8,9 @@ import model.object.Bike;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -43,12 +46,43 @@ public class BikeMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	public int getAvailableBikesForThisTerminal(int terminalId) {
+		String query;
+		Bike result = new Bike();
+
+		query = "SELECT ";
+		query += "count( * ) AS 'numberOfBikes'";
+		query += "FROM ";
+		query += DataBaseElements.TERMINAL + " " + DataBaseElements.ALIAS_TERMINAL + ", ";
+		query += DataBaseElements.STOCK + " " + DataBaseElements.ALIAS_STOCK + ", ";
+		query += DataBaseElements.STORAGE + " " + DataBaseElements.ALIAS_STORAGE + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + " ";
+		query += "WHERE ";
+		query += DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID + " = " + DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_IDSTOCK;
+		query += "AND ";
+		query += DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDENDSTORAGE;
+		query += "AND ";
+		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (Bike) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+		return result.getNumberOfBikes();
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Bike obj = new Bike();
 		if (this.hasColumn(DataBaseElements.BIKE_ID, row)) {
 			obj.setId(row.getInt(DataBaseElements.BIKE_ID));
-		 }
+		}
+		if (this.hasColumn("numberOfBikes", row)) {
+			obj.setNumberOfBikes(row.getInt("numberOfBikes"));
+		}
 		return obj;
 	}
 }

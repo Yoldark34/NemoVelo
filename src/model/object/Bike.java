@@ -11,6 +11,7 @@ package model.object;
 public class Bike {
 
 	private int id = -1;
+	private int numberOfBikes = -1;
 
 	public int getId() {
 		return id;
@@ -18,5 +19,13 @@ public class Bike {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getNumberOfBikes() {
+		return numberOfBikes;
+	}
+
+	public void setNumberOfBikes(int numberOfBikes) {
+		this.numberOfBikes = numberOfBikes;
 	}
 }

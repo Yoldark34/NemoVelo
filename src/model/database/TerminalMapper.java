@@ -8,6 +8,9 @@ import model.object.Terminal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -68,5 +71,18 @@ public class TerminalMapper extends AbstractMapper {
 		}
 
 		return obj;
+	}
+
+	public Terminal getTerminal(int numero) {
+		DbConnection adapter = DbConnection.getDbConnection();
+		Terminal myTerminal = null;
+		adapter.executeSelectQuery("Select * from " + DataBaseElements.TERMINAL + " WHERE " + DataBaseElements.TERMINAL_ID + " = " + numero);
+		try {
+			myTerminal = (Terminal) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getTerminal", ex);
+		}
+
+		return myTerminal;
 	}
 }

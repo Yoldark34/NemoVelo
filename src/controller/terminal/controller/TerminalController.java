@@ -5,6 +5,8 @@
 package controller.terminal.controller;
 
 import controller.terminal.interfacesGUI.TerminalMainVue;
+import model.database.TerminalMapper;
+import model.object.Terminal;
 
 /**
  *
@@ -13,9 +15,14 @@ import controller.terminal.interfacesGUI.TerminalMainVue;
 public class TerminalController {
 
 	private static TerminalMainVue mainVue;
+	private static Terminal terminal;
 
 	public static TerminalMainVue getMainVue() {
 		return TerminalController.mainVue;
+	}
+
+	public static Terminal getTerminal() {
+		return TerminalController.terminal;
 	}
 
 	private static void setMainVue(TerminalMainVue mainVue) {
@@ -23,6 +30,8 @@ public class TerminalController {
 	}
 
 	public TerminalController(TerminalMainVue mainVue) {
+		TerminalMapper terminalMapper = new TerminalMapper();
+		terminal = terminalMapper.getTerminal(1);
 		setMainVue(mainVue);
 		mainVue.displayTerminalWelcome();
 	}
