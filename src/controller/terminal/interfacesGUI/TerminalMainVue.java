@@ -34,5 +34,7 @@ public interface TerminalMainVue {
 	public void displayTerminalReturnSummary();
 
 	//Other possibilities
+	public void showAlert(String msg);
+
 	public void showError(String msg);
 }

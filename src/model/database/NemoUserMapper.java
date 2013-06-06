@@ -24,7 +24,7 @@ public class NemoUserMapper extends AbstractMapper {
 
 	public int save(NemoUser nemoUser) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (nemoUser.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.NEMOUSER + "` SET ";
 			//query += "`"+DataBaseElements.NEMOUSER_ID+"` = '"+nemoUser.getId()+"',";Can't be updated because used in where

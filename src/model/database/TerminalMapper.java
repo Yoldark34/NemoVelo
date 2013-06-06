@@ -27,7 +27,7 @@ public class TerminalMapper extends AbstractMapper {
 
 	public int save(Terminal terminal) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (terminal.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.TERMINAL + "` SET ";
 			//query += "`"+DataBaseElements.TERMINAL_ID+"` = '"+terminal.getId()+"',";Can't be updated because used in where

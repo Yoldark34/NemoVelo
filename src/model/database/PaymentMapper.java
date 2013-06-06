@@ -24,7 +24,7 @@ public class PaymentMapper extends AbstractMapper {
 
 	public int save(Payment payment) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (payment.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.PAYMENT + "` SET ";
 			//query += "`"+DataBaseElements.PAYMENT_ID+"` = '"+payment.getId()+"',";Can't be updated because used in where

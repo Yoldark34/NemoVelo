@@ -24,7 +24,7 @@ public class PriceMapper extends AbstractMapper {
 
 	public int save(Price price) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (price.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.PRICE + "` SET ";
 			//query += "`"+DataBaseElements.PRICE_ID+"` = '"+price.getId()+"',";Can't be updated because used in where

@@ -4,7 +4,6 @@
  */
 package resource;
 
-import resource.config.Configuration;
 import java.net.URL;
 import java.util.logging.Level;
 import resource.log.ProjectLogger;

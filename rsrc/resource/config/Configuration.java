@@ -46,7 +46,7 @@ public final class Configuration {
 	 * @return The asked param, null if an error occurred, "" if not found or
 	 * not set
 	 */
-	public static final String getParam(String sectionName, String paramName) {
+	public static String getParam(String sectionName, String paramName) {
 		URL fileUrl;
 		File file;
 		DocumentBuilderFactory documentBuilderFactory;

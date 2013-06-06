@@ -24,7 +24,7 @@ public class UserTypeMapper extends AbstractMapper {
 
 	public int save(UserType userType) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (userType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.USERTYPE + "` SET ";
 			//query += "`"+DataBaseElements.USERTYPE_ID+"` = '"+userType.getId()+"',";Can't be updated because used in where

@@ -16,6 +16,24 @@ public class TerminalController {
 
 	private static TerminalMainVue mainVue;
 	private static Terminal terminal;
+	private static boolean doAutoCancel;
+	private static boolean doAlertBeforeAutoCancel;
+
+	public static void setDoAutoCancel(boolean doAutoCancel) {
+		TerminalController.doAutoCancel = doAutoCancel;
+	}
+
+	public static boolean isDoAutoCancel() {
+		return doAutoCancel;
+	}
+
+	public static void setDoAlertBeforeAutoCancel(boolean doAlertBeforeAutoCancel) {
+		TerminalController.doAlertBeforeAutoCancel = doAlertBeforeAutoCancel;
+	}
+
+	public static boolean isDoAlertBeforeAutoCancel() {
+		return doAlertBeforeAutoCancel;
+	}
 
 	public static TerminalMainVue getMainVue() {
 		return TerminalController.mainVue;

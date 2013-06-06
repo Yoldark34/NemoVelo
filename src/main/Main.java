@@ -33,19 +33,17 @@ public class Main {
 			UIManager.setLookAndFeel(
 					UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
 		}
 
 		//Realy instanciate program
 		mainFrame = new TerminalMainFrame();
 		controller = new TerminalController(mainFrame);
-
+		TerminalController.setDoAutoCancel(true);
+		TerminalController.setDoAlertBeforeAutoCancel(true);
+		
 		mainFrame.setSize(mainFrame.getPreferredSize());
 
 		//Centering the frame
