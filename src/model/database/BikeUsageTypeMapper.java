@@ -24,7 +24,7 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 
 	public int save(BikeUsageType bikeUsageType) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (bikeUsageType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.BIKEUSAGETYPE + "` SET ";
 			//query += "`"+DataBaseElements.BIKEUSAGETYPE_ID+"` = '"+bikeUsageType.getId()+"',";Can't be updated because used in where

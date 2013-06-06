@@ -24,7 +24,7 @@ public class StockMapper extends AbstractMapper {
 
 	public int save(Stock stock) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (stock.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.STOCK + "` SET ";
 			//query += "`"+DataBaseElements.STOCK_ID+"` = '"+stock.getId()+"',";Can't be updated because used in where

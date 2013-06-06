@@ -22,7 +22,7 @@ public class DbConnection {
 	private Connection connection;
 	private ResultSet results;
 
-	public static final DbConnection getDbConnection() {
+	public static DbConnection getDbConnection() {
 		if (dbConnect == null) {
 			dbConnect = new DbConnection();
 		}
@@ -100,7 +100,7 @@ public class DbConnection {
 	}
 
 	public Collection<?> getModelsFromRequest(AbstractMapper callClass) throws SQLException, ClassNotFoundException {
-		ArrayList<Object> myCol = new ArrayList<Object>();
+		ArrayList<Object> myCol = new ArrayList<>();
 		while (this.results.next()) {
 			myCol.add(callClass.populateModel(this.results));
 		}

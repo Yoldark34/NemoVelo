@@ -24,7 +24,7 @@ public class StorageMapper extends AbstractMapper {
 
 	public int save(Storage storage) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (storage.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.STORAGE + "` SET ";
 			//query += "`" + DataBaseElements.STORAGE_ID +"` = '"+storage.getId() + "',";Can't be updated because used in where

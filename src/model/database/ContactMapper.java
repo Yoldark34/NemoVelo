@@ -24,7 +24,7 @@ public class ContactMapper extends AbstractMapper {
 
 	public int save(Contact contact) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (contact.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.CONTACT + "` SET ";
 			//query += "`"+DataBaseElements.CONTACT_ID+"` = '"+contact.getId()+"',";Can't be updated because used in where

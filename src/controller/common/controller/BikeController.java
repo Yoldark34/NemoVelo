@@ -12,7 +12,7 @@ public class BikeController {
 
 	private static BikeController bikeController;
 
-	public static final BikeController getBikeController() {
+	public static BikeController getBikeController() {
 		if (BikeController.bikeController == null) {
 			BikeController.bikeController = new BikeController();
 		}

@@ -12,7 +12,7 @@ public class NemoUserController {
 
 	private static NemoUserController nemoUserController;
 
-	public static final NemoUserController getBikeController() {
+	public static NemoUserController getBikeController() {
 		if (NemoUserController.nemoUserController == null) {
 			NemoUserController.nemoUserController = new NemoUserController();
 		}

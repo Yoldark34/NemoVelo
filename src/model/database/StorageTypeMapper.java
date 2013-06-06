@@ -24,7 +24,7 @@ public class StorageTypeMapper extends AbstractMapper {
 
 	public int save(StorageType storageType) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (storageType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.STORAGETYPE + "` SET ";
 			//query += "`"+DataBaseElements.STORAGETYPE_ID+"` = '"+storageType.getId()+"',";Can't be updated because used in where

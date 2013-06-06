@@ -24,7 +24,7 @@ public class SubscriptionMapper extends AbstractMapper {
 
 	public int save(Subscription subscription) {
 		int nbRows = 0;
-		String query = "";
+		String query;
 		if (subscription.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.SUBSCRIPTION + "` SET ";
 			//query += "`"+DataBaseElements.SUBSCRIPTION_ID+"` = '"+subscription.getId()+"',";Can't be updated because used in where

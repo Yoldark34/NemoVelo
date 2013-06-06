@@ -4,7 +4,6 @@
  */
 package vue.terminal;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -28,7 +27,7 @@ public abstract class AbstractTerminalPanel extends JPanel {
 			this.panelActions = new JPanel();
 			GridBagConstraints gbc_panel = new GridBagConstraints();
 			{
-				gbc_panel.insets = new Insets(0, 0, 5, 0);
+				gbc_panel.insets = new Insets(0, 0, 0, 0);
 				gbc_panel.fill = GridBagConstraints.BOTH;
 				gbc_panel.gridx = 0;
 				gbc_panel.gridy = 1;
