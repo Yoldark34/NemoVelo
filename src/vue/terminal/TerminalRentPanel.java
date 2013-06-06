@@ -91,9 +91,8 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 								if (cboNbBikes.getSelectedIndex() == -1) {
 									panelNbBikesValid.setValid(ValidityPanel.NONE);
 								} else {
-									if (TerminalRentController.getTerminalRentController()
-											.getBikesAreAvailable(
-											((Integer) (cboNbBikes.getSelectedItem())).intValue())) {
+									if (TerminalRentController.getTerminalRentController().getMaxAvailableBikes(true)
+											>= (((Integer) (cboNbBikes.getSelectedItem())).intValue())) {
 										panelNbBikesValid.setValid(ValidityPanel.VALID);
 									} else {
 										panelNbBikesValid.setValid(ValidityPanel.INVALID);

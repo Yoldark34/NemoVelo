@@ -20,14 +20,17 @@ public class TerminalRentController {
 	}
 
 	/**
-	 * Allows to know if a quantity of bikes are available
+	 * Allows to know the maximal amount of bikes available to rent
 	 *
-	 * @param quantity
-	 * @return true if asked quantity of bikes available, else false
+	 * @return quantity of available bikes
 	 */
-	public boolean getBikesAreAvailable(int quantity) {
-		boolean result = false;
+	public int getMaxAvailableBikes(boolean doAutoCancel) {
+		int result = 0;
 		//TODO
+		//Must the rental be canceled
+		if (result == 0 && doAutoCancel) {
+			doCancel();
+		}
 		return result;
 	}
 
@@ -37,6 +40,16 @@ public class TerminalRentController {
 			//TODO : Implement Payment
 			if (ok) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);
+			}
+		}
+	}
+
+	private void doCancel() {
+		boolean ok = true;
+		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_CANCEL)) {
+			//TODO : Implement Cancel
+			if (ok) {
+				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CANCEL);
 			}
 		}
 	}
