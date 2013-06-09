@@ -5,6 +5,9 @@
 package controller.terminal.controller;
 
 import model.database.BikeMapper;
+import model.database.BikeUsageMapper;
+import model.database.BikeUsageTypeMapper;
+import model.object.Bike;
 import model.object.Terminal;
 
 /**
@@ -14,6 +17,9 @@ import model.object.Terminal;
 public class TerminalRentController {
 
 	private static TerminalRentController terminalRentController;
+	private BikeMapper bikeMapper = new BikeMapper();
+	private BikeUsageMapper bikeUsageMapper = new BikeUsageMapper();
+	private Terminal terminal = TerminalController.getTerminal();
 
 	public static TerminalRentController getTerminalRentController() {
 		if (terminalRentController == null) {
@@ -29,10 +35,7 @@ public class TerminalRentController {
 	 */
 	public int getMaxAvailableBikes() {
 		int result = 0;
-		Terminal terminal = TerminalController.getTerminal();
-		BikeMapper bikeMapper = new BikeMapper();
-		result = bikeMapper.getAvailableBikesForThisTerminal(terminal.getId());
-		//TODO
+		result = this.bikeMapper.getAvailableBikesForThisTerminal(this.terminal.getId());
 		//Auto cancel?
 		if (result == 0) {
 			doAutoCancel("No bikes are available on this Terminal");
@@ -43,6 +46,8 @@ public class TerminalRentController {
 	public void doRent() {
 		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
+			//TODO send number of bikes in second argument.
+			boolean test = this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), 1);
 			//TODO : Implement Payment
 			if (ok) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);

@@ -139,6 +139,12 @@ public class DataBaseElements {
 		public static final String MONTH = "month";
 	}
 
+	public class BikeUsageType {
+
+		public static final String STOCKAGE = "Stockage";
+		public static final String BOOKING = "Réservation";
+	}
+
 	public class PriceTypeCode {
 		public static final String GUARANTEE = "guarantee";
 		public static final String RENT = "rent";

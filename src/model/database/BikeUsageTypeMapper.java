@@ -8,6 +8,9 @@ import model.object.BikeUsageType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import model.object.Bike;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -16,10 +19,32 @@ import java.util.ArrayList;
  */
 public class BikeUsageTypeMapper extends AbstractMapper {
 
-	public ArrayList<BikeUsageType> getAllBikeUsages() throws SQLException, ClassNotFoundException {
+	public ArrayList<BikeUsageType> getAllBikeUsagesType() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.BIKEUSAGETYPE);
 		return (ArrayList<BikeUsageType>) adapter.getModelsFromRequest(this);
+	}
+
+	public BikeUsageType getBikeUsagesType(String bikeUsageType) throws SQLException, ClassNotFoundException {
+		String query;
+		BikeUsageType result = null;
+
+		query = "SELECT ";
+		query += "*";
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + " ";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + bikeUsageType + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (BikeUsageType) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+		}
+
+		return result;
 	}
 
 	public int save(BikeUsageType bikeUsageType) {
