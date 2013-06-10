@@ -8,5 +8,5 @@ package controller.terminal.interfacesGUI;
  *
  * @author Valentin SEITZ
  */
-public interface TerminalPay extends TerminalSubVue {
+public interface TerminalPay {
 }
