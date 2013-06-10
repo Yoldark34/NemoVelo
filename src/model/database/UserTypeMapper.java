@@ -8,6 +8,8 @@ import model.object.UserType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -60,6 +62,28 @@ public class UserTypeMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	int getIdUserType(String userTypeCode) {
+		String query;
+		UserType result = new UserType();
+
+		query = "SELECT ";
+		query += "*";
+		query += " FROM ";
+		query += DataBaseElements.USERTYPE + " " + DataBaseElements.ALIAS_USERTYPE;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_USERTYPE + "." + DataBaseElements.USERTYPE_CODE + " = '" + userTypeCode + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (UserType) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return result.getId();
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		UserType obj = new UserType();
@@ -67,7 +91,7 @@ public class UserTypeMapper extends AbstractMapper {
 			obj.setId(row.getInt(DataBaseElements.USERTYPE_ID));
 		}
 		if (this.hasColumn(DataBaseElements.USERTYPE_IDPARENTUSERTYPE, row)) {
-			obj.setId(row.getInt(DataBaseElements.USERTYPE_IDPARENTUSERTYPE));
+			obj.setIdParentUserType(row.getInt(DataBaseElements.USERTYPE_IDPARENTUSERTYPE));
 		}
 		if (this.hasColumn(DataBaseElements.USERTYPE_CODE, row)) {
 			obj.setCode(row.getString(DataBaseElements.USERTYPE_CODE));

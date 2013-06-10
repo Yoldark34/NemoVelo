@@ -4,10 +4,14 @@
  */
 package model.database;
 
+import java.sql.Date;
 import model.object.NemoUser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import model.object.NemoUserType;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -48,11 +52,11 @@ public class NemoUserMapper extends AbstractMapper {
 			query = "INSERT INTO " + DataBaseElements.NEMOUSER + " (";
 			//query +=  "`" + DataBaseElements.NEMOUSER_ID + "`,";
 			query += "`" + DataBaseElements.NEMOUSER_LASTNAME + "`,";
-			query += "`" + DataBaseElements.NEMOUSER_FIRSTNAME + " `,";
+			query += "`" + DataBaseElements.NEMOUSER_FIRSTNAME + "`,";
 			query += "`" + DataBaseElements.NEMOUSER_EMAIL + "`,";
-			query += "`" + DataBaseElements.NEMOUSER_CRYPTEDPASSWORD + " `,";
+			query += "`" + DataBaseElements.NEMOUSER_CRYPTEDPASSWORD + "`,";
 			query += "`" + DataBaseElements.NEMOUSER_BIRTHDATE + "`,";
-			query += "`" + DataBaseElements.NEMOUSER_CREATEDATE + " ` ";
+			query += "`" + DataBaseElements.NEMOUSER_CREATEDATE + "` ";
 			query += ") VALUES (";
 			//query += "'" + nemoUser.getId() + "',";
 			query += "'" + nemoUser.getLastName() + "',";
@@ -79,6 +83,49 @@ public class NemoUserMapper extends AbstractMapper {
 		} catch (Exception e) {
 		}
 		return nbRows;
+	}
+
+	public int getLastUser() {
+		String query;
+		NemoUser result = new NemoUser();
+
+		query = "SELECT ";
+		query += " MAX( ";
+		query += DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID;
+		query += " ) as " + DataBaseElements.NEMOUSER_ID;
+		query += " FROM ";
+		query += DataBaseElements.NEMOUSER + " " + DataBaseElements.ALIAS_NEMOUSER;
+		
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (NemoUser) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return result.getId();
+	}
+
+	public int createAnonymousUser() {
+		java.util.Date today = new java.util.Date();
+		Date sqlToday = new Date(today.getTime());
+		NemoUser user = new NemoUser(-1, "Anonymous", "Anonymous", "Anonymous@Anonymous.fr", "Anonymous", sqlToday, sqlToday);
+		this.save(user);
+
+		user.setId(this.getLastUser());
+
+		NemoUserTypeMapper nutm = new NemoUserTypeMapper();
+		UserTypeMapper utm = new UserTypeMapper();
+		NemoUserType nut = new NemoUserType();
+
+		nut.setIdUser(user.getId());
+		nut.setIdUserType(utm.getIdUserType(DataBaseElements.UserType.ANONYMOUS));
+
+		nutm.save(nut, false, false);
+
+		return user.getId();
 	}
 
 	@Override

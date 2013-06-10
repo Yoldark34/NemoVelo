@@ -38,7 +38,7 @@ public class NemoUserTypeMapper extends AbstractMapper {
 		} else if (!updateMode && nemoUserType.getIdUser() != -1 && nemoUserType.getIdUserType() != -1) {
 			query = "INSERT INTO " + DataBaseElements.NEMOUSERTYPE + " (";
 			query += "`" + DataBaseElements.NEMOUSERTYPE_IDUSER + "`,";
-			query += "`" + DataBaseElements.NEMOUSERTYPE_IDUSERTYPE + " ` ";
+			query += "`" + DataBaseElements.NEMOUSERTYPE_IDUSERTYPE + "` ";
 			query += ") VALUES (";
 			query += "'" + nemoUserType.getIdUser() + "',";
 			query += "'" + nemoUserType.getIdUserType() + "' ";

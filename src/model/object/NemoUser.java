@@ -15,13 +15,26 @@ import resource.log.ProjectLogger;
  */
 public class NemoUser {
 
-	private int id;
+	private int id = -1;
 	private String lastName;
 	private String firstName;
 	private String email;
 	private String cryptedPassword;
 	private Date birthDate;
 	private Date createDate;
+
+	public NemoUser() {
+	}
+
+	public NemoUser(int id, String lastName, String firstName, String email, String cryptedPassword, Date birthDate, Date createDate) {
+		this.id = id;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.email = email;
+		this.cryptedPassword = cryptedPassword;
+		this.birthDate = birthDate;
+		this.createDate = createDate;
+	}
 
 	public int getId() {
 		return id;

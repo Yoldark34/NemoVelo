@@ -140,9 +140,13 @@ public class DataBaseElements {
 	}
 
 	public class BikeUsageType {
-
 		public static final String STOCKAGE = "Stockage";
 		public static final String BOOKING = "Réservation";
+	}
+
+	public class UserType {
+		public static final String TEST = "Test";
+		public static final String ANONYMOUS = "Anonyme";
 	}
 
 	public class PriceTypeCode {

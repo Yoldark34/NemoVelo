@@ -124,6 +124,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		if (result != null) {
 			java.util.Date today = new java.util.Date();
 			Date sqlToday = new Date(today.getTime());
+			NemoUserMapper num = new NemoUserMapper();
 
 			for (int i = 0; i < numberOfBikes; i++) {
 				bu = result.get(i);
@@ -133,11 +134,12 @@ public class BikeUsageMapper extends AbstractMapper {
 				this.save(bu);
 
 				bu.setId(-1);
+				bu.setIdNemoUser(-1);
 
 				BikeUsageTypeMapper btm = new BikeUsageTypeMapper();
 				try {
 					bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.BOOKING).getId());
-
+					bu.setIdNemoUser(num.createAnonymousUser());
 					bu.setStartDate(sqlToday);
 					bu.setEndDate(null);
 
