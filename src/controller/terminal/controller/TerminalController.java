@@ -72,4 +72,9 @@ public class TerminalController {
 		setMainVue(mainVue);
 		mainVue.displayTerminalWelcome();
 	}
+
+	public void doExit() {
+		//TODO : cancel current operation
+		System.exit(0);
+	}
 }
