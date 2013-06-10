@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -155,7 +156,12 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				this.cboDurationUnit = new JComboBox();
 				{
 					{
-						//TODO : Add model / listener
+						this.cboDurationUnit.addItemListener(new ItemListener() {
+							@Override
+							public void itemStateChanged(ItemEvent ie) {
+								initializePossibleDurations();
+							}
+						});
 					}
 					{
 						gbc = new GridBagConstraints();
@@ -215,11 +221,33 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 
 	@Override
 	public void init() {
+		Set<String> durationUnits;
+		//Initialize bike amount
 		this.cboNbBikes.removeAllItems();
 		for (int i = 1; i <= TerminalRentController.getTerminalRentController().getMaxAvailableBikes(); i++) {
 			this.cboNbBikes.addItem(new Integer(i));
 		}
+		//Initialize duration units
 		this.cboDurationUnit.removeAllItems();
-		TerminalRentController.getTerminalRentController().getPossibleDurationUnits();
+		durationUnits = TerminalRentController.getTerminalRentController().getPossibleDurationUnits();
+		for (String durationUnit : durationUnits) {
+			this.cboDurationUnit.addItem(durationUnit);
+		}
+		//Choose first available duration unit
+		if (this.cboDurationUnit.getItemCount() > 0) {
+			this.cboDurationUnit.setSelectedIndex(0);
+		}
+		initializePossibleDurations();
+	}
+	private void initializePossibleDurations() {
+		Set<Integer> durations;
+		//Initialize available durations
+		this.cboDuration.removeAllItems();
+		if (this.cboDurationUnit.getItemCount() > 0) {
+			durations = TerminalRentController.getTerminalRentController().getPossibleDurations(((String) this.cboDurationUnit.getSelectedItem()));
+			for (Integer duration : durations) {
+				this.cboDuration.addItem(duration);
+			}
+		}
 	}
 }
