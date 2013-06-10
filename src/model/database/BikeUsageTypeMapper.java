@@ -62,7 +62,7 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 			query = "INSERT INTO " + DataBaseElements.BIKEUSAGETYPE + " (";
 			//query +=  "`" + DataBaseElements.BIKEUSAGETYPE_ID + "`,";
 			query += "`" + DataBaseElements.BIKEUSAGETYPE_IDPARENT + "`,";
-			query += "`" + DataBaseElements.BIKEUSAGETYPE_NAME + " `,";
+			query += "`" + DataBaseElements.BIKEUSAGETYPE_NAME + "`,";
 			query += "`" + DataBaseElements.BIKEUSAGETYPE_DESCRIPTION + "` ";
 			query += ") VALUES (";
 			//query += "'" + bikeUsageType.getId() + "',";

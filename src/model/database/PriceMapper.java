@@ -40,11 +40,11 @@ public class PriceMapper extends AbstractMapper {
 			query = "INSERT INTO " + DataBaseElements.PRICE + " (";
 			//query +=  "`" + DataBaseElements.PRICE_ID + "`,";
 			query += "`" + DataBaseElements.PRICE_AMOUNT + "`,";
-			query += "`" + DataBaseElements.PRICE_TYPECODE + " `,";
+			query += "`" + DataBaseElements.PRICE_TYPECODE + "`,";
 			query += "`" + DataBaseElements.PRICE_NAME + "`,";
-			query += "`" + DataBaseElements.PRICE_DESCRIPTION + " `,";
+			query += "`" + DataBaseElements.PRICE_DESCRIPTION + "`,";
 			query += "`" + DataBaseElements.PRICE_DURATION + "`,";
-			query += "`" + DataBaseElements.PRICE_DURATIONUNIT + " ` ";
+			query += "`" + DataBaseElements.PRICE_DURATIONUNIT + "` ";
 			query += ") VALUES (";
 			//query += "'" + price.getId() + "',";
 			query += "'" + price.getAmount() + "',";

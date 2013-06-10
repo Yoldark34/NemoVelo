@@ -42,9 +42,9 @@ public class PaymentMapper extends AbstractMapper {
 			query = "INSERT INTO " + DataBaseElements.PAYMENT + " (";
 			//query +=  "`" + DataBaseElements.PAYMENT_ID + "`,";
 			query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "`,";
-			query += "`" + DataBaseElements.PAYMENT_AMOUNT + " `,";
+			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "`,";
 			query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "`,";
-			query += "`" + DataBaseElements.PAYMENT_VALIDATED + " ` ";
+			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` ";
 
 			query += ") VALUES (";
 			//query += "'" + payment.getId() + "',";

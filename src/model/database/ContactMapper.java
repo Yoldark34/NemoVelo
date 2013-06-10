@@ -40,11 +40,11 @@ public class ContactMapper extends AbstractMapper {
 			query = "INSERT INTO " + DataBaseElements.CONTACT + " (";
 			//query +=  "`" + DataBaseElements.CONTACT_ID + "`,";
 			query += "`" + DataBaseElements.CONTACT_STREETNUMBER + "`,";
-			query += "`" + DataBaseElements.CONTACT_STREETNAME + " `,";
+			query += "`" + DataBaseElements.CONTACT_STREETNAME + "`,";
 			query += "`" + DataBaseElements.CONTACT_ZIPCODE + "`,";
-			query += "`" + DataBaseElements.CONTACT_CITY + " `,";
+			query += "`" + DataBaseElements.CONTACT_CITY + "`,";
 			query += "`" + DataBaseElements.CONTACT_COUNTRY + "`,";
-			query += "`" + DataBaseElements.CONTACT_PHONENUMBER + " ` ";
+			query += "`" + DataBaseElements.CONTACT_PHONENUMBER + "` ";
 			query += ") VALUES (";
 			//query += "'" + contact.getId() + "',";
 			query += "'" + contact.getStreetNumber() + "',";
