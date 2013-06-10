@@ -69,7 +69,17 @@ public class TerminalRentController {
 	public Set<Integer> getPossibleDurations(String durationUnit) {
 		Set<Integer> result;
 		result = new HashSet<Integer>();
+		PriceMapper pm = new PriceMapper();
+		ArrayList<Price> priceResult = new ArrayList<>();
+		priceResult = pm.getPriceDurationForRent(durationUnit);
 
+		if (priceResult.size() > 0) {
+			for (int i = 0; i < priceResult.size(); ++i) {
+				result.add(priceResult.get(i).getPriceDuration());
+			}
+		} else {
+			doAutoCancel("Aucune durée n'a pu être retrouvé pour l'unité de durée donné.");
+		}
 		//Add result values
 
 		return result;
