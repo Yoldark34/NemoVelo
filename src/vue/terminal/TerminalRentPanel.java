@@ -27,7 +27,6 @@ import vue.common.ValidityPanel;
 public class TerminalRentPanel extends AbstractTerminalPanel implements TerminalRent {
 
 	//Maximal amount of bikes that can be selected
-	private static final int MAXSELECTABLE_NBBIKE = 20;
 	private static final int ROWHEIGHT = 32;
 	private static final int VERTICAL_GAP = 5;
 	private static final int HORIZONTAL_GAP = 5;
@@ -81,7 +80,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				//Nb selector of bikes
 				this.cboNbBikes = new JComboBox();
 				{
-					for (int i = 1; i <= MAXSELECTABLE_NBBIKE; i++) {
+					for (int i = 1; i <= TerminalRentController.getTerminalRentController().getMaxAvailableBikes(); i++) {
 						this.cboNbBikes.addItem(new Integer(i));
 					}
 					{
@@ -204,7 +203,10 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				this.btnRent.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
-						TerminalRentController.getTerminalRentController().doRent();
+						TerminalRentController.getTerminalRentController().doRent(
+								((Integer) cboNbBikes.getSelectedItem()).intValue(),
+								((Integer) cboDuration.getSelectedItem()).intValue(),
+								((String) cboDurationUnit.getSelectedItem()).toString());
 					}
 				});
 			}
