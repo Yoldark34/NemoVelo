@@ -8,5 +8,5 @@ package controller.terminal.interfacesGUI;
  *
  * @author Valentin SEITZ
  */
-public interface TerminalRent {
+public interface TerminalRent extends TerminalSubVue {
 }
