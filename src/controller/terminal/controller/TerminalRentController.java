@@ -4,6 +4,8 @@
  */
 package controller.terminal.controller;
 
+import java.util.HashSet;
+import java.util.Set;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
 import model.database.BikeUsageTypeMapper;
@@ -43,7 +45,24 @@ public class TerminalRentController {
 		return result;
 	}
 
-	public void doRent() {
+	public Set<Integer> getPossibleDurations(String durationUnit) {
+		Set<Integer> result;
+		result = new HashSet<Integer>();
+
+		//Affect right sized result array
+		//Write result values
+
+		return result;
+	}
+
+	/**
+	 * The user does want rent bikes
+	 *
+	 * @param nbBikes bikes to reserve during payment
+	 * @param duration duration of rental that next has to be payed
+	 * @param durationUnit duration unit of retnal that next has to be payed
+	 */
+	public void doRent(int nbBikes, int duration, String durationUnit) {
 		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
 			//TODO send number of bikes in second argument.
