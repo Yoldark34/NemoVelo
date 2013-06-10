@@ -220,6 +220,6 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 			this.cboNbBikes.addItem(new Integer(i));
 		}
 		this.cboDurationUnit.removeAllItems();
-		TerminalRentController.getTerminalRentController().getPossibleDurationUnits()
+		TerminalRentController.getTerminalRentController().getPossibleDurationUnits();
 	}
 }
