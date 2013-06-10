@@ -50,10 +50,9 @@ public class TerminalRentController {
 
 	public Set<String> getPossibleDurationUnits() {
 		Set<String> result;
-		result = new HashSet<String>();
+		result = new HashSet<>();
 		PriceMapper pm = new PriceMapper();
-		ArrayList<Price> priceResult = new ArrayList<>();
-		priceResult = pm.getUniquePriceDurationUnitForRent();
+		ArrayList<Price> priceResult = pm.getUniquePriceDurationUnitForRent();
 
 		if (priceResult.size() > 0) {
 			for (int i = 0; i < priceResult.size(); ++i) {
@@ -68,10 +67,9 @@ public class TerminalRentController {
 
 	public Set<Integer> getPossibleDurations(String durationUnit) {
 		Set<Integer> result;
-		result = new HashSet<Integer>();
+		result = new HashSet<>();
 		PriceMapper pm = new PriceMapper();
-		ArrayList<Price> priceResult = new ArrayList<>();
-		priceResult = pm.getPriceDurationForRent(durationUnit);
+		ArrayList<Price> priceResult = pm.getPriceDurationForRent(durationUnit);
 
 		if (priceResult.size() > 0) {
 			for (int i = 0; i < priceResult.size(); ++i) {
