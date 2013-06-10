@@ -45,7 +45,7 @@ public class TerminalRentController {
 		return result;
 	}
 
-	public Set<String> getPossibleDurationUnits(String durationUnit) {
+	public Set<String> getPossibleDurationUnits() {
 		Set<String> result;
 		result = new HashSet<String>();
 
