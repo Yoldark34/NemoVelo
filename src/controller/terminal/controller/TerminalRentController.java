@@ -45,12 +45,20 @@ public class TerminalRentController {
 		return result;
 	}
 
+	public Set<String> getPossibleDurationUnits(String durationUnit) {
+		Set<String> result;
+		result = new HashSet<String>();
+
+		//Add result values
+
+		return result;
+	}
+
 	public Set<Integer> getPossibleDurations(String durationUnit) {
 		Set<Integer> result;
 		result = new HashSet<Integer>();
 
-		//Affect right sized result array
-		//Write result values
+		//Add result values
 
 		return result;
 	}
