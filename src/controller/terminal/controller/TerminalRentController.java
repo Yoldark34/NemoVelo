@@ -65,8 +65,7 @@ public class TerminalRentController {
 	public void doRent(int nbBikes, int duration, String durationUnit) {
 		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
-			//TODO send number of bikes in second argument.
-			boolean test = this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), 1);
+			boolean test = this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), nbBikes);
 			//TODO : Implement Rental
 			if (ok) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);
