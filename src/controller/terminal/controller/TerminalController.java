@@ -19,6 +19,7 @@ public class TerminalController {
 	private static boolean doAutoCancel;
 	private static boolean doAlertBeforeAutoCancel;
 	private static int anonymousUserId;
+	private static PayAmount amountToPay;
 
 	public static int getAnonymousUserId() {
 		return anonymousUserId;
@@ -26,6 +27,14 @@ public class TerminalController {
 
 	public static void setAnonymousUserId(int anonymousUserId) {
 		TerminalController.anonymousUserId = anonymousUserId;
+	}
+
+	public static PayAmount getAmountToPay() {
+		return amountToPay;
+	}
+
+	private static void setAmountToPay(PayAmount amountToPay) {
+		TerminalController.amountToPay = amountToPay;
 	}
 
 	public static void setDoAutoCancel(boolean doAutoCancel) {
@@ -59,6 +68,7 @@ public class TerminalController {
 	public TerminalController(TerminalMainVue mainVue) {
 		TerminalMapper terminalMapper = new TerminalMapper();
 		terminal = terminalMapper.getTerminal(1);
+		setAmountToPay(new PayAmount());
 		setMainVue(mainVue);
 		mainVue.displayTerminalWelcome();
 	}

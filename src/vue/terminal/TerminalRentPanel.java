@@ -18,6 +18,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import model.database.DataBaseElements;
 import vue.common.ValidityPanel;
 
 /**
@@ -218,6 +219,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 		for (int i = 1; i <= TerminalRentController.getTerminalRentController().getMaxAvailableBikes(); i++) {
 			this.cboNbBikes.addItem(new Integer(i));
 		}
-
+		this.cboDurationUnit.removeAllItems();
+		TerminalRentController.getTerminalRentController().getPossibleDurationUnits();
 	}
 }
