@@ -80,9 +80,6 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				//Nb selector of bikes
 				this.cboNbBikes = new JComboBox();
 				{
-					for (int i = 1; i <= TerminalRentController.getTerminalRentController().getMaxAvailableBikes(); i++) {
-						this.cboNbBikes.addItem(new Integer(i));
-					}
 					{
 						this.cboNbBikes.addItemListener(new ItemListener() {
 							@Override
@@ -213,5 +210,14 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 			this.getPanelActions().add(this.btnRent);
 			//TODO : Add Sign in button
 		}
+	}
+
+	@Override
+	public void init() {
+		this.cboNbBikes.removeAllItems();
+		for (int i = 1; i <= TerminalRentController.getTerminalRentController().getMaxAvailableBikes(); i++) {
+			this.cboNbBikes.addItem(new Integer(i));
+		}
+
 	}
 }
