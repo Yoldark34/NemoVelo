@@ -4,12 +4,15 @@
  */
 package controller.terminal.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
 import model.database.BikeUsageTypeMapper;
+import model.database.PriceMapper;
 import model.object.Bike;
+import model.object.Price;
 import model.object.Terminal;
 
 /**
@@ -48,8 +51,17 @@ public class TerminalRentController {
 	public Set<String> getPossibleDurationUnits() {
 		Set<String> result;
 		result = new HashSet<String>();
+		PriceMapper pm = new PriceMapper();
+		ArrayList<Price> priceResult = new ArrayList<>();
+		priceResult = pm.getUniquePriceDurationUnitForRent();
 
-		//Add result values
+		if (priceResult.size() > 0) {
+			for (int i = 0; i < priceResult.size(); ++i) {
+				result.add(priceResult.get(i).getPriceDurationUnit());
+			}
+		} else {
+			doAutoCancel("Aucune unité de durée n'a pu être retrouvé.");
+		}
 
 		return result;
 	}

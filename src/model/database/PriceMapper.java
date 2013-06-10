@@ -8,6 +8,8 @@ import model.object.Price;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -63,6 +65,30 @@ public class PriceMapper extends AbstractMapper {
 		} catch (Exception e) {
 		}
 		return nbRows;
+	}
+
+	public ArrayList<Price> getUniquePriceDurationUnitForRent() {
+		String query;
+		ArrayList<Price> results = new ArrayList<>();
+
+		query = "SELECT ";
+		query += "DISTINCT(";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_DURATIONUNIT;
+		query += ")";
+		query += " FROM ";
+		query += DataBaseElements.PRICE + " " + DataBaseElements.ALIAS_PRICE;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_TYPECODE + " = '" + DataBaseElements.PriceTypeCode.RENT + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			results = (ArrayList<Price>) adapter.getModelsFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return results;
 	}
 
 	@Override
