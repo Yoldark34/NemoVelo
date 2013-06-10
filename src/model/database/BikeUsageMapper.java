@@ -4,6 +4,7 @@
  */
 package model.database;
 
+import controller.terminal.controller.TerminalController;
 import java.sql.Date;
 import model.object.BikeUsage;
 import java.sql.ResultSet;
@@ -122,8 +123,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		}
 
 		if (result != null) {
-			java.util.Date today = new java.util.Date();
-			Date sqlToday = new Date(today.getTime());
+			Date sqlToday = Helper.getSqlDateNow();
 			NemoUserMapper num = new NemoUserMapper();
 
 			for (int i = 0; i < numberOfBikes; i++) {
@@ -140,6 +140,7 @@ public class BikeUsageMapper extends AbstractMapper {
 				try {
 					bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.BOOKING).getId());
 					bu.setIdNemoUser(num.createAnonymousUser());
+					TerminalController.setAnonymousUserId(bu.getIdNemoUser());
 					bu.setStartDate(sqlToday);
 					bu.setEndDate(null);
 

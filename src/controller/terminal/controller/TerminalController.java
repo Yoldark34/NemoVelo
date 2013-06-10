@@ -18,6 +18,15 @@ public class TerminalController {
 	private static Terminal terminal;
 	private static boolean doAutoCancel;
 	private static boolean doAlertBeforeAutoCancel;
+	private static int anonymousUserId;
+
+	public static int getAnonymousUserId() {
+		return anonymousUserId;
+	}
+
+	public static void setAnonymousUserId(int anonymousUserId) {
+		TerminalController.anonymousUserId = anonymousUserId;
+	}
 
 	public static void setDoAutoCancel(boolean doAutoCancel) {
 		TerminalController.doAutoCancel = doAutoCancel;

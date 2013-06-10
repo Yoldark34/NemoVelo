@@ -109,8 +109,7 @@ public class NemoUserMapper extends AbstractMapper {
 	}
 
 	public int createAnonymousUser() {
-		java.util.Date today = new java.util.Date();
-		Date sqlToday = new Date(today.getTime());
+		Date sqlToday = Helper.getSqlDateNow();
 		NemoUser user = new NemoUser(-1, "Anonymous", "Anonymous", "Anonymous@Anonymous.fr", "Anonymous", sqlToday, sqlToday);
 		this.save(user);
 
