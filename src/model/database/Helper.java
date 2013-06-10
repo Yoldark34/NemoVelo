@@ -4,7 +4,7 @@
  */
 package model.database;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -12,9 +12,10 @@ import java.sql.Date;
  */
 public class Helper {
 
-	public static Date getSqlDateNow() {
-		java.sql.Date sqlToday = new Date(java.util.Calendar.getInstance().getTime().getTime());
+	public static Timestamp getSqlDateNow() {
+		Timestamp timestamp = new java.sql.Timestamp(java.util.Calendar.getInstance().getTime().getTime());
+		//java.sql.Date sqlToday = new Date();
 
-		return sqlToday;
+		return timestamp;
 	}
 }

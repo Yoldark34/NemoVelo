@@ -5,6 +5,7 @@
 package model.object;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import model.database.DataBaseElements;
 import resource.log.ProjectLogger;
@@ -20,8 +21,8 @@ public class BikeUsage {
 	private int idBikeUsageType;
 	private int idBike;
 	private int idEndStorage;
-	private Date startDate;
-	private Date endDate;
+	private Timestamp startDate;
+	private Timestamp endDate;
 	private String comments;
 
 	public int getId() {
@@ -64,19 +65,19 @@ public class BikeUsage {
 		this.idEndStorage = idEndStorage;
 	}
 
-	public Date getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public Timestamp getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
 

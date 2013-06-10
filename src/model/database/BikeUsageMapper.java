@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.object.Bike;
 import resource.log.ProjectLogger;
+import sun.misc.JavaxSecurityAuthKerberosAccess;
 
 
 /**
@@ -123,7 +124,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		}
 
 		if (result != null) {
-			Date sqlToday = Helper.getSqlDateNow();
+			java.sql.Timestamp sqlToday = Helper.getSqlDateNow();
 			NemoUserMapper num = new NemoUserMapper();
 
 			for (int i = 0; i < numberOfBikes; i++) {
@@ -175,10 +176,10 @@ public class BikeUsageMapper extends AbstractMapper {
 			obj.setIdEndStorage(row.getInt(DataBaseElements.BIKEUSAGE_IDENDSTORAGE));
 		}
 		if (this.hasColumn(DataBaseElements.BIKEUSAGE_STARTDATE, row)) {
-			obj.setStartDate(row.getDate(DataBaseElements.BIKEUSAGE_STARTDATE));
+			obj.setStartDate(row.getTimestamp(DataBaseElements.BIKEUSAGE_STARTDATE));
 		}
 		if (this.hasColumn(DataBaseElements.BIKEUSAGE_ENDDATE, row)) {
-			obj.setEndDate(row.getDate(DataBaseElements.BIKEUSAGE_ENDDATE));
+			obj.setEndDate(row.getTimestamp(DataBaseElements.BIKEUSAGE_ENDDATE));
 		}
 		if (this.hasColumn(DataBaseElements.BIKEUSAGE_COMMENTS, row)) {
 			obj.setComments(row.getString(DataBaseElements.BIKEUSAGE_COMMENTS));

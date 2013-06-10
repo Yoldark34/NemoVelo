@@ -109,7 +109,7 @@ public class NemoUserMapper extends AbstractMapper {
 	}
 
 	public int createAnonymousUser() {
-		Date sqlToday = Helper.getSqlDateNow();
+		java.sql.Timestamp sqlToday = Helper.getSqlDateNow();
 		NemoUser user = new NemoUser(-1, "Anonymous", "Anonymous", "Anonymous@Anonymous.fr", "Anonymous", sqlToday, sqlToday);
 		this.save(user);
 
@@ -146,10 +146,10 @@ public class NemoUserMapper extends AbstractMapper {
 			obj.setCryptedPassword(row.getString(DataBaseElements.NEMOUSER_CRYPTEDPASSWORD));
 		}
 		if (this.hasColumn(DataBaseElements.NEMOUSER_BIRTHDATE, row)) {
-			obj.setBirthDate(row.getDate(DataBaseElements.NEMOUSER_BIRTHDATE));
+			obj.setBirthDate(row.getTimestamp(DataBaseElements.NEMOUSER_BIRTHDATE));
 		}
 		if (this.hasColumn(DataBaseElements.NEMOUSER_CREATEDATE, row)) {
-			obj.setCreateDate(row.getDate(DataBaseElements.NEMOUSER_CREATEDATE));
+			obj.setCreateDate(row.getTimestamp(DataBaseElements.NEMOUSER_CREATEDATE));
 		}
 
 		return obj;

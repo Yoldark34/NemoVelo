@@ -5,6 +5,7 @@
 package model.object;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import model.database.DataBaseElements;
 import resource.log.ProjectLogger;
@@ -20,13 +21,13 @@ public class NemoUser {
 	private String firstName;
 	private String email;
 	private String cryptedPassword;
-	private Date birthDate;
-	private Date createDate;
+	private Timestamp birthDate;
+	private Timestamp createDate;
 
 	public NemoUser() {
 	}
 
-	public NemoUser(int id, String lastName, String firstName, String email, String cryptedPassword, Date birthDate, Date createDate) {
+	public NemoUser(int id, String lastName, String firstName, String email, String cryptedPassword, Timestamp birthDate, Timestamp createDate) {
 		this.id = id;
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -96,19 +97,19 @@ public class NemoUser {
 		}
 	}
 
-	public Date getBirthDate() {
+	public Timestamp getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(Timestamp birthDate) {
 		this.birthDate = birthDate;
 	}
 
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 }
