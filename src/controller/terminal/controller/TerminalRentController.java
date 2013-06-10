@@ -63,11 +63,9 @@ public class TerminalRentController {
 	 * @param durationUnit duration unit of retnal that next has to be payed
 	 */
 	public void doRent(int nbBikes, int duration, String durationUnit) {
-		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
-			boolean test = this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), nbBikes);
 			//TODO : Implement Rental
-			if (ok) {
+			if (this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), nbBikes)) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);
 			}
 		}
