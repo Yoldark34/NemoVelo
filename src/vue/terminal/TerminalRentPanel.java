@@ -19,7 +19,6 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import model.database.DataBaseElements;
 import vue.common.ValidityPanel;
 
 /**
@@ -239,6 +238,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 		}
 		initializePossibleDurations();
 	}
+
 	private void initializePossibleDurations() {
 		Set<Integer> durations;
 		//Initialize available durations
