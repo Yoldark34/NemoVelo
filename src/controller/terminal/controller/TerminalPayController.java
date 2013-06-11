@@ -4,6 +4,9 @@
  */
 package controller.terminal.controller;
 
+import model.database.PriceMapper;
+import model.object.Price;
+
 /**
  *
  * @author Valentin SEITZ
@@ -20,7 +23,11 @@ public class TerminalPayController {
 	}
 
 	public PayAmount getAmountToPay() {
-		PayAmount result = new PayAmount();
+		PriceMapper pm = new PriceMapper();
+		TerminalController.getAmountToPay().setGuaranteeAmount(pm.getFirstGuarantee().getAmount());
+		TerminalController.getAmountToPay().setDurationPricePerUnit(pm.getPriceAmountForUnitAndDuration(TerminalController.getAmountToPay().getDuration(), TerminalController.getAmountToPay().getDurationUnit()));
+		PayAmount result = TerminalController.getAmountToPay();
+
 		//TODO : calculate amount per duration and set values into PayAmount
 		return result;
 	}
