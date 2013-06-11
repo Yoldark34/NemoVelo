@@ -4,6 +4,7 @@
  */
 package vue.terminal;
 
+import controller.terminal.controller.PayAmount;
 import controller.terminal.controller.TerminalPayController;
 import controller.terminal.interfacesGUI.TerminalPay;
 import java.awt.GridBagConstraints;
@@ -271,5 +272,26 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 		}
 		this.getPanelActions().add(this.btnPay);
 		//TODO : Add Sign in button
+	}
+
+	@Override
+	public void init() {
+		PayAmount amount = TerminalPayController.getTerminalPayController().getAmountToPay();
+		if (amount != null) {
+			this.textDuration.setText(amount.getDuration() + " " + amount.getDurationUnit());
+			this.textPricePerBike.setText("" + amount.getDurationPricePerUnit());
+			this.textQuantity.setText("" + amount.getBikeQuantity());
+			this.textRentPrice.setText("" + amount.getRentAmount());
+			this.textGuarantee.setText("" + amount.getGuaranteeAmount());
+			this.textFinalPrice.setText("" + amount.getTotalAmount());
+		} else {
+			this.textDuration.setText("");
+			this.textPricePerBike.setText("");
+			this.textQuantity.setText("");
+			this.textRentPrice.setText("");
+			this.textGuarantee.setText("");
+			this.textFinalPrice.setText("");
+		}
+
 	}
 }

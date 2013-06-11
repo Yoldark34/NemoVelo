@@ -9,4 +9,6 @@ package controller.terminal.interfacesGUI;
  * @author Valentin SEITZ
  */
 public interface TerminalPay {
+
+	public void init();
 }
