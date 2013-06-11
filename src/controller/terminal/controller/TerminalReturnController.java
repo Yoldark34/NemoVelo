@@ -4,6 +4,9 @@
  */
 package controller.terminal.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Valentin SEITZ
@@ -19,7 +22,39 @@ public class TerminalReturnController {
 		return terminalReturnController;
 	}
 
-	public void doReturn() {
+	/**
+	 * Know the maximal quantity of bikes which can be returned to the current
+	 * terminal
+	 *
+	 * @return Qunetity of available storages
+	 */
+	public int getMaxAvailableStorages() {
+		int result = 0;
+
+		//TODO : Get the quantity of available storages of the current Terminal
+
+		return result;
+	}
+
+	/**
+	 * Know the serial numbers of all currently rented bikes
+	 *
+	 * @return The serial numbers of currently rented bikes
+	 */
+	public Set<Integer> getRentedBikeSerialNumbers() {
+		Set<Integer> result = new HashSet<Integer>();
+
+		//TODO : Construct the set with all the serial Numbers of currently rented bikes
+
+		return result;
+	}
+
+	/**
+	 * Return some bike(s) to the terminal
+	 *
+	 * @param bikeSerialNumbers Set of Serial numbers of the returned bikes
+	 */
+	public void doReturn(Set<Integer> bikeSerialNumbers) {
 		boolean payMissing;
 		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)

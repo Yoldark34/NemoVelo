@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import javax.swing.JButton;
 
 /**
@@ -50,7 +51,8 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 				this.btnReturn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
-						TerminalReturnController.getTerminalReturnController().doReturn();
+						//TODO : Construct the list of bike serial numbers
+						TerminalReturnController.getTerminalReturnController().doReturn(new HashSet<Integer>());
 					}
 				});
 			}
