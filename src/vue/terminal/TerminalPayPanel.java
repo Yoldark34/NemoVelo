@@ -5,6 +5,7 @@
 package vue.terminal;
 
 import controller.terminal.controller.PayAmount;
+import controller.terminal.controller.TerminalController;
 import controller.terminal.controller.TerminalPayController;
 import controller.terminal.interfacesGUI.TerminalPay;
 import java.awt.GridBagConstraints;
@@ -266,7 +267,13 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 			this.btnPay.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent ae) {
-					TerminalPayController.getTerminalPayController().doPay();
+					if (!chckbxUseTerms.isSelected()) {
+						TerminalController.getMainVue().showWarning("Veuillez accepter les condition d'utilisation du service.");
+					} else if (!chckbxBuyTerms.isSelected()) {
+						TerminalController.getMainVue().showWarning("Veuillez accepter les condition générales de vente.");
+					} else {
+						TerminalPayController.getTerminalPayController().doPay();
+					}
 				}
 			});
 		}
