@@ -12,42 +12,55 @@ public class PayAmount {
 
 	private int duration;
 	private String durationUnit;
-	private int durationPricePerUnit;
-	private int globalReduce;
-
-	public int getDuration() {
-		return duration;
-	}
+	private float durationPricePerUnit;
+	private int bikeQuantity;
+	private float guaranteeAmount;
 
 	public void setDuration(int duration) {
 		this.duration = duration;
-	}
-
-	public String getDurationUnit() {
-		return durationUnit;
 	}
 
 	public void setDurationUnit(String durationUnit) {
 		this.durationUnit = durationUnit;
 	}
 
-	public int getDurationPricePerUnit() {
-		return durationPricePerUnit;
-	}
-
-	public void setDurationPricePerUnit(int durationPricePerUnit) {
+	public void setDurationPricePerUnit(float durationPricePerUnit) {
 		this.durationPricePerUnit = durationPricePerUnit;
 	}
 
-	public int getGlobalReduce() {
-		return globalReduce;
+	public void setBikeQuantity(int bikeQuantity) {
+		this.bikeQuantity = bikeQuantity;
 	}
 
-	public void setGlobalReduce(int globalReduce) {
-		this.globalReduce = globalReduce;
+	public void setGuaranteeAmount(float guaranteeAmount) {
+		this.guaranteeAmount = guaranteeAmount;
 	}
 
-	public int getFinalPrice() {
-		return getDuration() * getDurationPricePerUnit() - getGlobalReduce();
+	public int getDuration() {
+		return duration;
+	}
+
+	public String getDurationUnit() {
+		return durationUnit;
+	}
+
+	public float getDurationPricePerUnit() {
+		return durationPricePerUnit;
+	}
+
+	public int getBikeQuantity() {
+		return bikeQuantity;
+	}
+
+	public float getRentAmount() {
+		return getDurationPricePerUnit() * getDurationPricePerUnit();
+	}
+
+	public float getGuaranteeAmount() {
+		return guaranteeAmount;
+	}
+
+	public float getTotalAmount() {
+		return getRentAmount() + getGuaranteeAmount();
 	}
 }
