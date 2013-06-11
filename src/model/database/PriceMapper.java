@@ -115,6 +115,54 @@ public class PriceMapper extends AbstractMapper {
 		return results;
 	}
 
+	public float getPriceAmountForUnitAndDuration(int duration, String durationUnit) {
+		String query;
+		Price result = new Price();
+
+		query = "SELECT ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_AMOUNT;
+		query += " FROM ";
+		query += DataBaseElements.PRICE + " " + DataBaseElements.ALIAS_PRICE;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_TYPECODE + " = '" + DataBaseElements.PriceTypeCode.RENT + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_DURATIONUNIT + " = '" + durationUnit + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_DURATION + " = '" + duration + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (Price) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return result.getAmount();
+	}
+
+	public Price getFirstGuarantee() {
+		String query;
+		Price result = null;
+
+		query = "SELECT ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_AMOUNT;
+		query += " FROM ";
+		query += DataBaseElements.PRICE + " " + DataBaseElements.ALIAS_PRICE;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_TYPECODE + " = '" + DataBaseElements.PriceTypeCode.GUARANTEE + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (Price) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return result;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Price obj = new Price();

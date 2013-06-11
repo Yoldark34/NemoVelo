@@ -92,6 +92,9 @@ public class TerminalRentController {
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
 			//TODO : Implement Rental
 			if (this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), nbBikes)) {
+				TerminalController.getAmountToPay().setBikeQuantity(nbBikes);
+				TerminalController.getAmountToPay().setDuration(duration);
+				TerminalController.getAmountToPay().setDurationUnit(durationUnit);
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);
 			}
 		}
