@@ -160,13 +160,18 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	}
 
 	@Override
-	public void showError(String msg) {
-		//TODO
-		JOptionPane.showMessageDialog(null, "Erreur : " + msg);
+	public void showInformation(String msg) {
+		JOptionPane.showMessageDialog(null, msg, "Information", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override
-	public void showAlert(String msg) {
-		JOptionPane.showMessageDialog(null, msg);
+	public void showError(String msg) {
+		//TODO
+		JOptionPane.showMessageDialog(null, msg, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void showWarning(String msg) {
+		JOptionPane.showMessageDialog(null, msg, "Avertissement", JOptionPane.WARNING_MESSAGE);
 	}
 }

@@ -9,9 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
-import model.database.BikeUsageTypeMapper;
 import model.database.PriceMapper;
-import model.object.Bike;
 import model.object.Price;
 import model.object.Terminal;
 
@@ -43,7 +41,7 @@ public class TerminalRentController {
 		result = this.bikeMapper.getAvailableBikesForThisTerminal(this.terminal.getId());
 		//Auto cancel?
 		if (result == 0) {
-			doAutoCancel("No bikes are available on this Terminal");
+			doAutoCancel("Aucun vélo disponible sur ce terminal.");
 		}
 		return result;
 	}
@@ -112,7 +110,7 @@ public class TerminalRentController {
 	private void doAutoCancel(String msg) {
 		if (TerminalController.isDoAutoCancel()) {
 			if (TerminalController.isDoAlertBeforeAutoCancel()) {
-				TerminalController.getMainVue().showAlert(msg);
+				TerminalController.getMainVue().showWarning(msg);
 			}
 			doCancel();
 		}
