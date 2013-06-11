@@ -53,7 +53,7 @@ public class PayAmount {
 	}
 
 	public float getRentAmount() {
-		return getDurationPricePerUnit() * getDurationPricePerUnit();
+		return getDurationPricePerUnit() * getBikeQuantity();
 	}
 
 	public float getGuaranteeAmount() {
