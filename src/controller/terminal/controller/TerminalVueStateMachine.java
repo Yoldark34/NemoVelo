@@ -83,12 +83,12 @@ class TerminalVueStateMachine {
 				TerminalController.getMainVue().displayTerminalWelcome();
 				break;
 			case VUE_RENT:
-				TerminalController.getMainVue().getTerminalRent().init();
 				TerminalController.getMainVue().displayTerminalRent();
+				TerminalController.getMainVue().getTerminalRent().init();
 				break;
 			case VUE_PAY:
-				TerminalController.getMainVue().getTerminalPay().init();
 				TerminalController.getMainVue().displayTerminalPay();
+				TerminalController.getMainVue().getTerminalPay().init();
 				break;
 			case VUE_RETURN:
 				TerminalController.getMainVue().displayTerminalReturn();
