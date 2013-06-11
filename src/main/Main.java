@@ -5,8 +5,11 @@
 package main;
 
 import controller.terminal.controller.TerminalController;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import resource.Resource;
 import resource.config.Configuration;
 import resource.log.ProjectLogger;
 import vue.terminal.TerminalMainFrame;
@@ -19,6 +22,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		TerminalMainFrame mainFrame;
+		URL iconUrl;
+		ImageIcon icon;
 		TerminalController controller;
 
 		//Configure Logger following tha configuration
@@ -43,8 +48,19 @@ public class Main {
 		controller = new TerminalController(mainFrame);
 		TerminalController.setDoAutoCancel(true);
 		TerminalController.setDoAlertBeforeAutoCancel(true);
-		
-		mainFrame.setSize(mainFrame.getPreferredSize());
+
+		iconUrl = Resource.getResource(Resource.IMAGE_LOGO);
+		if (iconUrl != null) {
+			icon = new ImageIcon(iconUrl);
+			//		/!\ icon can be null if the resource iconUrl doesn't exit! /!\
+			if (icon != null) {
+				mainFrame.setIconImage(icon.getImage());
+			}
+		}
+
+		//Setting minimum size of frame
+		mainFrame.setMinimumSize(mainFrame.getPreferredSize());
+		mainFrame.pack();
 
 		//Centering the frame
 		mainFrame.setLocationRelativeTo(null);
