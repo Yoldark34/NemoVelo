@@ -4,8 +4,12 @@
  */
 package controller.terminal.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import model.database.BikeMapper;
+import model.database.StorageMapper;
+import model.object.Bike;
 
 /**
  *
@@ -30,7 +34,8 @@ public class TerminalReturnController {
 	 */
 	public int getMaxAvailableStorages() {
 		int result = 0;
-
+		StorageMapper sm = new StorageMapper();
+		result = sm.getAvailableStoragesForTerminal(TerminalController.getTerminal().getId());
 		//TODO : Get the quantity of available storages of the current Terminal
 
 		return result;
@@ -42,8 +47,14 @@ public class TerminalReturnController {
 	 * @return The serial numbers of currently rented bikes
 	 */
 	public Set<Integer> getRentedBikeSerialNumbers() {
-		Set<Integer> result = new HashSet<Integer>();
-
+		Set<Integer> result = new HashSet<>();
+		BikeMapper bm = new BikeMapper();
+		ArrayList<Bike> resultBikes = bm.getRentedBikesForThisTerminal(TerminalController.getTerminal().getId());
+		if (resultBikes.size() > 0) {
+			for (int i = 0; i < resultBikes.size(); ++i) {
+				result.add(resultBikes.get(i).getId());
+			}
+		}
 		//TODO : Construct the set with all the serial Numbers of currently rented bikes
 
 		return result;

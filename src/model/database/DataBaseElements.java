@@ -141,8 +141,9 @@ public class DataBaseElements {
 	}
 
 	public class BikeUsageType {
-		public static final String STOCKAGE = "Stockage";
+		public static final String STOCKING = "Stockage";
 		public static final String BOOKING = "Réservation";
+		public static final String RENTING = "Location";
 	}
 
 	public class UserType {
