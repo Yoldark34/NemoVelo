@@ -28,7 +28,6 @@ public class TerminalPayController {
 		TerminalController.getAmountToPay().setDurationPricePerUnit(pm.getPriceAmountForUnitAndDuration(TerminalController.getAmountToPay().getDuration(), TerminalController.getAmountToPay().getDurationUnit()));
 		PayAmount result = TerminalController.getAmountToPay();
 
-		//TODO : calculate amount per duration and set values into PayAmount
 		return result;
 	}
 
