@@ -36,7 +36,6 @@ public class TerminalReturnController {
 		int result = 0;
 		StorageMapper sm = new StorageMapper();
 		result = sm.getAvailableStoragesForTerminal(TerminalController.getTerminal().getId());
-		//TODO : Get the quantity of available storages of the current Terminal
 
 		return result;
 	}
@@ -55,7 +54,6 @@ public class TerminalReturnController {
 				result.add(resultBikes.get(i).getId());
 			}
 		}
-		//TODO : Construct the set with all the serial Numbers of currently rented bikes
 
 		return result;
 	}
