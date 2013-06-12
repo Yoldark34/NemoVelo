@@ -7,6 +7,7 @@ package model.database;
 import model.object.Payment;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -24,18 +25,29 @@ public class PaymentMapper extends AbstractMapper {
 
 	public int save(Payment payment) {
 		int nbRows = 0;
+		int validated = 0;
+		if (payment.isValidated()) {
+			validated = 1;
+		}
 		String query;
 		if (payment.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.PAYMENT + "` SET ";
 			//query += "`"+DataBaseElements.PAYMENT_ID+"` = '"+payment.getId()+"',";Can't be updated because used in where
-			query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "` = '" + payment.getIdSubscription() + "',";
+
+			if (payment.getIdSubscription() == -1) {
+				query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "` = NULL,";
+			} else {
+				query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "` = '" + payment.getIdSubscription() + "',";
+			}
+			
 			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "` = '" + payment.getAmount() + "',";
 			if (payment.getPaymentDate() == null) {
 				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = " + payment.getPaymentDate() + ",";
 			} else {
 				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = '" + payment.getPaymentDate() + "',";
 			}
-			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` = '" + payment.isValidated() + "' ";
+			query += "`" + DataBaseElements.PAYMENT_IDNEMOUSER + "` = '" + payment.getIdNemoUser() + "',";
+			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` = '" + validated + "' ";
 
 			query += "WHERE `" + DataBaseElements.PAYMENT_ID + "` = '" + payment.getId() + "';";
 		} else {
@@ -44,18 +56,25 @@ public class PaymentMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "`,";
 			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "`,";
 			query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "`,";
+			query += "`" + DataBaseElements.PAYMENT_IDNEMOUSER + "`,";
 			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` ";
 
 			query += ") VALUES (";
 			//query += "'" + payment.getId() + "',";
-			query += "'" + payment.getIdSubscription() + "',";
+			if (payment.getIdSubscription() == -1) {
+				query += "NULL,";
+			} else {
+				query += "'" + payment.getIdSubscription() + "',";
+			}
+			
 			query += "'" + payment.getAmount() + "',";
 			if (payment.getPaymentDate() == null) {
 				query += payment.getPaymentDate() + ",";
 			} else {
 				query += "'" + payment.getPaymentDate() + "',";
 			}
-			query += "'" + payment.isValidated() + "' ";
+			query += "'" + payment.getIdNemoUser() + "',";
+			query += "'" + validated + "' ";
 
 			query += ")";
 		}
@@ -66,6 +85,21 @@ public class PaymentMapper extends AbstractMapper {
 		} catch (Exception e) {
 		}
 		return nbRows;
+	}
+
+	public boolean payAmountForNemoUser(int anonymousUserId, float totalAmount, Timestamp today) {
+		Payment payment = new Payment();
+		payment.setAmount(totalAmount);
+		payment.setIdNemoUser(anonymousUserId);
+		payment.setPaymentDate(today);
+		payment.setValidated(false);
+
+		int nb = this.save(payment);
+		if (nb > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -81,7 +115,7 @@ public class PaymentMapper extends AbstractMapper {
 			obj.setAmount(row.getFloat(DataBaseElements.PAYMENT_AMOUNT));
 		}
 		if (this.hasColumn(DataBaseElements.PAYMENT_PAYMENTDATE, row)) {
-			obj.setPaymentDate(row.getDate(DataBaseElements.PAYMENT_PAYMENTDATE));
+			obj.setPaymentDate(row.getTimestamp(DataBaseElements.PAYMENT_PAYMENTDATE));
 		}
 		if (this.hasColumn(DataBaseElements.PAYMENT_VALIDATED, row)) {
 			obj.setValidated(row.getBoolean(DataBaseElements.PAYMENT_VALIDATED));

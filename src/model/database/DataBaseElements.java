@@ -59,6 +59,7 @@ public class DataBaseElements {
 	public static final String PAYMENT = "payment";
 	public static final String PAYMENT_ID = "id";
 	public static final String PAYMENT_IDSUBSCRIPTION = "id_subscription";
+	public static final String PAYMENT_IDNEMOUSER = "id_nemo_user";
 	public static final String PAYMENT_AMOUNT = "amount";
 	public static final String PAYMENT_PAYMENTDATE = "payment_date";
 	public static final String PAYMENT_VALIDATED = "validated";
@@ -154,5 +155,16 @@ public class DataBaseElements {
 	public class PriceTypeCode {
 		public static final String GUARANTEE = "guarantee";
 		public static final String RENT = "rent";
+	}
+
+	public class BikeUsageColSet {
+
+		public static final String FULL = DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ID + ", "
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDNEMOUSER + ", "
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE + ", "
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKE + ", "
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDENDSTORAGE + ", "
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_STARTDATE + ", "
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE;
 	}
 }

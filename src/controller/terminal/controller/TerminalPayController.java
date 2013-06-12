@@ -4,7 +4,12 @@
  */
 package controller.terminal.controller;
 
+import java.sql.Timestamp;
+import model.database.BikeUsageMapper;
+import model.database.Helper;
+import model.database.PaymentMapper;
 import model.database.PriceMapper;
+import model.database.SubscriptionMapper;
 import model.object.Price;
 
 /**
@@ -32,10 +37,18 @@ public class TerminalPayController {
 	}
 
 	public void doPay() {
-		boolean ok = true;
+		boolean rentSuccess = false;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_PAY)) {
-			//TODO : Implement Payment
-			if (ok) {
+			Timestamp today = Helper.getSqlDateNow();
+			PayAmount amountToPay = TerminalController.getAmountToPay();
+			PaymentMapper pm = new PaymentMapper();
+			boolean paymentSuccess = pm.payAmountForNemoUser(TerminalController.getAnonymousUserId(), amountToPay.getTotalAmount(), today);
+			if (paymentSuccess) {
+				BikeUsageMapper bum = new BikeUsageMapper();
+				rentSuccess = bum.rentBookedBikesForNemoUser(TerminalController.getAnonymousUserId(), today);
+			}
+
+			if (rentSuccess) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_PAY);
 			}
 		}
