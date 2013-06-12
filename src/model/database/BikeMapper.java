@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import resource.log.ProjectLogger;
 
 
@@ -92,5 +91,10 @@ public class BikeMapper extends AbstractMapper {
 			obj.setNumberOfBikes(row.getInt("numberOfBikes"));
 		}
 		return obj;
+	}
+
+	@Override
+	Object getEmptyModel() {
+		return new Bike();
 	}
 }

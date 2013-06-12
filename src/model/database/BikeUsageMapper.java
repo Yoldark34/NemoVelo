@@ -187,4 +187,9 @@ public class BikeUsageMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new BikeUsage();
+	}
 }

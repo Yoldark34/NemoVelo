@@ -154,4 +154,9 @@ public class NemoUserMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new NemoUser();
+	}
 }

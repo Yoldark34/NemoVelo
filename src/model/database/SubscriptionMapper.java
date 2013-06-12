@@ -103,4 +103,9 @@ public class SubscriptionMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new Subscription();
+	}
 }

@@ -135,7 +135,7 @@ public class PriceMapper extends AbstractMapper {
 			adapter.executeSelectQuery(query);
 			result = (Price) adapter.getModelFromRequest(this);
 		} catch (SQLException | ClassNotFoundException ex) {
-			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getPriceAmountForUnitAndDuration", ex);
 		}
 
 		return result.getAmount();
@@ -166,6 +166,7 @@ public class PriceMapper extends AbstractMapper {
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Price obj = new Price();
+
 		if (this.hasColumn(DataBaseElements.PRICE_ID, row)) {
 			obj.setId(row.getInt(DataBaseElements.PRICE_ID));
 		}
@@ -189,5 +190,10 @@ public class PriceMapper extends AbstractMapper {
 		}
 
 		return obj;
+	}
+
+	@Override
+	Object getEmptyModel() {
+		return new Price();
 	}
 }

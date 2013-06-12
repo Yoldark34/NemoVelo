@@ -89,4 +89,9 @@ public class PaymentMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new Payment();
+	}
 }
