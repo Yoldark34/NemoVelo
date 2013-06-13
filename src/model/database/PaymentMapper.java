@@ -84,12 +84,12 @@ public class PaymentMapper extends AbstractMapper {
 		return nbRows;
 	}
 
-	public boolean payAmountForNemoUser(int anonymousUserId, float totalAmount, Timestamp today, int idSubscriptiont) {
+	public boolean payAmountForNemoUser(int anonymousUserId, float totalAmount, Timestamp today, int idSubscription) {
 		Payment payment = new Payment();
 		payment.setAmount(totalAmount);
 		payment.setPaymentDate(today);
 		payment.setValidated(false);
-		payment.setIdSubscription(idSubscriptiont);
+		payment.setIdSubscription(idSubscription);
 
 		int nb = this.save(payment);
 		if (nb > 0) {

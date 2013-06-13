@@ -50,9 +50,9 @@ public class TerminalPayController {
 			subscription.setIdPrice(priceId);
 			subscription.setAmount(amountToPay.getTotalAmount());
 			subscription.setStartDate(today);
-			int idSubscriptiont = sm.save(subscription);
-			if (idSubscriptiont > 0) {
-				boolean paymentSuccess = pm.payAmountForNemoUser(TerminalController.getAnonymousUserId(), amountToPay.getTotalAmount(), today, idSubscriptiont);
+			int idSubscription = sm.save(subscription);
+			if (idSubscription > 0) {
+				boolean paymentSuccess = pm.payAmountForNemoUser(TerminalController.getAnonymousUserId(), amountToPay.getTotalAmount(), today, idSubscription);
 				if (paymentSuccess) {
 					BikeUsageMapper bum = new BikeUsageMapper();
 					rentSuccess = bum.rentBookedBikesForNemoUser(TerminalController.getAnonymousUserId(), today);
