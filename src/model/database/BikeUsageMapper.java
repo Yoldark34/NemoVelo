@@ -5,17 +5,13 @@
 package model.database;
 
 import controller.terminal.controller.TerminalController;
-import java.sql.Date;
 import model.object.BikeUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.object.Bike;
 import resource.log.ProjectLogger;
-import sun.misc.JavaxSecurityAuthKerberosAccess;
 
 
 /**

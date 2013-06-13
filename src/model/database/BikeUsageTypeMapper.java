@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import model.object.Bike;
 import resource.log.ProjectLogger;
 
 

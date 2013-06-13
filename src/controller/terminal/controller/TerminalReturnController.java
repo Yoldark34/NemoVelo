@@ -33,7 +33,7 @@ public class TerminalReturnController {
 	 * @return Qunetity of available storages
 	 */
 	public int getMaxAvailableStorages() {
-		int result = 0;
+		int result;
 		StorageMapper sm = new StorageMapper();
 		result = sm.getAvailableStoragesForTerminal(TerminalController.getTerminal().getId());
 

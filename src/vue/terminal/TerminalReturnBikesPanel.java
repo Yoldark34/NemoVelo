@@ -42,7 +42,7 @@ class TerminalReturnBikesPanel extends JPanel {
 	}
 
 	private void initialize() {
-		bikePanels = new ArrayList<TerminalReturnBikePanel>();
+		bikePanels = new ArrayList<>();
 	}
 
 	public void setBikeQuantity(int quantity) {

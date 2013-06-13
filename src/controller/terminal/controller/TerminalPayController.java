@@ -9,8 +9,6 @@ import model.database.BikeUsageMapper;
 import model.database.Helper;
 import model.database.PaymentMapper;
 import model.database.PriceMapper;
-import model.database.SubscriptionMapper;
-import model.object.Price;
 
 /**
  *
