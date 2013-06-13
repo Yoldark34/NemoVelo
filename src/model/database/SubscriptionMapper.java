@@ -24,6 +24,7 @@ public class SubscriptionMapper extends AbstractMapper {
 
 	public int save(Subscription subscription) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (subscription.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.SUBSCRIPTION + "` SET ";
@@ -43,6 +44,12 @@ public class SubscriptionMapper extends AbstractMapper {
 			}
 
 			query += "WHERE `" + DataBaseElements.SUBSCRIPTION_ID + "` = '" + subscription.getId() + "';";
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.SUBSCRIPTION + " (";
 			//query +=  "`" + DataBaseElements.SUBSCRIPTION_ID + "`,";
@@ -69,14 +76,14 @@ public class SubscriptionMapper extends AbstractMapper {
 			}
 
 			query += ")";
-		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
-		return nbRows;
 	}
 
 	@Override
