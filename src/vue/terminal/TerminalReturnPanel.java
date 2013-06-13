@@ -19,7 +19,6 @@ import java.util.HashSet;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /**
@@ -28,6 +27,8 @@ import javax.swing.JScrollPane;
  */
 public class TerminalReturnPanel extends AbstractTerminalPanel implements TerminalReturn {
 
+	//UI Constants
+	private static final int ROW_HEIGHT = 32;
 	//Content
 	JComboBox cboNbBikes;
 	TerminalReturnBikesPanel panelBikes;
@@ -61,7 +62,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 			GridBagLayout gbl = new GridBagLayout();
 			{
 				gbl.columnWidths = new int[]{0, 0, 0};
-				gbl.rowHeights = new int[]{32, 0, 0};
+				gbl.rowHeights = new int[]{ROW_HEIGHT, 0, 0};
 				gbl.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 				gbl.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 			}
@@ -70,7 +71,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 			JLabel lblNombreDeVelos = new JLabel("Nombre de velos a rendre");
 			{//Position
 				gbc = new GridBagConstraints();
-				gbc.insets = new Insets(0, 0, 5, 5);
+				gbc.insets = new Insets(0, 5, 5, 5);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridx = 0;
 				gbc.gridy = 0;
@@ -87,13 +88,13 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 				});
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 0);
+					gbc.insets = new Insets(0, 0, 5, 5);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 1;
 					gbc.gridy = 0;
 				}
 			}
-			add(this.cboNbBikes, gbc);
+			this.getPanelContent().add(this.cboNbBikes, gbc);
 
 			JScrollPane scrollPane = new JScrollPane();
 			{
@@ -104,7 +105,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 				{//Position
 					gbc = new GridBagConstraints();
 					gbc.gridwidth = 2;
-					gbc.insets = new Insets(0, 0, 0, 5);
+					gbc.insets = new Insets(0, 5, 0, 5);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 0;
 					gbc.gridy = 1;
