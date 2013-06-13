@@ -95,10 +95,10 @@ public class SubscriptionMapper extends AbstractMapper {
 			obj.setAmount(row.getFloat(DataBaseElements.SUBSCRIPTION_AMOUNT));
 		}
 		if (this.hasColumn(DataBaseElements.SUBSCRIPTION_STARTDATE, row)) {
-			obj.setStartDate(row.getDate(DataBaseElements.SUBSCRIPTION_STARTDATE));
+			obj.setStartDate(row.getTimestamp(DataBaseElements.SUBSCRIPTION_STARTDATE));
 		}
 		if (this.hasColumn(DataBaseElements.SUBSCRIPTION_ENDDATE, row)) {
-			obj.setEndDate(row.getDate(DataBaseElements.SUBSCRIPTION_ENDDATE));
+			obj.setEndDate(row.getTimestamp(DataBaseElements.SUBSCRIPTION_ENDDATE));
 		}
 
 		return obj;

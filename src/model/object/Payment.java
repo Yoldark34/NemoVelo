@@ -17,7 +17,6 @@ public class Payment {
 	private float amount;
 	private Timestamp paymentDate;
 	private boolean validated;
-	private int idNemoUser;
 
 	public int getId() {
 		return id;
@@ -59,11 +58,4 @@ public class Payment {
 		this.validated = validated;
 	}
 
-	public int getIdNemoUser() {
-		return idNemoUser;
-	}
-
-	public void setIdNemoUser(int idNemoUser) {
-		this.idNemoUser = idNemoUser;
-	}
 }

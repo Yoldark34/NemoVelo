@@ -10,7 +10,7 @@ import model.database.Helper;
 import model.database.PaymentMapper;
 import model.database.PriceMapper;
 import model.database.SubscriptionMapper;
-import model.object.Price;
+import model.object.Subscription;
 
 /**
  *
@@ -42,10 +42,21 @@ public class TerminalPayController {
 			Timestamp today = Helper.getSqlDateNow();
 			PayAmount amountToPay = TerminalController.getAmountToPay();
 			PaymentMapper pm = new PaymentMapper();
+			SubscriptionMapper sm = new SubscriptionMapper();
+			PriceMapper prm = new PriceMapper();
 			boolean paymentSuccess = pm.payAmountForNemoUser(TerminalController.getAnonymousUserId(), amountToPay.getTotalAmount(), today);
 			if (paymentSuccess) {
-				BikeUsageMapper bum = new BikeUsageMapper();
-				rentSuccess = bum.rentBookedBikesForNemoUser(TerminalController.getAnonymousUserId(), today);
+				Subscription subscription = new Subscription();
+				subscription.setIdNemoUser(TerminalController.getAnonymousUserId());
+				int priceId = prm.getPriceId(amountToPay.getDurationUnit(), amountToPay.getDuration());
+				subscription.setIdPrice(priceId);
+				subscription.setAmount(amountToPay.getTotalAmount());
+				subscription.setStartDate(today);
+				int nbRow = sm.save(subscription);
+				if (nbRow > 0) {
+					BikeUsageMapper bum = new BikeUsageMapper();
+					rentSuccess = bum.rentBookedBikesForNemoUser(TerminalController.getAnonymousUserId(), today);
+				}
 			}
 
 			if (rentSuccess) {

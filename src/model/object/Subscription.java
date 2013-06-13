@@ -5,6 +5,7 @@
 package model.object;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -12,12 +13,12 @@ import java.sql.Date;
  */
 public class Subscription {
 
-	private int id;
+	private int id = -1;
 	private int idPrice;
 	private int idNemoUser;
 	private float amount;
-	private Date startDate;
-	private Date endDate;
+	private Timestamp startDate;
+	private Timestamp endDate;
 
 	public int getId() {
 		return id;
@@ -51,19 +52,19 @@ public class Subscription {
 		this.amount = amount;
 	}
 
-	public Date getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public Timestamp getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
 }

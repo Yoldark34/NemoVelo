@@ -71,7 +71,6 @@ public class PaymentMapper extends AbstractMapper {
 			} else {
 				query += "'" + payment.getPaymentDate() + "',";
 			}
-			query += "'" + payment.getIdNemoUser() + "',";
 			query += "'" + validated + "' ";
 
 			query += ")";
@@ -88,7 +87,6 @@ public class PaymentMapper extends AbstractMapper {
 	public boolean payAmountForNemoUser(int anonymousUserId, float totalAmount, Timestamp today) {
 		Payment payment = new Payment();
 		payment.setAmount(totalAmount);
-		payment.setIdNemoUser(anonymousUserId);
 		payment.setPaymentDate(today);
 		payment.setValidated(false);
 

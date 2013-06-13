@@ -85,7 +85,7 @@ public class PriceMapper extends AbstractMapper {
 			adapter.executeSelectQuery(query);
 			results = (ArrayList<Price>) adapter.getModelsFromRequest(this);
 		} catch (SQLException | ClassNotFoundException ex) {
-			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getUniquePriceDurationUnitForRent", ex);
 		}
 
 		return results;
@@ -109,7 +109,7 @@ public class PriceMapper extends AbstractMapper {
 			adapter.executeSelectQuery(query);
 			results = (ArrayList<Price>) adapter.getModelsFromRequest(this);
 		} catch (SQLException | ClassNotFoundException ex) {
-			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getPriceDurationForRent", ex);
 		}
 
 		return results;
@@ -157,10 +157,34 @@ public class PriceMapper extends AbstractMapper {
 			adapter.executeSelectQuery(query);
 			result = (Price) adapter.getModelFromRequest(this);
 		} catch (SQLException | ClassNotFoundException ex) {
-			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getFirstGuarantee", ex);
 		}
 
 		return result;
+	}
+
+	public int getPriceId(String durationUnit, int duration) {
+		String query;
+		Price result = new Price();
+
+		query = "SELECT ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_ID;
+		query += " FROM ";
+		query += DataBaseElements.PRICE + " " + DataBaseElements.ALIAS_PRICE;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_DURATION + " = '" + duration + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_PRICE + "." + DataBaseElements.PRICE_DURATIONUNIT + " = '" + durationUnit + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (Price) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getPriceId", ex);
+		}
+
+		return result.getId();
 	}
 
 	@Override

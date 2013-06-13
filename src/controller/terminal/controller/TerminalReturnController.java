@@ -4,10 +4,12 @@
  */
 package controller.terminal.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import model.database.BikeMapper;
+import model.database.Helper;
 import model.database.StorageMapper;
 import model.object.Bike;
 
@@ -68,6 +70,7 @@ public class TerminalReturnController {
 		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)
 				|| TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_ASK_PAY)) {
+			Timestamp today = Helper.getSqlDateNow();
 			//TODO : Know if a rest is to pay
 			payMissing = true;
 			if (payMissing) {
