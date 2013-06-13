@@ -9,6 +9,7 @@ import java.sql.Date;
 import model.object.BikeUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -111,7 +112,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		query += " AND ";
 		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
 		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.STOCKAGE + "'";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.STOCKING + "'";
 		query += " AND ";
 		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
 
@@ -123,7 +124,7 @@ public class BikeUsageMapper extends AbstractMapper {
 			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
 		}
 
-		if (result != null) {
+		if (!result.isEmpty()) {
 			java.sql.Timestamp sqlToday = Helper.getSqlDateNow();
 			NemoUserMapper num = new NemoUserMapper();
 
@@ -157,6 +158,66 @@ public class BikeUsageMapper extends AbstractMapper {
 		return false;
 	}
 
+	public boolean rentBookedBikesForNemoUser(int anonymousUserId, Timestamp today) {
+		String query;
+		ArrayList<BikeUsage> result = null;
+		BikeUsage bu;
+		boolean error = false;
+		int nbRow;
+
+		query = "SELECT ";
+		query += DataBaseElements.BikeUsageColSet.FULL;
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + " ";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.BOOKING + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDNEMOUSER + " = " + anonymousUserId;
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (ArrayList<BikeUsage>) adapter.getModelsFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+		}
+
+		if (!result.isEmpty()) {
+			for (int i = 0; i < result.size(); i++) {
+				bu = result.get(i);
+				bu.setEndDate(today);
+				//TODO ask user to login before or create anonymous user
+				//bu.setIdNemoUser();
+				nbRow = this.save(bu);
+				if (nbRow <= 0) {
+					error = true;
+				}
+
+				bu.setId(-1);
+
+				BikeUsageTypeMapper btm = new BikeUsageTypeMapper();
+				try {
+					bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.RENTING).getId());
+					bu.setStartDate(today);
+					bu.setEndDate(null);
+
+					nbRow = this.save(bu);
+					if (nbRow <= 0) {
+						error = true;
+					}
+				} catch (SQLException | ClassNotFoundException ex) {
+					ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+				}
+
+				return !error;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		BikeUsage obj = new BikeUsage();
@@ -186,5 +247,10 @@ public class BikeUsageMapper extends AbstractMapper {
 		}
 
 		return obj;
+	}
+
+	@Override
+	Object getEmptyModel() {
+		return new BikeUsage();
 	}
 }

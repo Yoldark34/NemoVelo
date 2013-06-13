@@ -75,4 +75,9 @@ public class StorageTypeMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new StorageType();
+	}
 }

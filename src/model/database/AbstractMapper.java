@@ -16,6 +16,8 @@ public abstract class AbstractMapper {
 
 	abstract Object populateModel(ResultSet row) throws SQLException;
 
+	abstract Object getEmptyModel();
+
 	public boolean hasColumn(String columnName, ResultSet res) throws SQLException {
 		ResultSetMetaData rsmd = res.getMetaData();
 		int columns = rsmd.getColumnCount();

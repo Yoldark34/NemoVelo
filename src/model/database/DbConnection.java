@@ -109,10 +109,15 @@ public class DbConnection {
 	}
 
 	public Object getModelFromRequest(AbstractMapper callClass) throws SQLException, ClassNotFoundException {
-		Object myObj = new Object();
-		this.results.next();
-		myObj = callClass.populateModel(this.results);
+		Object myObj;
+
+		if (this.results.next()) {
+			myObj = callClass.populateModel(this.results);
+		} else {
+			return callClass.getEmptyModel();
+		}
 		this.closeConnection();
+
 		return myObj;
 	}
 }

@@ -105,4 +105,9 @@ public class UserTypeMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new UserType();
+	}
 }

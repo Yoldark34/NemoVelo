@@ -92,4 +92,9 @@ public class ContactMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new Contact();
+	}
 }

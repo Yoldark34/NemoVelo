@@ -8,6 +8,8 @@ import model.object.Storage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -54,6 +56,34 @@ public class StorageMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	public int getAvailableStoragesForTerminal(int terminalId) {
+		String query;
+		Storage result = new Storage();
+
+		query = "SELECT ";
+		query += "count( * ) AS 'numberOfStorages'";
+		query += " FROM ";
+		query += DataBaseElements.TERMINAL + " " + DataBaseElements.ALIAS_TERMINAL + ", ";
+		query += DataBaseElements.STOCK + " " + DataBaseElements.ALIAS_STOCK + ", ";
+		query += DataBaseElements.STORAGE + " " + DataBaseElements.ALIAS_STORAGE;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID + " = " + DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_IDSTOCK + " = " + DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (Storage) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return result.getNumberOfStorages();
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		Storage obj = new Storage();
@@ -66,7 +96,15 @@ public class StorageMapper extends AbstractMapper {
 		if (this.hasColumn(DataBaseElements.STORAGE_IDSTORAGETYPE, row)) {
 			obj.setIdStorageType(row.getInt(DataBaseElements.STORAGE_IDSTORAGETYPE));
 		}
+		if (this.hasColumn("numberOfStorages", row)) {
+			obj.setNumberOfStorages(row.getInt("numberOfStorages"));
+		}
 
 		return obj;
+	}
+
+	@Override
+	Object getEmptyModel() {
+		return new Storage();
 	}
 }

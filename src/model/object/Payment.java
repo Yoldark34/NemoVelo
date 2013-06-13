@@ -4,7 +4,7 @@
  */
 package model.object;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -12,11 +12,12 @@ import java.sql.Date;
  */
 public class Payment {
 
-	private int id;
-	private int idSubscription;
+	private int id = -1;
+	private int idSubscription = -1;
 	private float amount;
-	private Date paymentDate;
+	private Timestamp paymentDate;
 	private boolean validated;
+	private int idNemoUser;
 
 	public int getId() {
 		return id;
@@ -42,11 +43,11 @@ public class Payment {
 		this.amount = amount;
 	}
 
-	public Date getPaymentDate() {
+	public Timestamp getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(Timestamp paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
@@ -56,5 +57,13 @@ public class Payment {
 
 	public void setValidated(boolean validated) {
 		this.validated = validated;
+	}
+
+	public int getIdNemoUser() {
+		return idNemoUser;
+	}
+
+	public void setIdNemoUser(int idNemoUser) {
+		this.idNemoUser = idNemoUser;
 	}
 }

@@ -86,4 +86,9 @@ public class UsagePossibilityMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new UsagePossibility();
+	}
 }

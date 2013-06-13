@@ -13,6 +13,7 @@ public class Storage {
 	private int id;
 	private int idStock;
 	private int idStorageType;
+	private int numberOfStorages;
 
 	public int getId() {
 		return id;
@@ -36,5 +37,13 @@ public class Storage {
 
 	public void setIdStorageType(int idStorageType) {
 		this.idStorageType = idStorageType;
+	}
+
+	public int getNumberOfStorages() {
+		return numberOfStorages;
+	}
+
+	public void setNumberOfStorages(int numberOfStorages) {
+		this.numberOfStorages = numberOfStorages;
 	}
 }

@@ -87,4 +87,9 @@ public class StockMapper extends AbstractMapper {
 
 		return obj;
 	}
+
+	@Override
+	Object getEmptyModel() {
+		return new Stock();
+	}
 }

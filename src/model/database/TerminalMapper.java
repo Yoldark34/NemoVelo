@@ -73,6 +73,11 @@ public class TerminalMapper extends AbstractMapper {
 		return obj;
 	}
 
+	@Override
+	Object getEmptyModel() {
+		return new Terminal();
+	}
+
 	public Terminal getTerminal(int numero) {
 		DbConnection adapter = DbConnection.getDbConnection();
 		Terminal myTerminal = null;
