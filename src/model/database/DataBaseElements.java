@@ -59,7 +59,6 @@ public class DataBaseElements {
 	public static final String PAYMENT = "payment";
 	public static final String PAYMENT_ID = "id";
 	public static final String PAYMENT_IDSUBSCRIPTION = "id_subscription";
-	public static final String PAYMENT_IDNEMOUSER = "id_nemo_user";
 	public static final String PAYMENT_AMOUNT = "amount";
 	public static final String PAYMENT_PAYMENTDATE = "payment_date";
 	public static final String PAYMENT_VALIDATED = "validated";

@@ -46,7 +46,6 @@ public class PaymentMapper extends AbstractMapper {
 			} else {
 				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = '" + payment.getPaymentDate() + "',";
 			}
-			query += "`" + DataBaseElements.PAYMENT_IDNEMOUSER + "` = '" + payment.getIdNemoUser() + "',";
 			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` = '" + validated + "' ";
 
 			query += "WHERE `" + DataBaseElements.PAYMENT_ID + "` = '" + payment.getId() + "';";
@@ -56,7 +55,6 @@ public class PaymentMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "`,";
 			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "`,";
 			query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "`,";
-			query += "`" + DataBaseElements.PAYMENT_IDNEMOUSER + "`,";
 			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` ";
 
 			query += ") VALUES (";
