@@ -8,6 +8,8 @@ import model.object.Subscription;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -84,6 +86,28 @@ public class SubscriptionMapper extends AbstractMapper {
 			}
 			return idResult;
 		}
+	}
+
+	public ArrayList<Subscription> getSubscriptionsForNemoUserFromBikes(int idNemoUser) {
+		String query;
+		ArrayList<Subscription> results = new ArrayList<>();
+
+		query = "SELECT ";
+		query += "*";
+		query += " FROM ";
+		query += DataBaseElements.SUBSCRIPTION + " " + DataBaseElements.ALIAS_SUBSCRIPTION;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_SUBSCRIPTION + "." + DataBaseElements.SUBSCRIPTION_IDNEMOUSER + " = '" + idNemoUser + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			results = (ArrayList<Subscription>) adapter.getModelsFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getUniquePriceDurationUnitForRent", ex);
+		}
+
+		return results;
 	}
 
 	@Override

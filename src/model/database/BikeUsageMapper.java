@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.object.Bike;
@@ -216,6 +217,86 @@ public class BikeUsageMapper extends AbstractMapper {
 			}
 		}
 		return false;
+	}
+
+	public int getNemoUserIdFromBikes(Set<Integer> bikeSerialNumbers) {
+		String query;
+		BikeUsage result = null;
+
+		query = "SELECT ";
+		query += DataBaseElements.BikeUsageColSet.FULL;
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + " ";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKE;
+		query += " IN ";
+		query += " ( ";
+		int size = bikeSerialNumbers.size() - 1;
+		for (Integer idBike : bikeSerialNumbers) {
+			query += "'" + idBike + "'";
+			if (size != 0) {
+				query += ", ";
+			}
+			size--;
+		}
+		query += " ) ";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (BikeUsage) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+		}
+
+		return result.getIdNemoUser();
+	}
+
+	public ArrayList<BikeUsage> getBikesFromNemoUserAndDateForBikes(int idNemoUser, Timestamp startDate, Set<Integer> bikeSerialNumbers) {
+		String query;
+		ArrayList<BikeUsage> result = null;
+
+		query = "SELECT ";
+		query += DataBaseElements.BikeUsageColSet.FULL;
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + " ";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKE;
+		query += " IN ";
+		query += " ( ";
+		int size = bikeSerialNumbers.size() - 1;
+		for (Integer idBike : bikeSerialNumbers) {
+			query += "'" + idBike + "'";
+			if (size != 0) {
+				query += ", ";
+			}
+			size--;
+		}
+		query += " ) ";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDNEMOUSER + " = '" + idNemoUser + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_STARTDATE + " = '" + startDate + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (ArrayList<BikeUsage>) adapter.getModelsFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+		}
+
+		return result;
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class TerminalPayController {
 			subscription.setIdNemoUser(TerminalController.getAnonymousUserId());
 			int priceId = prm.getPriceId(amountToPay.getDurationUnit(), amountToPay.getDuration());
 			subscription.setIdPrice(priceId);
-			subscription.setAmount(amountToPay.getTotalAmount());
+			subscription.setAmount(amountToPay.getRentAmount());
 			subscription.setStartDate(today);
 			int idSubscription = sm.save(subscription);
 			if (idSubscription > 0) {
