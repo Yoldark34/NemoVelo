@@ -4,7 +4,6 @@
  */
 package model.object;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import model.database.DataBaseElements;

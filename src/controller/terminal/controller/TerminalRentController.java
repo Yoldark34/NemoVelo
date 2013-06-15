@@ -37,7 +37,7 @@ public class TerminalRentController {
 	 * @return quantity of available bikes
 	 */
 	public int getMaxAvailableBikes() {
-		int result = 0;
+		int result;
 		result = this.bikeMapper.getAvailableBikesForThisTerminal(this.terminal.getId());
 		//Auto cancel?
 		if (result == 0) {

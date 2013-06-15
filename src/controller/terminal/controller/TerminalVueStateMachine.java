@@ -92,6 +92,7 @@ class TerminalVueStateMachine {
 				break;
 			case VUE_RETURN:
 				TerminalController.getMainVue().displayTerminalReturn();
+				TerminalController.getMainVue().getTerminalReturn().init();
 				break;
 			case VUE_RETURN_SUMMARY:
 				TerminalController.getMainVue().displayTerminalReturnSummary();
