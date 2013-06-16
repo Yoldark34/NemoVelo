@@ -4,12 +4,16 @@
  */
 package vue.terminal;
 
+import controller.terminal.controller.TerminalReturnController;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +24,12 @@ import javax.swing.JPanel;
  */
 class TerminalReturnBikesPanel extends JPanel {
 
+	//GUI constants
+	private static final int ROW_HEIGHT = 32;
+	//Content
 	List<TerminalReturnBikePanel> bikePanels;
+	List<Integer> selectedBikeSerialNumbers;
+	Set<Integer> rentedBikeSerialNumbers;
 
 	public TerminalReturnBikesPanel(LayoutManager lm, boolean bln) {
 		super(lm, bln);
@@ -46,7 +55,62 @@ class TerminalReturnBikesPanel extends JPanel {
 	}
 
 	public void setBikeQuantity(int quantity) {
-		//TODO : Implement
+		GridBagLayout gbl;
+		int[] rowHeights;
+		double[] rowWeights;
+		GridBagConstraints gbc;
+		TerminalReturnBikePanel bikePanel;
+
+		{//Remove old panels
+			for (TerminalReturnBikePanel panel : this.bikePanels) {
+				//From GUI
+				this.remove(panel);
+			}
+			//From panel list
+			this.bikePanels.clear();
+		}
+
+		{//Add new Panels
+			//One panel per line
+			gbl = new GridBagLayout();
+			{//Layout settings
+				gbl.columnWidths = new int[]{0, 0};
+				gbl.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+				{//Rows
+					rowHeights = new int[quantity + 1];
+					rowWeights = new double[quantity + 1];
+					for (int i = 0; i < quantity; i++) {
+						rowHeights[i] = ROW_HEIGHT;
+						rowWeights[i] = 0.0;
+					}
+					rowHeights[quantity] = 0;
+					rowWeights[quantity] = Double.MIN_VALUE;
+					gbl.rowHeights = rowHeights;
+					gbl.rowWeights = rowWeights;
+				}
+			}
+			this.setLayout(gbl);
+			//As many panels as specified quantity
+			for (int i = 0; i < quantity; i++) {
+				bikePanel = new TerminalReturnBikePanel(i);
+				{//Constraints
+					gbc = new GridBagConstraints();
+					gbc.insets = new Insets(0, 0, 5, 0);
+					gbc.fill = GridBagConstraints.BOTH;
+					gbc.gridx = 0;
+					gbc.gridy = i;
+				}
+				//Add to panel list
+				this.add(bikePanel, gbc);
+				//Add to GUI
+				this.bikePanels.add(bikePanel);
+			}
+		}
+
+		this.rentedBikeSerialNumbers = TerminalReturnController.getTerminalReturnController().getRentedBikeSerialNumbers();
+		this.selectedBikeSerialNumbers = new ArrayList<Integer>(quantity);
+
+		this.validate();
 	}
 
 	private class TerminalReturnBikePanel extends JPanel {
@@ -87,7 +151,7 @@ class TerminalReturnBikesPanel extends JPanel {
 			}
 			setLayout(gbl);
 
-			JLabel lblBikeNumber = new JLabel("Velo N\u00B0 de série : ");
+			JLabel lblBikeNumber = new JLabel("Vélo " + (this.bikeIndex + 1) + ", N\u00B0 de série : ");
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.fill = GridBagConstraints.VERTICAL;

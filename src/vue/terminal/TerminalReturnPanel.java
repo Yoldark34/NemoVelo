@@ -31,6 +31,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 	private static final int ROW_HEIGHT = 32;
 	//Content
 	JComboBox cboNbBikes;
+	JScrollPane scrollPane;
 	TerminalReturnBikesPanel panelBikes;
 	//Actions
 	private JButton btnReturn;
@@ -84,6 +85,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 					@Override
 					public void itemStateChanged(ItemEvent ie) {
 						panelBikes.setBikeQuantity(((Integer) cboNbBikes.getSelectedItem()).intValue());
+						scrollPane.validate();
 					}
 				});
 				{//Position
@@ -96,11 +98,14 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 			}
 			this.getPanelContent().add(this.cboNbBikes, gbc);
 
-			JScrollPane scrollPane = new JScrollPane();
+
+			this.panelBikes = new TerminalReturnBikesPanel();
+
+			this.scrollPane = new JScrollPane();
 			{
-				this.panelBikes = new TerminalReturnBikesPanel();
+				this.scrollPane.setWheelScrollingEnabled(true);
 				//The view port contains the panel which allows to handle bikes
-				scrollPane.setViewportView(this.panelBikes);
+				this.scrollPane.setViewportView(this.panelBikes);
 
 				{//Position
 					gbc = new GridBagConstraints();
@@ -111,7 +116,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 					gbc.gridy = 1;
 				}
 			}
-			this.getPanelContent().add(scrollPane, gbc);
+			this.getPanelContent().add(this.scrollPane, gbc);
 		}
 
 		{//Actions
