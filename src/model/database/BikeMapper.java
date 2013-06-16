@@ -86,7 +86,7 @@ public class BikeMapper extends AbstractMapper {
 		ArrayList<Bike> results = new ArrayList<>();
 
 		query = "SELECT ";
-		query += DataBaseElements.ALIAS_BIKE + " " + DataBaseElements.BIKE_ID;
+		query += DataBaseElements.ALIAS_BIKE + "." + DataBaseElements.BIKE_ID;
 		query += " FROM ";
 		query += DataBaseElements.TERMINAL + " " + DataBaseElements.ALIAS_TERMINAL + ", ";
 		query += DataBaseElements.STOCK + " " + DataBaseElements.ALIAS_STOCK + ", ";
