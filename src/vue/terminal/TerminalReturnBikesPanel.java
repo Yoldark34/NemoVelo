@@ -5,10 +5,8 @@
 package vue.terminal;
 
 import controller.terminal.controller.TerminalReturnController;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
@@ -24,12 +22,10 @@ import javax.swing.JPanel;
  */
 class TerminalReturnBikesPanel extends JPanel {
 
-	//GUI constants
-	private static final int ROW_HEIGHT = 32;
 	//Content
-	List<TerminalReturnBikePanel> bikePanels;
-	List<Integer> selectedBikeSerialNumbers;
-	Set<Integer> rentedBikeSerialNumbers;
+	private List<TerminalReturnBikePanel> bikePanels;
+	private List<Integer> selectedBikeSerialNumbers;
+	private Set<Integer> rentedBikeSerialNumbers;
 
 	public TerminalReturnBikesPanel(LayoutManager lm, boolean bln) {
 		super(lm, bln);
@@ -80,7 +76,7 @@ class TerminalReturnBikesPanel extends JPanel {
 					rowHeights = new int[quantity + 1];
 					rowWeights = new double[quantity + 1];
 					for (int i = 0; i < quantity; i++) {
-						rowHeights[i] = ROW_HEIGHT;
+						rowHeights[i] = TerminalMainFrame.ROW_HEIGHT;
 						rowWeights[i] = 0.0;
 					}
 					rowHeights[quantity] = 0;
@@ -95,7 +91,7 @@ class TerminalReturnBikesPanel extends JPanel {
 				bikePanel = new TerminalReturnBikePanel(i);
 				{//Constraints
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 0);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, 0);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 0;
 					gbc.gridy = i;
@@ -155,7 +151,7 @@ class TerminalReturnBikesPanel extends JPanel {
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.fill = GridBagConstraints.VERTICAL;
-				gbc.insets = new Insets(0, 5, 0, 5);
+				gbc.insets = new Insets(0, TerminalMainFrame.HORIZONTAL_GAP, 0, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.anchor = GridBagConstraints.EAST;
 				gbc.gridx = 0;
 				gbc.gridy = 0;

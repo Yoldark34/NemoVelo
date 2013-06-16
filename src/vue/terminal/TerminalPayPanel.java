@@ -26,8 +26,6 @@ import javax.swing.JTextField;
  */
 public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalPay {
 
-	//UI Constants
-	private static final int ROW_HEIGHT = 32;
 	//Content
 	private JTextField textDuration;
 	private JTextField textPricePerBike;
@@ -66,7 +64,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 		{//Content
 			gbl.columnWidths = new int[]{0, 42, 0, 0, 0, 0, 0};
 			//The white space have at least the specified row height
-			gbl.rowHeights = new int[]{0, 0, 0, ROW_HEIGHT, 0, 0, ROW_HEIGHT, 0, 0, 0, 0, 0};
+			gbl.rowHeights = new int[]{0, 0, 0, TerminalMainFrame.ROW_HEIGHT, 0, 0, TerminalMainFrame.ROW_HEIGHT, 0, 0, 0, 0, 0};
 			gbl.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 			gbl.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 			this.getPanelContent().setLayout(gbl);
@@ -79,7 +77,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					{//Position
 						gbc = new GridBagConstraints();
 						gbc.gridwidth = 2;
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.HORIZONTAL;
 						gbc.gridx = 1;
 						gbc.gridy = 1;
@@ -93,7 +91,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					this.textPricePerBike.setEditable(false);
 					{//Position
 						gbc = new GridBagConstraints();
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.HORIZONTAL;
 						gbc.gridx = 3;
 						gbc.gridy = 1;
@@ -105,7 +103,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 				JLabel lblVelo = new JLabel("\u20AC / v\u00E9lo");
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 5);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.gridx = 4;
 					gbc.gridy = 1;
 				}
@@ -119,7 +117,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					this.textQuantity.setEditable(false);
 					{//Position
 						gbc = new GridBagConstraints();
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.HORIZONTAL;
 						gbc.gridx = 3;
 						gbc.gridy = 2;
@@ -134,7 +132,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					{//Position
 						gbc = new GridBagConstraints();
 						gbc.gridwidth = 2;
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.anchor = GridBagConstraints.EAST;
 						gbc.gridx = 1;
 						gbc.gridy = 2;
@@ -150,7 +148,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					this.textRentPrice.setColumns(10);
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 5);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.HORIZONTAL;
 					gbc.gridx = 3;
 					gbc.gridy = 4;
@@ -164,7 +162,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					{//Position
 						gbc = new GridBagConstraints();
 						gbc.gridwidth = 2;
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.anchor = GridBagConstraints.EAST;
 						gbc.gridx = 1;
 						gbc.gridy = 4;
@@ -180,7 +178,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					this.textGuarantee.setColumns(10);
 					{//Position
 						gbc = new GridBagConstraints();
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.HORIZONTAL;
 						gbc.gridx = 3;
 						gbc.gridy = 5;
@@ -194,7 +192,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					{//Position
 						gbc = new GridBagConstraints();
 						gbc.gridwidth = 2;
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.anchor = GridBagConstraints.EAST;
 						gbc.gridx = 1;
 						gbc.gridy = 5;
@@ -210,7 +208,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					this.textFinalPrice.setColumns(10);
 					{//Position
 						gbc = new GridBagConstraints();
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.HORIZONTAL;
 						gbc.gridx = 3;
 						gbc.gridy = 7;
@@ -224,7 +222,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					{//Position
 						gbc = new GridBagConstraints();
 						gbc.gridwidth = 2;
-						gbc.insets = new Insets(0, 0, 5, 5);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.anchor = GridBagConstraints.EAST;
 						gbc.gridx = 1;
 						gbc.gridy = 7;
@@ -239,7 +237,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					gbc = new GridBagConstraints();
 					gbc.anchor = GridBagConstraints.WEST;
 					gbc.gridwidth = 2;
-					gbc.insets = new Insets(0, 0, 5, 5);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.gridx = 2;
 					gbc.gridy = 9;
 				}
@@ -250,7 +248,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					gbc = new GridBagConstraints();
 					gbc.anchor = GridBagConstraints.WEST;
 					gbc.gridwidth = 2;
-					gbc.insets = new Insets(0, 0, 0, 5);
+					gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.gridx = 2;
 					gbc.gridy = 10;
 				}

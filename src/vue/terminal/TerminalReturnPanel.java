@@ -27,8 +27,6 @@ import javax.swing.JScrollPane;
  */
 public class TerminalReturnPanel extends AbstractTerminalPanel implements TerminalReturn {
 
-	//UI Constants
-	private static final int ROW_HEIGHT = 32;
 	//Content
 	JComboBox cboNbBikes;
 	JScrollPane scrollPane;
@@ -63,7 +61,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 			GridBagLayout gbl = new GridBagLayout();
 			{
 				gbl.columnWidths = new int[]{0, 0, 0};
-				gbl.rowHeights = new int[]{ROW_HEIGHT, 0, 0};
+				gbl.rowHeights = new int[]{TerminalMainFrame.ROW_HEIGHT, 0, 0};
 				gbl.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 				gbl.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 			}
@@ -72,7 +70,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 			JLabel lblNombreDeVelos = new JLabel("Nombre de velos a rendre");
 			{//Position
 				gbc = new GridBagConstraints();
-				gbc.insets = new Insets(0, 5, 5, 5);
+				gbc.insets = new Insets(0, TerminalMainFrame.HORIZONTAL_GAP, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridx = 0;
 				gbc.gridy = 0;
@@ -90,7 +88,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 				});
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 5);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 1;
 					gbc.gridy = 0;
@@ -110,7 +108,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 				{//Position
 					gbc = new GridBagConstraints();
 					gbc.gridwidth = 2;
-					gbc.insets = new Insets(0, 5, 0, 5);
+					gbc.insets = new Insets(0, TerminalMainFrame.HORIZONTAL_GAP, 0, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 0;
 					gbc.gridy = 1;

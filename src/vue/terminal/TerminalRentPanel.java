@@ -27,10 +27,6 @@ import vue.common.ValidityPanel;
  */
 public class TerminalRentPanel extends AbstractTerminalPanel implements TerminalRent {
 
-	//Maximal amount of bikes that can be selected
-	private static final int ROWHEIGHT = 32;
-	private static final int VERTICAL_GAP = 5;
-	private static final int HORIZONTAL_GAP = 5;
 	//Panel to manage informations
 	private GridBagLayout gblInformations;
 	//First line (number of bikes
@@ -70,8 +66,8 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 		{//Contenu
 			this.gblInformations = new GridBagLayout();
 			{
-				this.gblInformations.columnWidths = new int[]{0, 0, 0, ROWHEIGHT, 0};
-				this.gblInformations.rowHeights = new int[]{ROWHEIGHT, ROWHEIGHT, 0};
+				this.gblInformations.columnWidths = new int[]{0, 0, 0, TerminalMainFrame.ROW_HEIGHT, 0};
+				this.gblInformations.rowHeights = new int[]{TerminalMainFrame.ROW_HEIGHT, TerminalMainFrame.ROW_HEIGHT, 0};
 				this.gblInformations.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 				this.gblInformations.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 			}
@@ -101,7 +97,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 					}
 					{
 						gbc = new GridBagConstraints();
-						gbc.insets = new Insets(0, 0, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.BOTH;
 						gbc.gridwidth = 2;
 						gbc.gridx = 1;
@@ -116,7 +112,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 					{
 						gbc = new GridBagConstraints();
 						gbc.fill = GridBagConstraints.VERTICAL;
-						gbc.insets = new Insets(0, HORIZONTAL_GAP, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.insets = new Insets(0, TerminalMainFrame.HORIZONTAL_GAP, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.anchor = GridBagConstraints.EAST;
 						gbc.gridx = 0;
 						gbc.gridy = 0;
@@ -128,7 +124,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				{
 					gbc = new GridBagConstraints();
 					gbc.fill = GridBagConstraints.BOTH;
-					gbc.insets = new Insets(0, 0, VERTICAL_GAP, 0);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, 0);
 					gbc.gridx = 3;
 					gbc.gridy = 0;
 				}
@@ -144,7 +140,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 					}
 					{
 						gbc = new GridBagConstraints();
-						gbc.insets = new Insets(0, 0, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.BOTH;
 						gbc.gridx = 1;
 						gbc.gridy = 1;
@@ -164,7 +160,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 					}
 					{
 						gbc = new GridBagConstraints();
-						gbc.insets = new Insets(0, 0, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.BOTH;
 						gbc.gridx = 2;
 						gbc.gridy = 1;
@@ -178,7 +174,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 					{
 						gbc = new GridBagConstraints();
 						gbc.fill = GridBagConstraints.VERTICAL;
-						gbc.insets = new Insets(0, HORIZONTAL_GAP, VERTICAL_GAP, HORIZONTAL_GAP);
+						gbc.insets = new Insets(0, TerminalMainFrame.HORIZONTAL_GAP, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.anchor = GridBagConstraints.EAST;
 						gbc.gridx = 0;
 						gbc.gridy = 1;
@@ -190,7 +186,7 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				{
 					gbc = new GridBagConstraints();
 					gbc.fill = GridBagConstraints.BOTH;
-					gbc.insets = new Insets(0, 0, VERTICAL_GAP, 0);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, 0);
 					gbc.gridx = 3;
 					gbc.gridy = 1;
 				}
