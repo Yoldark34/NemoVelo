@@ -11,7 +11,8 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,8 +25,7 @@ class TerminalReturnBikesPanel extends JPanel {
 
 	//Content
 	private List<TerminalReturnBikePanel> bikePanels;
-	private List<Integer> selectedBikeSerialNumbers;
-	private Set<Integer> rentedBikeSerialNumbers;
+	private Vector<Integer> rentedBikeSerialNumbers;
 
 	public TerminalReturnBikesPanel(LayoutManager lm, boolean bln) {
 		super(lm, bln);
@@ -47,7 +47,8 @@ class TerminalReturnBikesPanel extends JPanel {
 	}
 
 	private void initialize() {
-		bikePanels = new ArrayList<>();
+		this.bikePanels = new ArrayList<>();
+		this.rentedBikeSerialNumbers = new Vector<Integer>();
 	}
 
 	public void setBikeQuantity(int quantity) {
@@ -66,6 +67,9 @@ class TerminalReturnBikesPanel extends JPanel {
 			this.bikePanels.clear();
 		}
 
+		this.rentedBikeSerialNumbers.clear();
+		this.rentedBikeSerialNumbers.addAll(TerminalReturnController.getTerminalReturnController().getRentedBikeSerialNumbers());
+		
 		{//Add new Panels
 			//One panel per line
 			gbl = new GridBagLayout();
@@ -102,9 +106,6 @@ class TerminalReturnBikesPanel extends JPanel {
 				this.bikePanels.add(bikePanel);
 			}
 		}
-
-		this.rentedBikeSerialNumbers = TerminalReturnController.getTerminalReturnController().getRentedBikeSerialNumbers();
-		this.selectedBikeSerialNumbers = new ArrayList<Integer>(quantity);
 
 		this.validate();
 	}
@@ -161,6 +162,7 @@ class TerminalReturnBikesPanel extends JPanel {
 			this.comboBikeSerialNumber = new JComboBox();
 			{
 				lblBikeNumber.setLabelFor(this.comboBikeSerialNumber);
+				this.comboBikeSerialNumber.setModel(new DefaultComboBoxModel(rentedBikeSerialNumbers));
 				{//Position
 					gbc = new GridBagConstraints();
 					gbc.fill = GridBagConstraints.BOTH;
