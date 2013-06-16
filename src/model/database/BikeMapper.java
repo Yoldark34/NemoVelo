@@ -92,7 +92,7 @@ public class BikeMapper extends AbstractMapper {
 		query += DataBaseElements.STOCK + " " + DataBaseElements.ALIAS_STOCK + ", ";
 		query += DataBaseElements.STORAGE + " " + DataBaseElements.ALIAS_STORAGE + ", ";
 		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
-		query += DataBaseElements.BIKE_ID + " " + DataBaseElements.ALIAS_BIKE + ", ";
+		query += DataBaseElements.BIKE + " " + DataBaseElements.ALIAS_BIKE + ", ";
 		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + " ";
 		query += " WHERE ";
 		query += DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID + " = " + DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_IDSTOCK;
