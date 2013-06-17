@@ -4,6 +4,7 @@
  */
 package vue.terminal;
 
+import controller.terminal.controller.TerminalController;
 import controller.terminal.controller.TerminalReturnController;
 import controller.terminal.interfacesGUI.TerminalReturn;
 import java.awt.GridBagConstraints;
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -126,7 +128,13 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 					@Override
 					public void actionPerformed(ActionEvent ae) {
 						//TODO : Construct the list of bike serial numbers
-						TerminalReturnController.getTerminalReturnController().doReturn(new HashSet<Integer>());
+						Set bikeSerialNumbers;
+						bikeSerialNumbers = panelBikes.getBikeSerialNumbers();
+						if (bikeSerialNumbers.size() == panelBikes.getBikeQuantity()) {
+							TerminalReturnController.getTerminalReturnController().doReturn(bikeSerialNumbers);
+						} else {
+							TerminalController.getMainVue().showWarning("Vous avez séléctionné des numéros de vélos en double.");
+						}
 					}
 				});
 			}

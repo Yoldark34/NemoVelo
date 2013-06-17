@@ -10,7 +10,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -110,6 +112,19 @@ class TerminalReturnBikesPanel extends JPanel {
 		this.validate();
 	}
 
+	public int getBikeQuantity() {
+		return this.bikePanels.size();
+	}
+
+	public Set<Integer> getBikeSerialNumbers() {
+		Set<Integer> result;
+		result = new HashSet<Integer>();
+		for (TerminalReturnBikePanel bikePanel : this.bikePanels) {
+			result.add(bikePanel.getBikeSerialNumber());
+		}
+		return result;
+	}
+
 	private class TerminalReturnBikePanel extends JPanel {
 
 		private int bikeIndex;
@@ -173,10 +188,10 @@ class TerminalReturnBikesPanel extends JPanel {
 			this.add(comboBikeSerialNumber, gbc);
 		}
 
-		public int getBikeSerialNumber() {
-			int result;
+		public Integer getBikeSerialNumber() {
+			Integer result;
 
-			result = ((Integer) this.comboBikeSerialNumber.getSelectedItem()).intValue();
+			result = ((Integer) this.comboBikeSerialNumber.getSelectedItem());
 
 			return result;
 		}
