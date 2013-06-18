@@ -112,7 +112,7 @@ public class BikeMapper extends AbstractMapper {
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();
 			adapter.executeSelectQuery(query);
-			results = (ArrayList<Bike>) adapter.getModelFromRequest(this);
+			results = (ArrayList<Bike>) adapter.getModelsFromRequest(this);
 		} catch (SQLException | ClassNotFoundException ex) {
 			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
 		}

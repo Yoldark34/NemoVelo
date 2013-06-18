@@ -4,6 +4,7 @@
  */
 package model.database;
 
+import tools.Helper;
 import model.object.NemoUser;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -4,6 +4,7 @@
  */
 package model.database;
 
+import tools.Helper;
 import controller.terminal.controller.TerminalController;
 import model.object.BikeUsage;
 import java.sql.ResultSet;
@@ -76,7 +77,12 @@ public class BikeUsageMapper extends AbstractMapper {
 			} else {
 				query += "'" + bikeUsage.getEndDate() + "',";
 			}
-			query += "'" + bikeUsage.getComments() + "' ";
+			if (bikeUsage.getComments() == null) {
+				query += "NULL ";
+			} else {
+				query += "'" + bikeUsage.getComments() + "' ";
+			}
+			
 
 			query += ")";
 		}

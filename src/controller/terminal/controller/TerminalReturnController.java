@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
-import model.database.Helper;
+import tools.Helper;
 import model.database.PriceMapper;
 import model.database.ReturnAmountMapper;
 import model.database.StorageMapper;
@@ -75,7 +75,7 @@ public class TerminalReturnController {
 	 */
 	public void doReturn(Set<Integer> bikeSerialNumbers) {
 		bikeSerialNumbers.add(1);
-		boolean payMissing;
+		boolean payMissing = false;
 		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)
 				|| TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_ASK_PAY)) {
@@ -88,10 +88,14 @@ public class TerminalReturnController {
 			ArrayList<Subscription> subscriptions = sm.getSubscriptionsForNemoUserFromBikes(idNemoUser);
 
 			ReturnAmount ra;
-			ArrayList<BikeUsage> bikes = new ArrayList<>();
+			ArrayList<BikeUsage> bikes;
 			PayAmount pa = new PayAmount();
 			Price p;
+			float totalSubscription = 0;
+			float totalReturn = 0;
 			for (int i = 0; i < subscriptions.size(); i++) {
+				totalSubscription += subscriptions.get(i).getAmount();
+				totalReturn += ram.GetAmountOfReturnForSubscription(subscriptions.get(i).getId());
 				p = pm.GetPriceFromId(subscriptions.get(i).getIdPrice());
 				bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
 				for (int j = 0; j < bikes.size(); j++) {
@@ -100,12 +104,17 @@ public class TerminalReturnController {
 					pa.setDurationPricePerUnit(p.getAmount());
 					Timestamp start = (Timestamp) bikes.get(j).getStartDate();
 					int finalDuration = Helper.getDifference(start, today, p.getPriceDurationUnit());
-					pa.setDuration(finalDuration);
+					if (finalDuration < p.getPriceDuration()) {
+						finalDuration = p.getPriceDuration();
+					}
+					pa.setMultiplier(Helper.divide(finalDuration, p.getPriceDuration()));
+					pa.setDuration(p.getPriceDuration());
 					ra = new ReturnAmount();
 					ra.setAmount(pa.getRentAmount());
 					ra.setIdSubscription(subscriptions.get(i).getId());
 					ra.setReturnDate(today);
 					ram.save(ra);
+					totalReturn += ra.getAmount();
 				}
 			}
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
