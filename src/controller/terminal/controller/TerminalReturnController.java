@@ -108,15 +108,7 @@ public class TerminalReturnController {
 					ram.save(ra);
 				}
 			}
-			//TODO : Know if a rest is to pay
-			payMissing = true;
-			if (payMissing) {
-				//TODO : Actions to do before person pays
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
-			} else {
-				//TODO : Actions to return
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
-			}
+			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
 		}
 	}
 }
