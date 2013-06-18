@@ -46,7 +46,9 @@ public class TerminalReturnController {
 		int result;
 		StorageMapper sm = new StorageMapper();
 		result = sm.getAvailableStoragesForTerminal(TerminalController.getTerminal().getId());
-
+		if (result == 0) {
+			doAutoCancel("Aucun emplacement disponible sur ce terminal.");
+		}
 		return result;
 	}
 
@@ -120,6 +122,25 @@ public class TerminalReturnController {
 			}
 			TerminalController.setRentSummary(summary);
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
+		}
+	}
+
+	private void doCancel() {
+		boolean ok = true;
+		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_CANCEL)) {
+			//TODO : Implement Cancel
+			if (ok) {
+				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CANCEL);
+			}
+		}
+	}
+
+	private void doAutoCancel(String msg) {
+		if (TerminalController.isDoAutoCancel()) {
+			if (TerminalController.isDoAlertBeforeAutoCancel()) {
+				TerminalController.getMainVue().showWarning(msg);
+			}
+			doCancel();
 		}
 	}
 }
