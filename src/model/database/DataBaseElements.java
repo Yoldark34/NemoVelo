@@ -14,6 +14,7 @@ public class DataBaseElements {
 	public static final String ALIAS_NEMOUSERTYPE = "nut";
 	public static final String ALIAS_PAYMENT = "p";
 	public static final String ALIAS_PRICE = "pr";
+	public static final String ALIAS_RETURNAMOUNT = "r";
 	public static final String ALIAS_STOCK = "s";
 	public static final String ALIAS_STORAGE = "st";
 	public static final String ALIAS_STORAGETYPE = "stt";
@@ -70,6 +71,11 @@ public class DataBaseElements {
 	public static final String PRICE_DESCRIPTION = "description";
 	public static final String PRICE_DURATION = "price_duration";
 	public static final String PRICE_DURATIONUNIT = "price_duration_unit";
+	public static final String RETURNAMOUNT = "return_amount";
+	public static final String RETURNAMOUNT_ID = "id";
+	public static final String RETURNAMOUNT_IDSUBSCRIPTION = "id_subscription";
+	public static final String RETURNAMOUNT_AMOUNT = "amount";
+	public static final String RETURNAMOUNT_RETURNDATE = "return_date";
 	public static final String STOCK = "stock";
 	public static final String STOCK_ID = "id";
 	public static final String STOCK_CODE = "code";

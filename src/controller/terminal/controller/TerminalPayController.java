@@ -6,7 +6,7 @@ package controller.terminal.controller;
 
 import java.sql.Timestamp;
 import model.database.BikeUsageMapper;
-import model.database.Helper;
+import tools.Helper;
 import model.database.PaymentMapper;
 import model.database.PriceMapper;
 import model.database.SubscriptionMapper;

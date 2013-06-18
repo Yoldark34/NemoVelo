@@ -9,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import model.object.ReturnAmount;
+import resource.log.ProjectLogger;
 
 
 /**
@@ -18,10 +20,10 @@ import model.object.ReturnAmount;
  */
 public class ReturnAmountMapper extends AbstractMapper {
 
-	public ArrayList<Payment> getAllPayments() throws SQLException, ClassNotFoundException {
+	public ArrayList<ReturnAmount> getAllReturnAmount() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
-		adapter.executeSelectQuery("Select * from " + DataBaseElements.PAYMENT);
-		return (ArrayList<Payment>) adapter.getModelsFromRequest(this);
+		adapter.executeSelectQuery("Select * from " + DataBaseElements.RETURNAMOUNT);
+		return (ArrayList<ReturnAmount>) adapter.getModelsFromRequest(this);
 	}
 
 	public int save(ReturnAmount returnAmount) {
@@ -29,32 +31,32 @@ public class ReturnAmountMapper extends AbstractMapper {
 		String query;
 
 		if (returnAmount.getId() != -1) {
-			query = "UPDATE `" + DataBaseElements.PAYMENT + "` SET ";
-			//query += "`"+DataBaseElements.PAYMENT_ID+"` = '"+payment.getId()+"',";Can't be updated because used in where
+			query = "UPDATE `" + DataBaseElements.RETURNAMOUNT + "` SET ";
+			//query += "`"+DataBaseElements.RETURNAMOUNT_ID+"` = '"+returnAmount.getId()+"',";Can't be updated because used in where
 
 			if (returnAmount.getIdSubscription() == -1) {
-				query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "` = NULL,";
+				query += "`" + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION + "` = NULL,";
 			} else {
-				query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "` = '" + returnAmount.getIdSubscription() + "',";
+				query += "`" + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION + "` = '" + returnAmount.getIdSubscription() + "',";
 			}
 			
-			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "` = '" + returnAmount.getAmount() + "',";
+			query += "`" + DataBaseElements.RETURNAMOUNT_AMOUNT + "` = '" + returnAmount.getAmount() + "',";
 			if (returnAmount.getReturnDate() == null) {
-				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = " + returnAmount.getReturnDate() + ",";
+				query += "`" + DataBaseElements.RETURNAMOUNT_RETURNDATE + "` = " + returnAmount.getReturnDate() + ",";
 			} else {
-				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = '" + returnAmount.getReturnDate() + "'";
+				query += "`" + DataBaseElements.RETURNAMOUNT_RETURNDATE + "` = '" + returnAmount.getReturnDate() + "'";
 			}
 
-			query += " WHERE `" + DataBaseElements.PAYMENT_ID + "` = '" + returnAmount.getId() + "';";
+			query += " WHERE `" + DataBaseElements.RETURNAMOUNT_ID + "` = '" + returnAmount.getId() + "';";
 		} else {
-			query = "INSERT INTO " + DataBaseElements.PAYMENT + " (";
-			//query +=  "`" + DataBaseElements.PAYMENT_ID + "`,";
-			query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "`,";
-			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "`,";
-			query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` ";
+			query = "INSERT INTO " + DataBaseElements.RETURNAMOUNT + " (";
+			//query +=  "`" + DataBaseElements.RETURNAMOUNT_ID + "`,";
+			query += "`" + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION + "`,";
+			query += "`" + DataBaseElements.RETURNAMOUNT_AMOUNT + "`,";
+			query += "`" + DataBaseElements.RETURNAMOUNT_RETURNDATE + "` ";
 
 			query += ") VALUES (";
-			//query += "'" + payment.getId() + "',";
+			//query += "'" + returnAmount.getId() + "',";
 			if (returnAmount.getIdSubscription() == -1) {
 				query += "NULL,";
 			} else {
@@ -79,20 +81,44 @@ public class ReturnAmountMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	public float GetAmountOfReturnForSubscription(int subscriptionId) {
+		String query;
+		ReturnAmount result = new ReturnAmount();
+
+		query = "SELECT ";
+		query += DataBaseElements.ALIAS_RETURNAMOUNT + "." + DataBaseElements.RETURNAMOUNT_AMOUNT;
+		query += " FROM ";
+		query += DataBaseElements.RETURNAMOUNT + " " + DataBaseElements.ALIAS_RETURNAMOUNT;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_RETURNAMOUNT + "." + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION + " = '" + subscriptionId + "'";
+		query += " GROUP BY ";
+		query += DataBaseElements.ALIAS_RETURNAMOUNT + "." + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION;
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (ReturnAmount) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return result.getAmount();
+	}
+
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
-		Payment obj = new Payment();
-		if (this.hasColumn(DataBaseElements.PAYMENT_ID, row)) {
-			obj.setId(row.getInt(DataBaseElements.PAYMENT_ID));
+		ReturnAmount obj = new ReturnAmount();
+		if (this.hasColumn(DataBaseElements.RETURNAMOUNT_ID, row)) {
+			obj.setId(row.getInt(DataBaseElements.RETURNAMOUNT_ID));
 		}
-		if (this.hasColumn(DataBaseElements.PAYMENT_IDSUBSCRIPTION, row)) {
-			obj.setIdSubscription(row.getInt(DataBaseElements.PAYMENT_IDSUBSCRIPTION));
+		if (this.hasColumn(DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION, row)) {
+			obj.setIdSubscription(row.getInt(DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION));
 		}
-		if (this.hasColumn(DataBaseElements.PAYMENT_AMOUNT, row)) {
-			obj.setAmount(row.getFloat(DataBaseElements.PAYMENT_AMOUNT));
+		if (this.hasColumn(DataBaseElements.RETURNAMOUNT_AMOUNT, row)) {
+			obj.setAmount(row.getFloat(DataBaseElements.RETURNAMOUNT_AMOUNT));
 		}
-		if (this.hasColumn(DataBaseElements.PAYMENT_PAYMENTDATE, row)) {
-			obj.setPaymentDate(row.getTimestamp(DataBaseElements.PAYMENT_PAYMENTDATE));
+		if (this.hasColumn(DataBaseElements.RETURNAMOUNT_RETURNDATE, row)) {
+			obj.setReturnDate(row.getTimestamp(DataBaseElements.RETURNAMOUNT_RETURNDATE));
 		}
 
 		return obj;

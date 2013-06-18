@@ -15,6 +15,7 @@ public class PayAmount {
 	private float durationPricePerUnit;
 	private int bikeQuantity;
 	private float guaranteeAmount;
+	private float multiplier = 1;
 
 	public void setDuration(int duration) {
 		this.duration = duration;
@@ -53,7 +54,7 @@ public class PayAmount {
 	}
 
 	public float getRentAmount() {
-		return getDurationPricePerUnit() * getBikeQuantity();
+		return getDurationPricePerUnit() * getBikeQuantity() * multiplier;
 	}
 
 	public float getGuaranteeAmount() {
@@ -62,5 +63,13 @@ public class PayAmount {
 
 	public float getTotalAmount() {
 		return getRentAmount() + getGuaranteeAmount();
+	}
+
+	public float getMultiplier() {
+		return multiplier;
+	}
+
+	public void setMultiplier(float multiplier) {
+		this.multiplier = multiplier;
 	}
 }
