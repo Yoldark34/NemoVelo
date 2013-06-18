@@ -12,11 +12,21 @@ import java.util.ArrayList;
  */
 public class RentSummary extends ArrayList<BikeRentSummmary> {
 
-	public float supplementToPay() {
+	private float guaranteePerBike;
+
+	public float supplementAmount() {
 		float supplement = 0;
 		for (BikeRentSummmary bikeSummary : this) {
 			supplement += bikeSummary.getAmountToPay();
 		}
 		return supplement;
+	}
+
+	public void setGuaranteePerBike(float guaranteePerBike) {
+		this.guaranteePerBike = guaranteePerBike;
+	}
+
+	public float guaranteeAmount() {
+		return guaranteePerBike * this.size();
 	}
 }

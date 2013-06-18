@@ -34,7 +34,7 @@ public class TerminalReturnSummaryController {
 
 	public void doConfirm() {
 		//TODO : Know if a rest is to pay
-		if (this.getRentSummary().supplementToPay() > 0) {
+		if (this.getRentSummary().supplementAmount() > 0) {
 			//TODO : Actions to do before person pays
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
 		} else {

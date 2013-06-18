@@ -29,7 +29,7 @@ public class TerminalPayController {
 
 	public PayAmount getAmountToPay() {
 		PriceMapper pm = new PriceMapper();
-		TerminalController.getAmountToPay().setGuaranteeAmount(pm.getFirstGuarantee().getAmount());
+		TerminalController.getAmountToPay().setGuaranteePerBikeAmount(pm.getFirstGuarantee().getAmount());
 		TerminalController.getAmountToPay().setDurationPricePerUnit(pm.getPriceAmountForUnitAndDuration(TerminalController.getAmountToPay().getDuration(), TerminalController.getAmountToPay().getDurationUnit()));
 		PayAmount result = TerminalController.getAmountToPay();
 

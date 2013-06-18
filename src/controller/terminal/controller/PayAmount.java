@@ -14,7 +14,7 @@ public class PayAmount {
 	private String durationUnit;
 	private float durationPricePerUnit;
 	private int bikeQuantity;
-	private float guaranteeAmount;
+	private float guaranteePerBikeAmount;
 	private float multiplier = 1;
 
 	public void setDuration(int duration) {
@@ -33,8 +33,8 @@ public class PayAmount {
 		this.bikeQuantity = bikeQuantity;
 	}
 
-	public void setGuaranteeAmount(float guaranteeAmount) {
-		this.guaranteeAmount = guaranteeAmount;
+	public void setGuaranteePerBikeAmount(float guaranteePerBikeAmount) {
+		this.guaranteePerBikeAmount = guaranteePerBikeAmount;
 	}
 
 	public int getDuration() {
@@ -58,7 +58,7 @@ public class PayAmount {
 	}
 
 	public float getGuaranteeAmount() {
-		return guaranteeAmount;
+		return guaranteePerBikeAmount * getBikeQuantity();
 	}
 
 	public float getTotalAmount() {
