@@ -74,9 +74,6 @@ public class TerminalReturnController {
 	 * @param bikeSerialNumbers Set of Serial numbers of the returned bikes
 	 */
 	public void doReturn(Set<Integer> bikeSerialNumbers) {
-		bikeSerialNumbers.add(1);
-		boolean payMissing = false;
-		boolean ok = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)
 				|| TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_ASK_PAY)) {
 			Timestamp today = Helper.getSqlDateNow();
@@ -91,14 +88,12 @@ public class TerminalReturnController {
 			ArrayList<BikeUsage> bikes;
 			PayAmount pa = new PayAmount();
 			Price p;
-			float totalSubscription = 0;
-			float totalReturn = 0;
+			RentSummary summary = new RentSummary();
 			for (int i = 0; i < subscriptions.size(); i++) {
-				totalSubscription += subscriptions.get(i).getAmount();
-				totalReturn += ram.GetAmountOfReturnForSubscription(subscriptions.get(i).getId());
 				p = pm.GetPriceFromId(subscriptions.get(i).getIdPrice());
 				bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
 				for (int j = 0; j < bikes.size(); j++) {
+					BikeRentSummmary brs = new BikeRentSummmary();
 					pa.setBikeQuantity(bikes.size());
 					pa.setDurationUnit(p.getPriceDurationUnit());
 					pa.setDurationPricePerUnit(p.getAmount());
@@ -114,9 +109,16 @@ public class TerminalReturnController {
 					ra.setIdSubscription(subscriptions.get(i).getId());
 					ra.setReturnDate(today);
 					ram.save(ra);
-					totalReturn += ra.getAmount();
+					brs.setDurationUnit(p.getPriceDurationUnit());
+					brs.setInitialDuration(p.getPriceDuration());
+					brs.setInitialAmount(p.getAmount());
+					brs.setFinalAmount(pa.getRentAmount());
+					brs.setFinalDuration(finalDuration);
+					brs.setSerialNumber(bikes.get(j).getIdBike());
+					summary.add(brs);
 				}
 			}
+			TerminalController.setRentSummary(summary);
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
 		}
 	}
