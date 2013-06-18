@@ -19,7 +19,27 @@ public class TerminalReturnSummaryController {
 		return terminalReturnSummaryController;
 	}
 
+	/**
+	 * Returns the summary of the rental
+	 *
+	 * @return summary of the rental
+	 */
+	public RentSummary getRentSummary() {
+		RentSummary summary = new RentSummary();
+
+		//TODO : Initialize the summary
+
+		return summary;
+	}
+
 	public void doConfirm() {
-		TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CONFIRM_RETURN);
+		//TODO : Know if a rest is to pay
+		if (this.getRentSummary().supplementToPay() > 0) {
+			//TODO : Actions to do before person pays
+			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
+		} else {
+			//TODO : Actions to return
+			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
+		}
 	}
 }
