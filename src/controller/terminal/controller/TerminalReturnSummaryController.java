@@ -25,9 +25,7 @@ public class TerminalReturnSummaryController {
 	 * @return summary of the rental
 	 */
 	public RentSummary getRentSummary() {
-		RentSummary summary = new RentSummary();
-
-		//TODO : Initialize the summary
+		RentSummary summary = TerminalController.getRentSummary();
 
 		return summary;
 	}
