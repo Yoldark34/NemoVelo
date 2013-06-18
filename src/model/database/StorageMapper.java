@@ -82,6 +82,24 @@ public class StorageMapper extends AbstractMapper {
 		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
 		query += " AND ";
 		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+		query += " AND ";
+		query += " NOT EXISTS ";
+		query += " ( ";
+		query += " SELECT *";
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + "2" + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + "2";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_IDENDSTORAGE + " = " + DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_ID;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "2" + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "2" + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.STOCKING + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_STARTDATE + " > " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_STARTDATE;
+		query += " ) ";
 
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();
