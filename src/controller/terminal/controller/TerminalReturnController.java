@@ -120,6 +120,7 @@ public class TerminalReturnController {
 					summary.add(brs);
 				}
 			}
+			summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
 			TerminalController.setRentSummary(summary);
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
 		}
