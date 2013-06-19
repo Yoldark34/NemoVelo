@@ -85,11 +85,15 @@ public class BikeUsage {
 	}
 
 	public void setComments(String comments) {
-		if (comments.length() <= DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS) {
-			this.comments = comments;
+		if (comments != null) {
+			if (comments.length() <= DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS) {
+				this.comments = comments;
+			} else {
+				ProjectLogger.log(this, Level.WARNING,
+						String.format("The size of the comments can't have a length > %1$d", DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS));
+			}
 		} else {
-			ProjectLogger.log(this, Level.WARNING,
-					String.format("The size of the comments can't have a length > %1$d", DataBaseElements.SIZEOF_BIKEUSAGE_COMMENTS));
+			this.comments = comments;
 		}
 	}
 }

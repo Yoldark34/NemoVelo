@@ -88,7 +88,7 @@ public class SubscriptionMapper extends AbstractMapper {
 		}
 	}
 
-	public ArrayList<Subscription> getSubscriptionsForNemoUserFromBikes(int idNemoUser) {
+	public ArrayList<Subscription> getSubscriptionsFromNemoUser(int idNemoUser) {
 		String query;
 		ArrayList<Subscription> results = new ArrayList<>();
 

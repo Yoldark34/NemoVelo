@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
+import model.database.NemoUserMapper;
 import tools.Helper;
 import model.database.PriceMapper;
 import model.database.ReturnAmountMapper;
@@ -17,6 +18,7 @@ import model.database.StorageMapper;
 import model.database.SubscriptionMapper;
 import model.object.Bike;
 import model.object.BikeUsage;
+import model.object.NemoUser;
 import model.object.Price;
 import model.object.ReturnAmount;
 import model.object.Subscription;
@@ -83,46 +85,53 @@ public class TerminalReturnController {
 			SubscriptionMapper sm = new SubscriptionMapper();
 			PriceMapper pm = new PriceMapper();
 			ReturnAmountMapper ram = new ReturnAmountMapper();
-			int idNemoUser = bum.getNemoUserIdFromBikes(bikeSerialNumbers);
-			ArrayList<Subscription> subscriptions = sm.getSubscriptionsForNemoUserFromBikes(idNemoUser);
+			NemoUserMapper num = new NemoUserMapper();
+			ArrayList<NemoUser> nemoUsers = num.getNemoUsersFromBikes(bikeSerialNumbers);
 
-			ReturnAmount ra;
-			ArrayList<BikeUsage> bikes;
-			PayAmount pa = new PayAmount();
-			Price p;
-			RentSummary summary = new RentSummary();
-			for (int i = 0; i < subscriptions.size(); i++) {
-				p = pm.GetPriceFromId(subscriptions.get(i).getIdPrice());
-				bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
-				for (int j = 0; j < bikes.size(); j++) {
-					BikeRentSummmary brs = new BikeRentSummmary();
-					pa.setBikeQuantity(bikes.size());
-					pa.setDurationUnit(p.getPriceDurationUnit());
-					pa.setDurationPricePerUnit(p.getAmount());
-					Timestamp start = (Timestamp) bikes.get(j).getStartDate();
-					int finalDuration = Helper.getDifference(start, today, p.getPriceDurationUnit());
-					if (finalDuration < p.getPriceDuration()) {
-						finalDuration = p.getPriceDuration();
+			if (nemoUsers.size() == 1) {
+				int idNemoUser = nemoUsers.get(0).getId();
+				ArrayList<Subscription> subscriptions = sm.getSubscriptionsFromNemoUser(idNemoUser);
+
+				ReturnAmount ra;
+				ArrayList<BikeUsage> bikes;
+				PayAmount pa = new PayAmount();
+				Price p;
+				RentSummary summary = new RentSummary();
+				for (int i = 0; i < subscriptions.size(); i++) {
+					p = pm.GetPriceFromId(subscriptions.get(i).getIdPrice());
+					bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
+					for (int j = 0; j < bikes.size(); j++) {
+						BikeRentSummmary brs = new BikeRentSummmary();
+						pa.setBikeQuantity(bikes.size());
+						pa.setDurationUnit(p.getPriceDurationUnit());
+						pa.setDurationPricePerUnit(p.getAmount());
+						Timestamp start = (Timestamp) bikes.get(j).getStartDate();
+						int finalDuration = Helper.getDifference(start, today, p.getPriceDurationUnit());
+						if (finalDuration < p.getPriceDuration()) {
+							finalDuration = p.getPriceDuration();
+						}
+						pa.setMultiplier(Helper.divide(finalDuration, p.getPriceDuration()));
+						pa.setDuration(p.getPriceDuration());
+						ra = new ReturnAmount();
+						ra.setAmount(pa.getRentAmount());
+						ra.setIdSubscription(subscriptions.get(i).getId());
+						ra.setReturnDate(today);
+						ram.save(ra);
+						brs.setDurationUnit(p.getPriceDurationUnit());
+						brs.setInitialDuration(p.getPriceDuration());
+						brs.setInitialAmount(p.getAmount());
+						brs.setFinalAmount(pa.getRentAmount());
+						brs.setFinalDuration(finalDuration);
+						brs.setSerialNumber(bikes.get(j).getIdBike());
+						summary.add(brs);
 					}
-					pa.setMultiplier(Helper.divide(finalDuration, p.getPriceDuration()));
-					pa.setDuration(p.getPriceDuration());
-					ra = new ReturnAmount();
-					ra.setAmount(pa.getRentAmount());
-					ra.setIdSubscription(subscriptions.get(i).getId());
-					ra.setReturnDate(today);
-					ram.save(ra);
-					brs.setDurationUnit(p.getPriceDurationUnit());
-					brs.setInitialDuration(p.getPriceDuration());
-					brs.setInitialAmount(p.getAmount());
-					brs.setFinalAmount(pa.getRentAmount());
-					brs.setFinalDuration(finalDuration);
-					brs.setSerialNumber(bikes.get(j).getIdBike());
-					summary.add(brs);
 				}
+				summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
+				TerminalController.setRentSummary(summary);
+				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
+			} else {
+				doAutoCancel("Ces vélos ne sont pas attribué au meme NemoUser.");
 			}
-			summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
-			TerminalController.setRentSummary(summary);
-			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
 		}
 	}
 

@@ -170,6 +170,19 @@ public class DataBaseElements {
 				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKE + ", "
 				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDENDSTORAGE + ", "
 				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_STARTDATE + ", "
-				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE;
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + ", "
+				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_COMMENTS;
+	}
+
+	public class NemoUserColSet {
+
+		public static final String FULL = DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID + ", "
+				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_LASTNAME + ", "
+				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_FIRSTNAME + ", "
+				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_EMAIL + ", "
+				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_CRYPTEDPASSWORD + ", "
+				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_BIRTHDATE + ", "
+				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_CREATEDATE;
+		public static final String MIN = DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID;
 	}
 }

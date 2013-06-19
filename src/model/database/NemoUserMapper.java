@@ -9,6 +9,7 @@ import model.object.NemoUser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Level;
 import model.object.NemoUserType;
 import resource.log.ProjectLogger;
@@ -83,6 +84,47 @@ public class NemoUserMapper extends AbstractMapper {
 		} catch (Exception e) {
 		}
 		return nbRows;
+	}
+
+	public ArrayList<NemoUser> getNemoUsersFromBikes(Set<Integer> bikeSerialNumbers) {
+		String query;
+		ArrayList<NemoUser> results = null;
+
+		query = "SELECT ";
+		query += DataBaseElements.NemoUserColSet.MIN;
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + ", ";
+		query += DataBaseElements.NEMOUSER + " " + DataBaseElements.ALIAS_NEMOUSER + " ";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDNEMOUSER;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKE;
+		query += " IN ";
+		query += " ( ";
+		int size = bikeSerialNumbers.size() - 1;
+		for (Integer idBike : bikeSerialNumbers) {
+			query += "'" + idBike + "'";
+			if (size != 0) {
+				query += ", ";
+			}
+			size--;
+		}
+		query += " ) ";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			results = (ArrayList<NemoUser>) adapter.getModelsFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+		}
+
+		return results;
 	}
 
 	public int getLastUser() {
