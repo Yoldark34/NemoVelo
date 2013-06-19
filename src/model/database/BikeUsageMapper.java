@@ -10,9 +10,11 @@ import model.object.BikeUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import resource.log.ProjectLogger;
 
 
@@ -30,6 +32,7 @@ public class BikeUsageMapper extends AbstractMapper {
 
 	public int save(BikeUsage bikeUsage) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (bikeUsage.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.BIKEUSAGE + "` SET ";
@@ -56,6 +59,13 @@ public class BikeUsageMapper extends AbstractMapper {
 			
 
 			query += "WHERE `" + DataBaseElements.BIKEUSAGE_ID + "` = '" + bikeUsage.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.BIKEUSAGE + " (";
 			//query +=  "`" + DataBaseElements.BIKEUSAGE_ID + "`,";
@@ -90,14 +100,15 @@ public class BikeUsageMapper extends AbstractMapper {
 			
 
 			query += ")";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
-		}
-		return nbRows;
 	}
 
 	public boolean bookAvailableBikesForTerminal(int terminalId, int numberOfBikes) {
@@ -141,6 +152,7 @@ public class BikeUsageMapper extends AbstractMapper {
 
 			for (int i = 0; i < numberOfBikes; i++) {
 				bu = result.get(i);
+				TerminalController.getIdBikeUsagesToResetEndDate().add(bu.getId());
 				bu.setEndDate(sqlToday);
 				//TODO ask user to login before or create anonymous user
 				//bu.setIdNemoUser();
@@ -157,10 +169,12 @@ public class BikeUsageMapper extends AbstractMapper {
 					bu.setStartDate(sqlToday);
 					bu.setEndDate(null);
 
-					this.save(bu);
+					int newId = this.save(bu);
+					TerminalController.getIdBikeUsagesToDelete().add(newId);
 				} catch (SQLException | ClassNotFoundException ex) {
 					ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
 				}
+				
 			}
 			return true;
 		}
@@ -216,9 +230,11 @@ public class BikeUsageMapper extends AbstractMapper {
 					bu.setStartDate(today);
 					bu.setEndDate(null);
 
-					nbRow = this.save(bu);
-					if (nbRow <= 0) {
+					int newId = this.save(bu);
+					if (newId <= 0) {
 						error = true;
+					} else {
+						TerminalController.getIdBikeUsagesToDelete().add(newId);
 					}
 				} catch (SQLException | ClassNotFoundException ex) {
 					ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
@@ -306,5 +322,70 @@ public class BikeUsageMapper extends AbstractMapper {
 	@Override
 	Object getEmptyModel() {
 		return new BikeUsage();
+	}
+
+	public boolean resetBikesLocationProcess(ArrayList<Integer> idBikeUsagesToResetEndDate, ArrayList<Integer> idBikeUsagesToDelete) {
+		boolean error = false;
+		boolean result;
+		for (Integer id : idBikeUsagesToResetEndDate) {
+			result = this.resetEndDateForBikeUsage(id);
+
+			if (!result ) {
+				error = true;
+			}
+		}
+		for (Integer id : idBikeUsagesToDelete) {
+			result = this.deleteBikeUsage(id);
+
+			if (!result) {
+				error = true;
+			}
+		}
+		return !error;
+	}
+
+	private boolean resetEndDateForBikeUsage(Integer id) {
+		String query;
+		int nbRows = 0;
+
+		query = "UPDATE ";
+		query += DataBaseElements.BIKEUSAGE;
+		query += " SET ";
+		query += DataBaseElements.BIKEUSAGE_ENDDATE + " = NULL";
+		query += " WHERE ";
+		query += DataBaseElements.BIKEUSAGE_ID + " = '" + id + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+
+		if (nbRows <= 0) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean deleteBikeUsage(Integer id) {
+		String query;
+		int nbRows = 0;
+
+		query = "DELETE";
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGE;
+		query += " WHERE ";
+		query += DataBaseElements.BIKEUSAGE_ID + " = '" + id + "';";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+
+		if (nbRows <= 0) {
+			return false;
+		}
+		return true;
 	}
 }

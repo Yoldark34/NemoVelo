@@ -4,9 +4,12 @@
  */
 package controller.terminal.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
 import model.database.PriceMapper;
@@ -100,12 +103,16 @@ public class TerminalRentController {
 	}
 
 	private void doCancel() {
-		boolean ok = true;
+		boolean ok;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_CANCEL)) {
+
+			BikeUsageMapper bum = new BikeUsageMapper();
+			ok = bum.resetBikesLocationProcess(TerminalController.getIdBikeUsagesToResetEndDate(), TerminalController.getIdBikeUsagesToDelete());
 			//TODO : Implement Cancel
 			if (ok) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CANCEL);
 			}
+
 		}
 	}
 
