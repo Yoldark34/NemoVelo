@@ -28,7 +28,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
 	private static final int BANNER_HEIGHT = 50;
 	private static final int BANNERSOUTH_MARGIN = 10;
-	public static final int ROW_HEIGHT = 64;
+	public static final int ROW_HEIGHT = 32;
 	public static final int VERTICAL_GAP = 5;
 	public static final int HORIZONTAL_GAP = 5;
 
