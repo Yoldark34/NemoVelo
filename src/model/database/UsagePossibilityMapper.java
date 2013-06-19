@@ -26,19 +26,27 @@ public class UsagePossibilityMapper extends AbstractMapper {
 		int nbRows = 0;
 		String query = "";
 		if (updateMode && usagePossibility.getIdBikeUsageType() != -1 && usagePossibility.getIdUserType() != -1 && usagePossibility.getIdStorageType() != -1) {
-			query = "UPDATE `" + DataBaseElements.USAGEPOSSIBILITY + "` SET ";
-			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDRENT + "` = '" + usagePossibility.getIdRent() + "',";
-			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDGUARANTEE + "` = '" + usagePossibility.getIdGuarantee() + "' ";
+			if (usagePossibility.getIdRent() != -1 && usagePossibility.getIdGuarantee() != -1) {
+				query = "UPDATE `" + DataBaseElements.USAGEPOSSIBILITY + "` SET ";
+				if (usagePossibility.getIdRent() != -1) {
+					query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDRENT + "` = '" + usagePossibility.getIdRent() + "',";
+				}
+				if (usagePossibility.getIdGuarantee() != -1) {
+					query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDGUARANTEE + "` = '" + usagePossibility.getIdGuarantee() + "' ";
+				}
 
-			query += "WHERE ";
-			query += "(";
-			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDBIKEUSAGETYPE + "` = '" + usagePossibility.getIdBikeUsageType() + "'";
-			query += " AND ";
-			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDUSERTYPE + "` = '" + usagePossibility.getIdUserType() + "'";
-			query += " AND ";
-			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDSTORAGETYPE + "` = '" + usagePossibility.getIdStorageType() + "'";
-			query += ")";
-			query += ";";
+				query += "WHERE ";
+				query += "(";
+				query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDBIKEUSAGETYPE + "` = '" + usagePossibility.getIdBikeUsageType() + "'";
+				query += " AND ";
+				query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDUSERTYPE + "` = '" + usagePossibility.getIdUserType() + "'";
+				query += " AND ";
+				query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDSTORAGETYPE + "` = '" + usagePossibility.getIdStorageType() + "'";
+				query += ")";
+				query += ";";
+			} else {
+				return 0;
+			}
 		} else if (!updateMode && usagePossibility.getIdBikeUsageType() != -1 && usagePossibility.getIdUserType() != -1 && usagePossibility.getIdStorageType() != -1) {
 			query = "INSERT INTO " + DataBaseElements.USAGEPOSSIBILITY + " (";
 			query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDBIKEUSAGETYPE + "`,";
@@ -51,9 +59,17 @@ public class UsagePossibilityMapper extends AbstractMapper {
 			query += "'" + usagePossibility.getIdBikeUsageType() + "',";
 			query += "'" + usagePossibility.getIdUserType() + "',";
 			query += "'" + usagePossibility.getIdStorageType() + "',";
-			query += "'" + usagePossibility.getIdRent() + "',";
-			query += "'" + usagePossibility.getIdGuarantee() + "' ";
+			if (usagePossibility.getIdRent() != -1) {
+				query += "'" + usagePossibility.getIdRent() + "',";
+			} else {
+				query += "NULL,";
+			}
 
+			if (usagePossibility.getIdGuarantee() != -1) {
+				query += "'" + usagePossibility.getIdGuarantee() + "' ";
+			} else {
+				query += "NULL,";
+			}
 			query += ")";
 		}
 

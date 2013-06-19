@@ -52,7 +52,12 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 		if (bikeUsageType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.BIKEUSAGETYPE + "` SET ";
 			//query += "`"+DataBaseElements.BIKEUSAGETYPE_ID+"` = '"+bikeUsageType.getId()+"',";Can't be updated because used in where
-			query += "`" + DataBaseElements.BIKEUSAGETYPE_IDPARENT + "` = '" + bikeUsageType.getId_parent_bike_usage_type() + "',";
+			if (bikeUsageType.getId_parent_bike_usage_type() == -1) {
+				query += "`" + DataBaseElements.BIKEUSAGETYPE_IDPARENT + "` = NULL,";
+			} else {
+				query += "`" + DataBaseElements.BIKEUSAGETYPE_IDPARENT + "` = '" + bikeUsageType.getId_parent_bike_usage_type() + "',";
+			}
+			
 			query += "`" + DataBaseElements.BIKEUSAGETYPE_NAME + "` = '" + bikeUsageType.getName() + "',";
 			query += "`" + DataBaseElements.BIKEUSAGETYPE_DESCRIPTION + "` = '" + bikeUsageType.getDescription() + "' ";
 
@@ -65,7 +70,12 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.BIKEUSAGETYPE_DESCRIPTION + "` ";
 			query += ") VALUES (";
 			//query += "'" + bikeUsageType.getId() + "',";
-			query += "'" + bikeUsageType.getId_parent_bike_usage_type() + "',";
+			if (bikeUsageType.getId_parent_bike_usage_type() == -1) {
+				query += "NULL,";
+			} else {
+				query += "'" + bikeUsageType.getId_parent_bike_usage_type() + "',";
+			}
+			
 			query += "'" + bikeUsageType.getName() + "',";
 			query += "'" + bikeUsageType.getDescription() + "' ";
 

@@ -39,8 +39,11 @@ public class PaymentMapper extends AbstractMapper {
 			} else {
 				query += "`" + DataBaseElements.PAYMENT_IDSUBSCRIPTION + "` = '" + payment.getIdSubscription() + "',";
 			}
-			
-			query += "`" + DataBaseElements.PAYMENT_AMOUNT + "` = '" + payment.getAmount() + "',";
+			if (payment.getAmount() != -1) {
+				query += "`" + DataBaseElements.PAYMENT_AMOUNT + "` = '" + payment.getAmount() + "',";
+			} else {
+				query += "NULL,";
+			}
 			if (payment.getPaymentDate() == null) {
 				query += "`" + DataBaseElements.PAYMENT_PAYMENTDATE + "` = " + payment.getPaymentDate() + ",";
 			} else {
@@ -64,8 +67,11 @@ public class PaymentMapper extends AbstractMapper {
 			} else {
 				query += "'" + payment.getIdSubscription() + "',";
 			}
-			
-			query += "'" + payment.getAmount() + "',";
+			if (payment.getAmount() != -1) {
+				query += "'" + payment.getAmount() + "',";
+			} else {
+				query += "NULL,";
+			}
 			if (payment.getPaymentDate() == null) {
 				query += payment.getPaymentDate() + ",";
 			} else {

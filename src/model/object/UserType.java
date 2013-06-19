@@ -15,7 +15,7 @@ import resource.log.ProjectLogger;
 public class UserType {
 
 	private int id;
-	private int idParentUserType;
+	private int idParentUserType = -1;
 	private String code;
 	private String name;
 	private String description;

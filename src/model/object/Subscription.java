@@ -16,7 +16,7 @@ public class Subscription {
 	private int id = -1;
 	private int idPrice;
 	private int idNemoUser;
-	private float amount;
+	private float amount = -1;
 	private Timestamp startDate;
 	private Timestamp endDate;
 

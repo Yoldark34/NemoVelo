@@ -15,7 +15,7 @@ import resource.log.ProjectLogger;
 public class BikeUsageType {
 
 	private int id;
-	private int id_parent_bike_usage_type;
+	private int id_parent_bike_usage_type = -1;
 	private String name;
 	private String description;
 

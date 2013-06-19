@@ -14,7 +14,7 @@ public class Payment {
 
 	private int id = -1;
 	private int idSubscription = -1;
-	private float amount;
+	private float amount = -1;
 	private Timestamp paymentDate;
 	private boolean validated;
 

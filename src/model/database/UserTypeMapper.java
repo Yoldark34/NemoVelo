@@ -30,7 +30,9 @@ public class UserTypeMapper extends AbstractMapper {
 		if (userType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.USERTYPE + "` SET ";
 			//query += "`"+DataBaseElements.USERTYPE_ID+"` = '"+userType.getId()+"',";Can't be updated because used in where
-			query += "`" + DataBaseElements.USERTYPE_IDPARENTUSERTYPE + "` = '" + userType.getIdParentUserType() + "',";
+			if (userType.getIdParentUserType() != -1) {
+				query += "`" + DataBaseElements.USERTYPE_IDPARENTUSERTYPE + "` = '" + userType.getIdParentUserType() + "',";
+			}
 			query += "`" + DataBaseElements.USERTYPE_CODE + "` = '" + userType.getCode() + "',";
 			query += "`" + DataBaseElements.USERTYPE_NAME + "` = '" + userType.getName() + "',";
 			query += "`" + DataBaseElements.USERTYPE_DESCRIPTION + "` = '" + userType.getDescription() + "' ";
@@ -46,7 +48,12 @@ public class UserTypeMapper extends AbstractMapper {
 
 			query += ") VALUES (";
 			//query += "'" + userType.getId() + "',";
-			query += "'" + userType.getIdParentUserType() + "',";
+			if (userType.getIdParentUserType() == -1) {
+				query += "NULL,";
+			} else {
+				query += "'" + userType.getIdParentUserType() + "',";
+			}
+			
 			query += "'" + userType.getCode() + "',";
 			query += "'" + userType.getName() + "',";
 			query += "'" + userType.getDescription() + "' ";

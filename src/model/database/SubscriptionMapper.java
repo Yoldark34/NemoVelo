@@ -33,7 +33,12 @@ public class SubscriptionMapper extends AbstractMapper {
 			//query += "`"+DataBaseElements.SUBSCRIPTION_ID+"` = '"+subscription.getId()+"',";Can't be updated because used in where
 			query += "`" + DataBaseElements.SUBSCRIPTION_IDPRICE + "` = '" + subscription.getIdPrice() + "',";
 			query += "`" + DataBaseElements.SUBSCRIPTION_IDNEMOUSER + "` = '" + subscription.getIdNemoUser() + "',";
-			query += "`" + DataBaseElements.SUBSCRIPTION_AMOUNT + "` = '" + subscription.getAmount() + "',";
+			if (subscription.getAmount() != -1) {
+				query += "`" + DataBaseElements.SUBSCRIPTION_AMOUNT + "` = '" + subscription.getAmount() + "',";
+			} else {
+				query += "NULL,";
+			}
+			
 			if (subscription.getStartDate() == null) {
 				query += "`" + DataBaseElements.SUBSCRIPTION_STARTDATE + "` = " + subscription.getStartDate() + ",";
 			} else {
@@ -65,7 +70,11 @@ public class SubscriptionMapper extends AbstractMapper {
 			//query += "'" + subscription.getId() + "',";
 			query += "'" + subscription.getIdPrice() + "',";
 			query += "'" + subscription.getIdNemoUser() + "',";
-			query += "'" + subscription.getAmount() + "',";
+			if (subscription.getAmount() != -1) {
+				query += "'" + subscription.getAmount() + "',";
+			} else {
+				query += "NULL,";
+			}
 			if (subscription.getStartDate() == null) {
 				query += subscription.getStartDate() + ",";
 			} else {

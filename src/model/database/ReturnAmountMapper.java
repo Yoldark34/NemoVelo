@@ -39,8 +39,11 @@ public class ReturnAmountMapper extends AbstractMapper {
 			} else {
 				query += "`" + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION + "` = '" + returnAmount.getIdSubscription() + "',";
 			}
-			
-			query += "`" + DataBaseElements.RETURNAMOUNT_AMOUNT + "` = '" + returnAmount.getAmount() + "',";
+			if (returnAmount.getAmount() != -1) {
+				query += "`" + DataBaseElements.RETURNAMOUNT_AMOUNT + "` = '" + returnAmount.getAmount() + "',";
+			} else {
+				query += "NULL,";
+			}
 			if (returnAmount.getReturnDate() == null) {
 				query += "`" + DataBaseElements.RETURNAMOUNT_RETURNDATE + "` = " + returnAmount.getReturnDate() + ",";
 			} else {
@@ -62,8 +65,11 @@ public class ReturnAmountMapper extends AbstractMapper {
 			} else {
 				query += "'" + returnAmount.getIdSubscription() + "',";
 			}
-			
-			query += "'" + returnAmount.getAmount() + "',";
+			if (returnAmount.getAmount() != -1) {
+				query += "'" + returnAmount.getAmount() + "',";
+			} else {
+				query += "NULL,";
+			}
 			if (returnAmount.getReturnDate() == null) {
 				query += returnAmount.getReturnDate() + ",";
 			} else {
