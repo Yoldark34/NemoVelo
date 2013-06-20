@@ -5,12 +5,13 @@
 package vue.terminal;
 
 import controller.terminal.controller.BikeRentSummary;
-import controller.terminal.controller.RentSummary;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -21,7 +22,89 @@ import javax.swing.JTextField;
  */
 public class TerminalReturnBikesSummariesPanel extends JPanel {
 
-	RentSummary summary;
+	private List<TerminalReturnBikeSummaryPanel> bikeSummaryPanels;
+
+	public TerminalReturnBikesSummariesPanel(LayoutManager lm, boolean bln) {
+		super(lm, bln);
+		this.initialize();
+	}
+
+	public TerminalReturnBikesSummariesPanel(LayoutManager lm) {
+		super(lm);
+		this.initialize();
+	}
+
+	public TerminalReturnBikesSummariesPanel(boolean bln) {
+		super(bln);
+		this.initialize();
+	}
+
+	public TerminalReturnBikesSummariesPanel() {
+		this.initialize();
+
+
+	}
+
+	private void initialize() {
+		this.bikeSummaryPanels = new ArrayList<>();
+	}
+
+	public void setSummary(List<BikeRentSummary> bikeRentSummaries) {
+		GridBagLayout gbl;
+		int[] rowHeights;
+		double[] rowWeights;
+		GridBagConstraints gbc;
+		TerminalReturnBikeSummaryPanel bikeSummaryPanel;
+
+		{//Remove old panels
+			for (TerminalReturnBikeSummaryPanel panel : this.bikeSummaryPanels) {
+				//From GUI
+				this.remove(panel);
+			}
+			//From panel list
+			this.bikeSummaryPanels.clear();
+		}
+
+		{//Add new Panels
+			//One panel per line
+			gbl = new GridBagLayout();
+			{//Layout settings
+				gbl.columnWidths = new int[]{0, 0};
+				gbl.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+				{//Rows
+					rowHeights = new int[bikeRentSummaries.size() + 1];
+					rowWeights = new double[bikeRentSummaries.size() + 1];
+					for (int i = 0; i < bikeRentSummaries.size(); i++) {
+						rowHeights[i] = 0;
+						rowWeights[i] = 0.0;
+					}
+					rowHeights[bikeRentSummaries.size()] = 0;
+					rowWeights[bikeRentSummaries.size()] = Double.MIN_VALUE;
+					gbl.rowHeights = rowHeights;
+					gbl.rowWeights = rowWeights;
+				}
+			}
+			this.setLayout(gbl);
+			//As many panels as bike summaries
+			for (int i = 0; i < bikeRentSummaries.size(); i++) {
+				bikeSummaryPanel = new TerminalReturnBikeSummaryPanel(bikeRentSummaries.get(i));
+				{//Constraints
+					gbc = new GridBagConstraints();
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, 0);
+					gbc.fill = GridBagConstraints.BOTH;
+					gbc.gridx = 0;
+					gbc.gridy = i;
+				}
+				//Add to panel list
+				this.add(bikeSummaryPanel, gbc);
+				//Add to GUI
+				this.bikeSummaryPanels.add(bikeSummaryPanel);
+			}
+		}
+
+		this.validate();
+	}
+
 
 	private class TerminalReturnBikeSummaryPanel extends JPanel {
 
@@ -62,8 +145,8 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 
 			gbl = new GridBagLayout();
 			{
-				gbl.columnWidths = new int[]{64, 0, 64, 0, 64, 0, 0, 0};
-				gbl.rowHeights = new int[]{32, 32, 32, 0};
+				gbl.columnWidths = new int[]{2 * TerminalMainFrame.ROW_HEIGHT, 0, 2 * TerminalMainFrame.ROW_HEIGHT, 0, 2 * TerminalMainFrame.ROW_HEIGHT, 0, 0, 0};
+				gbl.rowHeights = new int[]{TerminalMainFrame.ROW_HEIGHT, TerminalMainFrame.ROW_HEIGHT, TerminalMainFrame.ROW_HEIGHT, 0};
 				gbl.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 				gbl.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 			}
@@ -74,7 +157,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 				gbc = new GridBagConstraints();
 				gbc.fill = GridBagConstraints.HORIZONTAL;
 				gbc.gridheight = 3;
-				gbc.insets = new Insets(0, 5, 0, 5);
+				gbc.insets = new Insets(0, TerminalMainFrame.HORIZONTAL_GAP, 0, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 0;
 				gbc.gridy = 0;
 			}
@@ -83,7 +166,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 			JLabel lblInitial = new JLabel("Pr\u00E9vu");
 			{//Position
 				gbc = new GridBagConstraints();
-				gbc.insets = new Insets(0, 0, 5, 5);
+				gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 1;
 				gbc.gridy = 0;
 			}
@@ -95,7 +178,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 				txtInitialDuration.setColumns(10);
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 5);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 1;
 					gbc.gridy = 1;
@@ -107,7 +190,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.WEST;
-				gbc.insets = new Insets(0, 0, 5, 5);
+				gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 2;
 				gbc.gridy = 1;
 			}
@@ -119,7 +202,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 				txtInitialAmount.setColumns(10);
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 0, 5);
+					gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 1;
 					gbc.gridy = 2;
@@ -131,7 +214,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.WEST;
-				gbc.insets = new Insets(0, 0, 0, 5);
+				gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 2;
 				gbc.gridy = 2;
 			}
@@ -140,7 +223,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 			JLabel lblFinal = new JLabel("R\u00E9el");
 			{//Position
 				gbc = new GridBagConstraints();
-				gbc.insets = new Insets(0, 0, 5, 5);
+				gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 3;
 				gbc.gridy = 0;
 			}
@@ -152,7 +235,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 				txtFinalDuration.setColumns(10);
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 5);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 3;
 					gbc.gridy = 1;
@@ -164,7 +247,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.WEST;
-				gbc.insets = new Insets(0, 0, 5, 5);
+				gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 4;
 				gbc.gridy = 1;
 			}
@@ -176,7 +259,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 				txtFinalAmount.setColumns(10);
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 0, 5);
+					gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 3;
 					gbc.gridy = 2;
@@ -188,7 +271,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.WEST;
-				gbc.insets = new Insets(0, 0, 0, 5);
+				gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 4;
 				gbc.gridy = 2;
 			}
@@ -199,7 +282,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 				lblAPayer.setFont(new Font("Tahoma", Font.PLAIN, 9));
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 5, 0);
+					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, 0);
 					gbc.anchor = GridBagConstraints.SOUTH;
 					gbc.gridwidth = 2;
 					gbc.gridx = 5;
@@ -214,7 +297,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 				txtToPayAmount.setColumns(10);
 				{//Position
 					gbc = new GridBagConstraints();
-					gbc.insets = new Insets(0, 0, 0, 5);
+					gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
 					gbc.fill = GridBagConstraints.BOTH;
 					gbc.gridx = 5;
 					gbc.gridy = 2;
