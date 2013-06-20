@@ -101,7 +101,7 @@ public class TerminalReturnController {
 					p = pm.GetPriceFromId(subscriptions.get(i).getIdPrice());
 					bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
 					for (int j = 0; j < bikes.size(); j++) {
-						BikeRentSummmary brs = new BikeRentSummmary();
+						BikeRentSummary brs = new BikeRentSummary();
 						pa.setBikeQuantity(bikes.size());
 						pa.setDurationUnit(p.getPriceDurationUnit());
 						pa.setDurationPricePerUnit(p.getAmount());
