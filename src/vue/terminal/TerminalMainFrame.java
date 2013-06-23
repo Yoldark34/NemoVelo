@@ -123,7 +123,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	}
 
 	@Override
-	public void displayTerminalRentSummary() {
+	public void displayTerminalPay() {
 		this.cardsLayout.show(this.cards, CARD_RENT_SUMMARY);
 	}
 
@@ -148,7 +148,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	}
 
 	@Override
-	public TerminalRentSummary getTerminalRentSummary() {
+	public TerminalRentSummary getTerminalPay() {
 		return this.payVue;
 	}
 
