@@ -8,7 +8,7 @@ package controller.terminal.controller;
  *
  * @author Valentin SEITZ
  */
-public class PayAmount {
+public class RentSummary {
 
 	private int duration;
 	private String durationUnit;

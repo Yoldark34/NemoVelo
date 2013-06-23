@@ -19,7 +19,7 @@ public class TerminalController {
 	private static boolean doAutoCancel;
 	private static boolean doAlertBeforeAutoCancel;
 	private static int anonymousUserId;
-	private static PayAmount amountToPay;
+	private static RentSummary rentSummary;
 	private static ReturnSummary returnSummary;
 
 	public static int getAnonymousUserId() {
@@ -30,12 +30,12 @@ public class TerminalController {
 		TerminalController.anonymousUserId = anonymousUserId;
 	}
 
-	public static PayAmount getAmountToPay() {
-		return amountToPay;
+	public static RentSummary getRentSummary() {
+		return rentSummary;
 	}
 
-	private static void setAmountToPay(PayAmount amountToPay) {
-		TerminalController.amountToPay = amountToPay;
+	private static void setRentSummary(RentSummary rentSummary) {
+		TerminalController.rentSummary = rentSummary;
 	}
 
 	public static void setDoAutoCancel(boolean doAutoCancel) {
@@ -77,7 +77,7 @@ public class TerminalController {
 	public TerminalController(TerminalMainVue mainVue) {
 		TerminalMapper terminalMapper = new TerminalMapper();
 		terminal = terminalMapper.getTerminal(1);
-		setAmountToPay(new PayAmount());
+		setRentSummary(new RentSummary());
 		setMainVue(mainVue);
 		mainVue.displayTerminalWelcome();
 	}

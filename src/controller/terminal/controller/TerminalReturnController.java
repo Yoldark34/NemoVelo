@@ -94,7 +94,7 @@ public class TerminalReturnController {
 
 				ReturnAmount ra;
 				ArrayList<BikeUsage> bikes;
-				PayAmount pa = new PayAmount();
+				RentSummary rs = new RentSummary();
 				Price p;
 				ReturnSummary summary = new ReturnSummary();
 				for (int i = 0; i < subscriptions.size(); i++) {
@@ -102,25 +102,25 @@ public class TerminalReturnController {
 					bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
 					for (int j = 0; j < bikes.size(); j++) {
 						BikeReturnSummary brs = new BikeReturnSummary();
-						pa.setBikeQuantity(bikes.size());
-						pa.setDurationUnit(p.getPriceDurationUnit());
-						pa.setDurationPricePerUnit(p.getAmount());
+						rs.setBikeQuantity(bikes.size());
+						rs.setDurationUnit(p.getPriceDurationUnit());
+						rs.setDurationPricePerUnit(p.getAmount());
 						Timestamp start = (Timestamp) bikes.get(j).getStartDate();
 						int finalDuration = Helper.getDifference(start, today, p.getPriceDurationUnit());
 						if (finalDuration < p.getPriceDuration()) {
 							finalDuration = p.getPriceDuration();
 						}
-						pa.setMultiplier(Helper.divide(finalDuration, p.getPriceDuration()));
-						pa.setDuration(p.getPriceDuration());
+						rs.setMultiplier(Helper.divide(finalDuration, p.getPriceDuration()));
+						rs.setDuration(p.getPriceDuration());
 						ra = new ReturnAmount();
-						ra.setAmount(pa.getRentAmount());
+						ra.setAmount(rs.getRentAmount());
 						ra.setIdSubscription(subscriptions.get(i).getId());
 						ra.setReturnDate(today);
 						ram.save(ra);
 						brs.setDurationUnit(p.getPriceDurationUnit());
 						brs.setInitialDuration(p.getPriceDuration());
 						brs.setInitialAmount(p.getAmount());
-						brs.setFinalAmount(pa.getRentAmount());
+						brs.setFinalAmount(rs.getRentAmount());
 						brs.setFinalDuration(finalDuration);
 						brs.setSerialNumber(bikes.get(j).getIdBike());
 						summary.add(brs);

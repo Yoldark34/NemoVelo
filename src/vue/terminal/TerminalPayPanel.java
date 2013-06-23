@@ -4,7 +4,7 @@
  */
 package vue.terminal;
 
-import controller.terminal.controller.PayAmount;
+import controller.terminal.controller.RentSummary;
 import controller.terminal.controller.TerminalController;
 import controller.terminal.controller.TerminalPayController;
 import controller.terminal.interfacesGUI.TerminalPay;
@@ -281,7 +281,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 
 	@Override
 	public void init() {
-		PayAmount amount = TerminalPayController.getTerminalPayController().getAmountToPay();
+		RentSummary amount = TerminalPayController.getTerminalPayController().getRentSummary();
 		if (amount != null) {
 			this.textDuration.setText(amount.getDuration() + " " + amount.getDurationUnit());
 			this.textPricePerBike.setText("" + amount.getDurationPricePerUnit());
