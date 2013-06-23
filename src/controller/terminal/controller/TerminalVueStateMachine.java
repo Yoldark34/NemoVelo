@@ -15,7 +15,7 @@ class TerminalVueStateMachine {
 	//The vues, first dimensions of possibilites array
 	private static final int IMPOSSIBLE = -2;
 	private static final int VUE_WELCOME = 0;
-	private static final int VUE_END = 0;
+	private static final int VUE_END = VUE_WELCOME;
 	private static final int VUE_RENT = 1;
 	private static final int VUE_PAY = 2;
 	private static final int VUE_RETURN = 3;

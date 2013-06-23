@@ -96,12 +96,12 @@ public class TerminalReturnController {
 				ArrayList<BikeUsage> bikes;
 				PayAmount pa = new PayAmount();
 				Price p;
-				RentSummary summary = new RentSummary();
+				ReturnSummary summary = new ReturnSummary();
 				for (int i = 0; i < subscriptions.size(); i++) {
 					p = pm.GetPriceFromId(subscriptions.get(i).getIdPrice());
 					bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
 					for (int j = 0; j < bikes.size(); j++) {
-						BikeRentSummary brs = new BikeRentSummary();
+						BikeReturnSummary brs = new BikeReturnSummary();
 						pa.setBikeQuantity(bikes.size());
 						pa.setDurationUnit(p.getPriceDurationUnit());
 						pa.setDurationPricePerUnit(p.getAmount());
@@ -127,7 +127,7 @@ public class TerminalReturnController {
 					}
 				}
 				summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
-				TerminalController.setRentSummary(summary);
+				TerminalController.setReturnSummary(summary);
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
 			} else {
 				doAutoCancel("Ces vélos ne sont pas attribué au meme NemoUser.");

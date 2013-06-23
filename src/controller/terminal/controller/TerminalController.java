@@ -20,7 +20,7 @@ public class TerminalController {
 	private static boolean doAlertBeforeAutoCancel;
 	private static int anonymousUserId;
 	private static PayAmount amountToPay;
-	private static RentSummary rentSummary;
+	private static ReturnSummary returnSummary;
 
 	public static int getAnonymousUserId() {
 		return anonymousUserId;
@@ -66,12 +66,12 @@ public class TerminalController {
 		TerminalController.mainVue = mainVue;
 	}
 
-	public static RentSummary getRentSummary() {
-		return rentSummary;
+	public static ReturnSummary getReturnSummary() {
+		return returnSummary;
 	}
 
-	public static void setRentSummary(RentSummary rentSummary) {
-		TerminalController.rentSummary = rentSummary;
+	public static void setReturnSummary(ReturnSummary rentSummary) {
+		TerminalController.returnSummary = rentSummary;
 	}
 
 	public TerminalController(TerminalMainVue mainVue) {
