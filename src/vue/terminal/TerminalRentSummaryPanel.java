@@ -6,8 +6,8 @@ package vue.terminal;
 
 import controller.terminal.controller.RentSummary;
 import controller.terminal.controller.TerminalController;
-import controller.terminal.controller.TerminalPayController;
-import controller.terminal.interfacesGUI.TerminalPay;
+import controller.terminal.controller.TerminalRentSummaryController;
+import controller.terminal.interfacesGUI.TerminalRentSummary;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  *
  * @author Valentin SEITZ
  */
-public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalPay {
+public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements TerminalRentSummary {
 
 	//Content
 	private JTextField textDuration;
@@ -38,22 +38,22 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 	//Actions
 	private JButton btnPay;
 
-	public TerminalPayPanel(LayoutManager lm, boolean bln) {
+	public TerminalRentSummaryPanel(LayoutManager lm, boolean bln) {
 		super(lm, bln);
 		initialize();
 	}
 
-	public TerminalPayPanel(LayoutManager lm) {
+	public TerminalRentSummaryPanel(LayoutManager lm) {
 		super(lm);
 		initialize();
 	}
 
-	public TerminalPayPanel(boolean bln) {
+	public TerminalRentSummaryPanel(boolean bln) {
 		super(bln);
 		initialize();
 	}
 
-	public TerminalPayPanel() {
+	public TerminalRentSummaryPanel() {
 		initialize();
 	}
 
@@ -270,7 +270,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 					} else if (!chckbxBuyTerms.isSelected()) {
 						TerminalController.getMainVue().showWarning("Veuillez accepter les condition générales de vente.");
 					} else {
-						TerminalPayController.getTerminalPayController().doPay();
+						TerminalRentSummaryController.getTerminalPayController().doPay();
 					}
 				}
 			});
@@ -281,7 +281,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 
 	@Override
 	public void init() {
-		RentSummary amount = TerminalPayController.getTerminalPayController().getRentSummary();
+		RentSummary amount = TerminalRentSummaryController.getTerminalPayController().getRentSummary();
 		if (amount != null) {
 			this.textDuration.setText(amount.getDuration() + " " + amount.getDurationUnit());
 			this.textPricePerBike.setText("" + amount.getDurationPricePerUnit());

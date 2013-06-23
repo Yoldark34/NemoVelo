@@ -16,13 +16,13 @@ import model.object.Subscription;
  *
  * @author Valentin SEITZ
  */
-public class TerminalPayController {
+public class TerminalRentSummaryController {
 
-	private static TerminalPayController terminalPayController;
+	private static TerminalRentSummaryController terminalPayController;
 
-	public static TerminalPayController getTerminalPayController() {
+	public static TerminalRentSummaryController getTerminalPayController() {
 		if (terminalPayController == null) {
-			terminalPayController = new TerminalPayController();
+			terminalPayController = new TerminalRentSummaryController();
 		}
 		return terminalPayController;
 	}

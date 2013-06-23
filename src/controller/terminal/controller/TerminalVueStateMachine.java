@@ -17,7 +17,7 @@ class TerminalVueStateMachine {
 	private static final int VUE_WELCOME = 0;
 	private static final int VUE_END = VUE_WELCOME;
 	private static final int VUE_RENT = 1;
-	private static final int VUE_PAY = 2;
+	private static final int VUE_RENT_SUMMARY = 2;
 	private static final int VUE_RETURN = 3;
 	private static final int VUE_RETURN_SUMMARY = 4;
 	//The actions which can change the vue, second dimension of possibilites
@@ -32,10 +32,10 @@ class TerminalVueStateMachine {
 	//The possibilites array
 	private static int[][] possibilities = {
 		{VUE_END, VUE_RENT, IMPOSSIBLE, IMPOSSIBLE, VUE_RETURN, IMPOSSIBLE}, //Welcome && End
-		{VUE_END, IMPOSSIBLE, VUE_PAY, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE}, //Rent
-		{IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, VUE_END, IMPOSSIBLE, IMPOSSIBLE}, //Pay
+		{VUE_END, IMPOSSIBLE, VUE_RENT_SUMMARY, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE}, //Rent
+		{IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, VUE_END, IMPOSSIBLE, IMPOSSIBLE}, //Rent summary
 		{VUE_END, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, VUE_RETURN_SUMMARY}, //Return
-		{VUE_END, IMPOSSIBLE, VUE_PAY, IMPOSSIBLE, IMPOSSIBLE, VUE_END} //Return summary
+		{VUE_END, IMPOSSIBLE, VUE_RENT_SUMMARY, IMPOSSIBLE, IMPOSSIBLE, VUE_END} //Return summary
 	};
 	//The state of machine
 	private static int state = VUE_WELCOME;
@@ -90,7 +90,7 @@ class TerminalVueStateMachine {
 				TerminalController.getMainVue().displayTerminalRent();
 				currentVue = TerminalController.getMainVue().getTerminalRent();
 				break;
-			case VUE_PAY:
+			case VUE_RENT_SUMMARY:
 				TerminalController.getMainVue().displayTerminalPay();
 				currentVue = TerminalController.getMainVue().getTerminalPay();
 				break;

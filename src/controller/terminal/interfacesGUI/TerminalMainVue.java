@@ -15,7 +15,7 @@ public interface TerminalMainVue {
 
 	public TerminalRent getTerminalRent();
 
-	public TerminalPay getTerminalPay();
+	public TerminalRentSummary getTerminalPay();
 
 	public TerminalReturn getTerminalReturn();
 
