@@ -4,6 +4,8 @@
  */
 package controller.terminal.controller;
 
+import controller.terminal.interfacesGUI.TerminalSubVue;
+
 /**
  *
  * @author Valentin SEITZ
@@ -76,30 +78,36 @@ class TerminalVueStateMachine {
 	}
 
 	private static void displayVue(int state) {
+		TerminalSubVue currentVue;
 		switch (state) {
 			case VUE_WELCOME:
 				//case VUE_END: (Same as welcome)
 				//TODO : Reinit all processed data
 				TerminalController.getMainVue().displayTerminalWelcome();
+				currentVue = TerminalController.getMainVue().getTerminalWelcome();
 				break;
 			case VUE_RENT:
 				TerminalController.getMainVue().displayTerminalRent();
-				TerminalController.getMainVue().getTerminalRent().init();
+				currentVue = TerminalController.getMainVue().getTerminalRent();
 				break;
 			case VUE_PAY:
 				TerminalController.getMainVue().displayTerminalPay();
-				TerminalController.getMainVue().getTerminalPay().init();
+				currentVue = TerminalController.getMainVue().getTerminalPay();
 				break;
 			case VUE_RETURN:
 				TerminalController.getMainVue().displayTerminalReturn();
-				TerminalController.getMainVue().getTerminalReturn().init();
+				currentVue = TerminalController.getMainVue().getTerminalReturn();
 				break;
 			case VUE_RETURN_SUMMARY:
 				TerminalController.getMainVue().displayTerminalReturnSummary();
-				TerminalController.getMainVue().getTerminalReturnSummary().init();
+				currentVue = TerminalController.getMainVue().getTerminalReturnSummary();
 				break;
 			default:
 				TerminalController.getMainVue().displayTerminalWelcome();
+				currentVue = TerminalController.getMainVue().getTerminalWelcome();
+		}
+		if (currentVue != null) {
+			currentVue.init();
 		}
 	}
 }

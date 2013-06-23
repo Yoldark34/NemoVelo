@@ -8,7 +8,5 @@ package controller.terminal.interfacesGUI;
  *
  * @author Valentin SEITZ
  */
-public interface TerminalReturn {
-
-	public void init();
+public interface TerminalReturn extends TerminalSubVue {
 }

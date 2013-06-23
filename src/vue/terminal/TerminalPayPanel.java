@@ -243,7 +243,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 				}
 				this.getPanelContent().add(this.chckbxUseTerms, gbc);
 
-				this.chckbxBuyTerms = new JCheckBox("J'acepte les CGV");
+				this.chckbxBuyTerms = new JCheckBox("J'accepte les CGV");
 				{//Position
 					gbc = new GridBagConstraints();
 					gbc.anchor = GridBagConstraints.WEST;
