@@ -10,13 +10,13 @@ import java.util.ArrayList;
  *
  * @author Valentin SEITZ
  */
-public class RentSummary extends ArrayList<BikeRentSummmary> {
+public class RentSummary extends ArrayList<BikeRentSummary> {
 
 	private float guaranteePerBike;
 
 	public float supplementAmount() {
 		float supplement = 0;
-		for (BikeRentSummmary bikeSummary : this) {
+		for (BikeRentSummary bikeSummary : this) {
 			supplement += bikeSummary.getAmountToPay();
 		}
 		return supplement;

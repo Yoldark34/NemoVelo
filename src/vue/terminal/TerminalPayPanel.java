@@ -296,7 +296,9 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 			this.textRentPrice.setText("");
 			this.textGuarantee.setText("");
 			this.textFinalPrice.setText("");
-		}
 
+		}
+		this.chckbxUseTerms.setSelected(false);
+		this.chckbxBuyTerms.setSelected(false);
 	}
 }
