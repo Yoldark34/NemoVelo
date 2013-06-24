@@ -8,5 +8,7 @@ package controller.terminal.interfacesGUI;
  *
  * @author Valentin SEITZ
  */
-public interface TerminalWelcome extends TerminalSubVue {
+public interface TerminalSubVue {
+
+	public void init();
 }

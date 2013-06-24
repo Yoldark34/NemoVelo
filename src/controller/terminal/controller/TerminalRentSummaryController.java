@@ -16,22 +16,22 @@ import model.object.Subscription;
  *
  * @author Valentin SEITZ
  */
-public class TerminalPayController {
+public class TerminalRentSummaryController {
 
-	private static TerminalPayController terminalPayController;
+	private static TerminalRentSummaryController terminalPayController;
 
-	public static TerminalPayController getTerminalPayController() {
+	public static TerminalRentSummaryController getTerminalPayController() {
 		if (terminalPayController == null) {
-			terminalPayController = new TerminalPayController();
+			terminalPayController = new TerminalRentSummaryController();
 		}
 		return terminalPayController;
 	}
 
-	public PayAmount getAmountToPay() {
+	public RentSummary getRentSummary() {
 		PriceMapper pm = new PriceMapper();
-		TerminalController.getAmountToPay().setGuaranteePerBikeAmount(pm.getFirstGuarantee().getAmount());
-		TerminalController.getAmountToPay().setDurationPricePerUnit(pm.getPriceAmountForUnitAndDuration(TerminalController.getAmountToPay().getDuration(), TerminalController.getAmountToPay().getDurationUnit()));
-		PayAmount result = TerminalController.getAmountToPay();
+		TerminalController.getRentSummary().setGuaranteePerBikeAmount(pm.getFirstGuarantee().getAmount());
+		TerminalController.getRentSummary().setDurationPricePerUnit(pm.getPriceAmountForUnitAndDuration(TerminalController.getRentSummary().getDuration(), TerminalController.getRentSummary().getDurationUnit()));
+		RentSummary result = TerminalController.getRentSummary();
 
 		return result;
 	}
@@ -40,7 +40,7 @@ public class TerminalPayController {
 		boolean rentSuccess = false;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_PAY)) {
 			Timestamp today = Helper.getSqlDateNow();
-			PayAmount amountToPay = TerminalController.getAmountToPay();
+			RentSummary amountToPay = TerminalController.getRentSummary();
 			PaymentMapper pm = new PaymentMapper();
 			SubscriptionMapper sm = new SubscriptionMapper();
 			PriceMapper prm = new PriceMapper();

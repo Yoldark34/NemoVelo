@@ -23,7 +23,6 @@ public class TerminalController {
 	private static boolean doAutoCancel;
 	private static boolean doAlertBeforeAutoCancel;
 	private static int anonymousUserId;
-	private static PayAmount amountToPay;
 	private static RentSummary rentSummary;
 	private static ArrayList<Integer> idBikeUsagesToResetEndDate = new ArrayList<>();
 	private static ArrayList<Integer> idBikeUsagesToDelete = new ArrayList<>();
@@ -52,12 +51,12 @@ public class TerminalController {
 		TerminalController.anonymousUserId = anonymousUserId;
 	}
 
-	public static PayAmount getAmountToPay() {
-		return amountToPay;
+	public static RentSummary getRentSummary() {
+		return rentSummary;
 	}
 
-	private static void setAmountToPay(PayAmount amountToPay) {
-		TerminalController.amountToPay = amountToPay;
+	private static void setRentSummary(RentSummary rentSummary) {
+		TerminalController.rentSummary = rentSummary;
 	}
 
 	public static void setDoAutoCancel(boolean doAutoCancel) {
@@ -88,18 +87,18 @@ public class TerminalController {
 		TerminalController.mainVue = mainVue;
 	}
 
-	public static RentSummary getRentSummary() {
-		return rentSummary;
+	public static ReturnSummary getReturnSummary() {
+		return returnSummary;
 	}
 
-	public static void setRentSummary(RentSummary rentSummary) {
-		TerminalController.rentSummary = rentSummary;
+	public static void setReturnSummary(ReturnSummary rentSummary) {
+		TerminalController.returnSummary = rentSummary;
 	}
 
 	public TerminalController(TerminalMainVue mainVue) {
 		TerminalMapper terminalMapper = new TerminalMapper();
 		terminal = terminalMapper.getTerminal(1);
-		setAmountToPay(new PayAmount());
+		setRentSummary(new RentSummary());
 		setMainVue(mainVue);
 		mainVue.displayTerminalWelcome();
 	}

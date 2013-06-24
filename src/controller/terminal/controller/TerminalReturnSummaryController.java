@@ -24,15 +24,15 @@ public class TerminalReturnSummaryController {
 	 *
 	 * @return summary of the rental
 	 */
-	public RentSummary getRentSummary() {
-		RentSummary summary = TerminalController.getRentSummary();
+	public ReturnSummary getReturnSummary() {
+		ReturnSummary summary = TerminalController.getReturnSummary();
 
 		return summary;
 	}
 
 	public void doConfirm() {
 		//TODO : Know if a rest is to pay
-		if (this.getRentSummary().supplementAmount() > 0) {
+		if (this.getReturnSummary().supplementAmount() > 0) {
 			//TODO : Actions to do before person pays
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
 		} else {

@@ -69,4 +69,9 @@ public class TerminalWelcomePanel extends AbstractTerminalPanel implements Termi
 			this.getPanelActions().add(btnReturn);
 		}
 	}
+
+	@Override
+	public void init() {
+		//Nothing to do
+	}
 }

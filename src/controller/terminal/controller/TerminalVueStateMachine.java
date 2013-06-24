@@ -4,6 +4,8 @@
  */
 package controller.terminal.controller;
 
+import controller.terminal.interfacesGUI.TerminalSubVue;
+
 /**
  *
  * @author Valentin SEITZ
@@ -13,9 +15,9 @@ class TerminalVueStateMachine {
 	//The vues, first dimensions of possibilites array
 	private static final int IMPOSSIBLE = -2;
 	private static final int VUE_WELCOME = 0;
-	private static final int VUE_END = 0;
+	private static final int VUE_END = VUE_WELCOME;
 	private static final int VUE_RENT = 1;
-	private static final int VUE_PAY = 2;
+	private static final int VUE_RENT_SUMMARY = 2;
 	private static final int VUE_RETURN = 3;
 	private static final int VUE_RETURN_SUMMARY = 4;
 	//The actions which can change the vue, second dimension of possibilites
@@ -30,10 +32,10 @@ class TerminalVueStateMachine {
 	//The possibilites array
 	private static int[][] possibilities = {
 		{VUE_END, VUE_RENT, IMPOSSIBLE, IMPOSSIBLE, VUE_RETURN, IMPOSSIBLE}, //Welcome && End
-		{VUE_END, IMPOSSIBLE, VUE_PAY, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE}, //Rent
-		{IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, VUE_END, IMPOSSIBLE, IMPOSSIBLE}, //Pay
+		{VUE_END, IMPOSSIBLE, VUE_RENT_SUMMARY, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE}, //Rent
+		{IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, VUE_END, IMPOSSIBLE, IMPOSSIBLE}, //Rent summary
 		{VUE_END, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, IMPOSSIBLE, VUE_RETURN_SUMMARY}, //Return
-		{VUE_END, IMPOSSIBLE, VUE_PAY, IMPOSSIBLE, IMPOSSIBLE, VUE_END} //Return summary
+		{VUE_END, IMPOSSIBLE, VUE_RENT_SUMMARY, IMPOSSIBLE, IMPOSSIBLE, VUE_END} //Return summary
 	};
 	//The state of machine
 	private static int state = VUE_WELCOME;
@@ -76,30 +78,36 @@ class TerminalVueStateMachine {
 	}
 
 	private static void displayVue(int state) {
+		TerminalSubVue currentVue;
 		switch (state) {
 			case VUE_WELCOME:
 				//case VUE_END: (Same as welcome)
 				//TODO : Reinit all processed data
 				TerminalController.getMainVue().displayTerminalWelcome();
+				currentVue = TerminalController.getMainVue().getTerminalWelcome();
 				break;
 			case VUE_RENT:
 				TerminalController.getMainVue().displayTerminalRent();
-				TerminalController.getMainVue().getTerminalRent().init();
+				currentVue = TerminalController.getMainVue().getTerminalRent();
 				break;
-			case VUE_PAY:
-				TerminalController.getMainVue().displayTerminalPay();
-				TerminalController.getMainVue().getTerminalPay().init();
+			case VUE_RENT_SUMMARY:
+				TerminalController.getMainVue().displayTerminalRentSummary();
+				currentVue = TerminalController.getMainVue().getTerminalRentSummary();
 				break;
 			case VUE_RETURN:
 				TerminalController.getMainVue().displayTerminalReturn();
-				TerminalController.getMainVue().getTerminalReturn().init();
+				currentVue = TerminalController.getMainVue().getTerminalReturn();
 				break;
 			case VUE_RETURN_SUMMARY:
 				TerminalController.getMainVue().displayTerminalReturnSummary();
-				TerminalController.getMainVue().getTerminalReturnSummary().init();
+				currentVue = TerminalController.getMainVue().getTerminalReturnSummary();
 				break;
 			default:
 				TerminalController.getMainVue().displayTerminalWelcome();
+				currentVue = TerminalController.getMainVue().getTerminalWelcome();
+		}
+		if (currentVue != null) {
+			currentVue.init();
 		}
 	}
 }

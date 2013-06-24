@@ -4,29 +4,72 @@
  */
 package controller.terminal.controller;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Valentin SEITZ
  */
-public class RentSummary extends ArrayList<BikeRentSummary> {
+public class RentSummary {
 
-	private float guaranteePerBike;
+	private int duration;
+	private String durationUnit;
+	private float durationPricePerUnit;
+	private int bikeQuantity;
+	private float guaranteePerBikeAmount;
+	private float multiplier = 1;
 
-	public float supplementAmount() {
-		float supplement = 0;
-		for (BikeRentSummary bikeSummary : this) {
-			supplement += bikeSummary.getAmountToPay();
-		}
-		return supplement;
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
-	public void setGuaranteePerBike(float guaranteePerBike) {
-		this.guaranteePerBike = guaranteePerBike;
+	public void setDurationUnit(String durationUnit) {
+		this.durationUnit = durationUnit;
 	}
 
-	public float guaranteeAmount() {
-		return guaranteePerBike * this.size();
+	public void setDurationPricePerUnit(float durationPricePerUnit) {
+		this.durationPricePerUnit = durationPricePerUnit;
+	}
+
+	public void setBikeQuantity(int bikeQuantity) {
+		this.bikeQuantity = bikeQuantity;
+	}
+
+	public void setGuaranteePerBikeAmount(float guaranteePerBikeAmount) {
+		this.guaranteePerBikeAmount = guaranteePerBikeAmount;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public String getDurationUnit() {
+		return durationUnit;
+	}
+
+	public float getDurationPricePerUnit() {
+		return durationPricePerUnit;
+	}
+
+	public int getBikeQuantity() {
+		return bikeQuantity;
+	}
+
+	public float getRentAmount() {
+		return getDurationPricePerUnit() * getBikeQuantity() * multiplier;
+	}
+
+	public float getGuaranteeAmount() {
+		return guaranteePerBikeAmount * getBikeQuantity();
+	}
+
+	public float getTotalAmount() {
+		return getRentAmount() + getGuaranteeAmount();
+	}
+
+	public float getMultiplier() {
+		return multiplier;
+	}
+
+	public void setMultiplier(float multiplier) {
+		this.multiplier = multiplier;
 	}
 }

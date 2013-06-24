@@ -4,7 +4,7 @@
  */
 package vue.terminal;
 
-import controller.terminal.controller.RentSummary;
+import controller.terminal.controller.ReturnSummary;
 import controller.terminal.controller.TerminalReturnSummaryController;
 import controller.terminal.interfacesGUI.TerminalReturnSummary;
 import java.awt.GridBagConstraints;
@@ -26,7 +26,7 @@ import javax.swing.JTextField;
  */
 public class TerminalReturnSummaryPanel extends AbstractTerminalPanel implements TerminalReturnSummary {
 
-	private TerminalReturnBikesSummariesPanel bikeSummaryPanels;
+	private TerminalReturnSummaryBikesPanel bikeSummaryPanels;
 	private JTextField txtGuarantee;
 	private JTextField txtSupplementAmount;
 	private JButton btnConfirm;
@@ -67,7 +67,7 @@ public class TerminalReturnSummaryPanel extends AbstractTerminalPanel implements
 
 			JScrollPane scrollPane = new JScrollPane();
 			{
-				this.bikeSummaryPanels = new TerminalReturnBikesSummariesPanel();
+				this.bikeSummaryPanels = new TerminalReturnSummaryBikesPanel();
 				scrollPane.setViewportView(this.bikeSummaryPanels);
 				{//Position
 					gbc = new GridBagConstraints();
@@ -149,7 +149,7 @@ public class TerminalReturnSummaryPanel extends AbstractTerminalPanel implements
 
 	@Override
 	public void init() {
-		RentSummary summary = TerminalReturnSummaryController.getTerminalReturnSummaryController().getRentSummary();
+		ReturnSummary summary = TerminalReturnSummaryController.getTerminalReturnSummaryController().getReturnSummary();
 		this.bikeSummaryPanels.setSummary(summary);
 		this.txtGuarantee.setText("" + summary.guaranteeAmount());
 		this.txtSupplementAmount.setText("" + summary.supplementAmount());

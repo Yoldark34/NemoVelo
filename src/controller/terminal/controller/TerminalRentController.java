@@ -94,9 +94,9 @@ public class TerminalRentController {
 	public void doRent(int nbBikes, int duration, String durationUnit) {
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
 			if (this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), nbBikes)) {
-				TerminalController.getAmountToPay().setBikeQuantity(nbBikes);
-				TerminalController.getAmountToPay().setDuration(duration);
-				TerminalController.getAmountToPay().setDurationUnit(durationUnit);
+				TerminalController.getRentSummary().setBikeQuantity(nbBikes);
+				TerminalController.getRentSummary().setDuration(duration);
+				TerminalController.getRentSummary().setDurationUnit(durationUnit);
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);
 			}
 		}

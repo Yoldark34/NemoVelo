@@ -8,7 +8,7 @@ package controller.terminal.controller;
  *
  * @author Valentin SEITZ
  */
-public class BikeRentSummary {
+public class BikeReturnSummary {
 
 	private int serialNumber;
 	private int initialDuration;

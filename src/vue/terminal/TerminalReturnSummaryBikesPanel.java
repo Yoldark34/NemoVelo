@@ -4,7 +4,7 @@
  */
 package vue.terminal;
 
-import controller.terminal.controller.BikeRentSummary;
+import controller.terminal.controller.BikeReturnSummary;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,26 +20,26 @@ import javax.swing.JTextField;
  *
  * @author Valentin SEITZ
  */
-public class TerminalReturnBikesSummariesPanel extends JPanel {
+public class TerminalReturnSummaryBikesPanel extends JPanel {
 
 	private List<TerminalReturnBikeSummaryPanel> bikeSummaryPanels;
 
-	public TerminalReturnBikesSummariesPanel(LayoutManager lm, boolean bln) {
+	public TerminalReturnSummaryBikesPanel(LayoutManager lm, boolean bln) {
 		super(lm, bln);
 		this.initialize();
 	}
 
-	public TerminalReturnBikesSummariesPanel(LayoutManager lm) {
+	public TerminalReturnSummaryBikesPanel(LayoutManager lm) {
 		super(lm);
 		this.initialize();
 	}
 
-	public TerminalReturnBikesSummariesPanel(boolean bln) {
+	public TerminalReturnSummaryBikesPanel(boolean bln) {
 		super(bln);
 		this.initialize();
 	}
 
-	public TerminalReturnBikesSummariesPanel() {
+	public TerminalReturnSummaryBikesPanel() {
 		this.initialize();
 
 
@@ -49,7 +49,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 		this.bikeSummaryPanels = new ArrayList<>();
 	}
 
-	public void setSummary(List<BikeRentSummary> bikeRentSummaries) {
+	public void setSummary(List<BikeReturnSummary> bikeRentSummaries) {
 		GridBagLayout gbl;
 		int[] rowHeights;
 		double[] rowWeights;
@@ -108,7 +108,7 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 
 	private class TerminalReturnBikeSummaryPanel extends JPanel {
 
-		BikeRentSummary summary;
+		BikeReturnSummary summary;
 		//Fields
 		private JTextField txtInitialDuration;
 		private JLabel lblInitialDurationUnit;
@@ -118,26 +118,26 @@ public class TerminalReturnBikesSummariesPanel extends JPanel {
 		private JTextField txtFinalAmount;
 		private JTextField txtToPayAmount;
 		
-		public TerminalReturnBikeSummaryPanel(BikeRentSummary summary, LayoutManager lm, boolean bln) {
+		public TerminalReturnBikeSummaryPanel(BikeReturnSummary summary, LayoutManager lm, boolean bln) {
 			super(lm, bln);
 			this.initialize(summary);
 		}
 
-		public TerminalReturnBikeSummaryPanel(BikeRentSummary summary, LayoutManager lm) {
+		public TerminalReturnBikeSummaryPanel(BikeReturnSummary summary, LayoutManager lm) {
 			super(lm);
 			this.initialize(summary);
 		}
 
-		public TerminalReturnBikeSummaryPanel(BikeRentSummary summary, boolean bln) {
+		public TerminalReturnBikeSummaryPanel(BikeReturnSummary summary, boolean bln) {
 			super(bln);
 			this.initialize(summary);
 		}
 
-		public TerminalReturnBikeSummaryPanel(BikeRentSummary summary) {
+		public TerminalReturnBikeSummaryPanel(BikeReturnSummary summary) {
 			this.initialize(summary);
 		}
 
-		private void initialize(BikeRentSummary summary) {
+		private void initialize(BikeReturnSummary summary) {
 			this.summary = summary;
 
 			GridBagLayout gbl;
