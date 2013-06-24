@@ -78,8 +78,7 @@ public class TerminalReturnController {
 	 * @param bikeSerialNumbers Set of Serial numbers of the returned bikes
 	 */
 	public void doReturn(Set<Integer> bikeSerialNumbers) {
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)
-				|| TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_ASK_PAY)) {
+		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)) {
 			Timestamp today = Helper.getSqlDateNow();
 			BikeUsageMapper bum = new BikeUsageMapper();
 			SubscriptionMapper sm = new SubscriptionMapper();

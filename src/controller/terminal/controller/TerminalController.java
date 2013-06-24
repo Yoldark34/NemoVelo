@@ -6,10 +6,7 @@ package controller.terminal.controller;
 
 import controller.terminal.interfacesGUI.TerminalMainVue;
 import java.util.ArrayList;
-import java.util.HashSet;
 import model.database.TerminalMapper;
-import model.object.Bike;
-import model.object.BikeUsage;
 import model.object.Terminal;
 
 /**

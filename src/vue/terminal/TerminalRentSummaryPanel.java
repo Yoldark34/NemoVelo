@@ -33,8 +33,6 @@ public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements T
 	private JTextField textRentPrice;
 	private JTextField textGuarantee;
 	private JTextField textFinalPrice;
-	private JCheckBox chckbxUseTerms;
-	private JCheckBox chckbxBuyTerms;
 	//Actions
 	private JButton btnPay;
 
@@ -64,9 +62,9 @@ public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements T
 		{//Content
 			gbl.columnWidths = new int[]{0, 42, 0, 0, 0, 0, 0};
 			//The white space have at least the specified row height
-			gbl.rowHeights = new int[]{0, 0, 0, TerminalMainFrame.ROW_HEIGHT, 0, 0, TerminalMainFrame.ROW_HEIGHT, 0, 0, 0, 0, 0};
+			gbl.rowHeights = new int[]{0, 0, 0, TerminalMainFrame.ROW_HEIGHT, 0, 0, TerminalMainFrame.ROW_HEIGHT, 0, 0, 0};
 			gbl.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-			gbl.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 			this.getPanelContent().setLayout(gbl);
 
 			{//Per bike sum up
@@ -230,30 +228,6 @@ public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements T
 				}
 				this.getPanelContent().add(lblPrice, gbc);
 			}//End price
-
-			{//Usage & buy terms
-				this.chckbxUseTerms = new JCheckBox("J'accepte les CGU");
-				{//Position
-					gbc = new GridBagConstraints();
-					gbc.anchor = GridBagConstraints.WEST;
-					gbc.gridwidth = 2;
-					gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
-					gbc.gridx = 2;
-					gbc.gridy = 9;
-				}
-				this.getPanelContent().add(this.chckbxUseTerms, gbc);
-
-				this.chckbxBuyTerms = new JCheckBox("J'accepte les CGV");
-				{//Position
-					gbc = new GridBagConstraints();
-					gbc.anchor = GridBagConstraints.WEST;
-					gbc.gridwidth = 2;
-					gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
-					gbc.gridx = 2;
-					gbc.gridy = 10;
-				}
-				this.getPanelContent().add(this.chckbxBuyTerms, gbc);
-			}//Usage & buy terms
 		}
 	}
 
@@ -265,13 +239,7 @@ public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements T
 			this.btnPay.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent ae) {
-					if (!chckbxUseTerms.isSelected()) {
-						TerminalController.getMainVue().showWarning("Veuillez accepter les condition d'utilisation du service.");
-					} else if (!chckbxBuyTerms.isSelected()) {
-						TerminalController.getMainVue().showWarning("Veuillez accepter les condition générales de vente.");
-					} else {
-						TerminalRentSummaryController.getTerminalPayController().doPay();
-					}
+					TerminalRentSummaryController.getTerminalPayController().doPay();
 				}
 			});
 		}
@@ -296,9 +264,6 @@ public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements T
 			this.textRentPrice.setText("");
 			this.textGuarantee.setText("");
 			this.textFinalPrice.setText("");
-
 		}
-		this.chckbxUseTerms.setSelected(false);
-		this.chckbxBuyTerms.setSelected(false);
 	}
 }
