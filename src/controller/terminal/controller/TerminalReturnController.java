@@ -99,23 +99,27 @@ public class TerminalReturnController {
 				for (int i = 0; i < subscriptions.size(); i++) {
 					p = pm.GetPriceFromId(subscriptions.get(i).getIdPrice());
 					bikes = bum.getBikesFromNemoUserAndDateForBikes(subscriptions.get(i).getIdNemoUser(), subscriptions.get(i).getStartDate(), bikeSerialNumbers);
+					rs.setBikeQuantity(1);
+					rs.setDurationUnit(p.getPriceDurationUnit());
+					rs.setDurationPricePerUnit(p.getAmount());
+					rs.setDuration(p.getPriceDuration());
+					ra = new ReturnAmount();
+					ra.setIdSubscription(subscriptions.get(i).getId());
+					boolean first = true;
+					int finalDuration = -1;
 					for (int j = 0; j < bikes.size(); j++) {
-						BikeReturnSummary brs = new BikeReturnSummary();
-						rs.setBikeQuantity(bikes.size());
-						rs.setDurationUnit(p.getPriceDurationUnit());
-						rs.setDurationPricePerUnit(p.getAmount());
-						Timestamp start = (Timestamp) bikes.get(j).getStartDate();
-						int finalDuration = Helper.getDifference(start, today, p.getPriceDurationUnit());
-						if (finalDuration < p.getPriceDuration()) {
-							finalDuration = p.getPriceDuration();
+						if (first) {
+							Timestamp start = (Timestamp) bikes.get(j).getStartDate();
+							finalDuration = Helper.getDifference(start, today, p.getPriceDurationUnit());
+							if (finalDuration < p.getPriceDuration()) {
+								finalDuration = p.getPriceDuration();
+							}
+							rs.setMultiplier(Helper.divide(finalDuration, p.getPriceDuration()));
+							
+							ra.setReturnDate(today);
 						}
-						rs.setMultiplier(Helper.divide(finalDuration, p.getPriceDuration()));
-						rs.setDuration(p.getPriceDuration());
-						ra = new ReturnAmount();
-						ra.setAmount(rs.getRentAmount());
-						ra.setIdSubscription(subscriptions.get(i).getId());
-						ra.setReturnDate(today);
-						ram.save(ra);
+
+						BikeReturnSummary brs = new BikeReturnSummary();
 						brs.setDurationUnit(p.getPriceDurationUnit());
 						brs.setInitialDuration(p.getPriceDuration());
 						brs.setInitialAmount(p.getAmount());
@@ -124,6 +128,9 @@ public class TerminalReturnController {
 						brs.setSerialNumber(bikes.get(j).getIdBike());
 						summary.add(brs);
 					}
+					rs.setBikeQuantity(bikes.size());
+					ra.setAmount(rs.getRentAmount());
+					ram.save(ra);
 				}
 				summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
 				TerminalController.setReturnSummary(summary);

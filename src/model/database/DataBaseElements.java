@@ -184,5 +184,6 @@ public class DataBaseElements {
 				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_BIRTHDATE + ", "
 				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_CREATEDATE;
 		public static final String MIN = DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID;
+		public static final String DISTINCTID = "DISTINCT ( " + DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID + ")";
 	}
 }

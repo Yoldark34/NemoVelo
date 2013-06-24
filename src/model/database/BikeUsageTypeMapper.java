@@ -24,7 +24,7 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 		return (ArrayList<BikeUsageType>) adapter.getModelsFromRequest(this);
 	}
 
-	public BikeUsageType getBikeUsagesType(String bikeUsageType) throws SQLException, ClassNotFoundException {
+	public BikeUsageType getBikeUsagesType(String bikeUsageType) {
 		String query;
 		BikeUsageType result = null;
 

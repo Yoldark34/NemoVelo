@@ -91,7 +91,7 @@ public class NemoUserMapper extends AbstractMapper {
 		ArrayList<NemoUser> results = null;
 
 		query = "SELECT ";
-		query += DataBaseElements.NemoUserColSet.MIN;
+		query += DataBaseElements.NemoUserColSet.DISTINCTID;
 		query += " FROM ";
 		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
 		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + ", ";
@@ -115,6 +115,8 @@ public class NemoUserMapper extends AbstractMapper {
 		query += " ) ";
 		query += " AND ";
 		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
 
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();

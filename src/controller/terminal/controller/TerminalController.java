@@ -5,7 +5,11 @@
 package controller.terminal.controller;
 
 import controller.terminal.interfacesGUI.TerminalMainVue;
+import java.util.ArrayList;
+import java.util.HashSet;
 import model.database.TerminalMapper;
+import model.object.Bike;
+import model.object.BikeUsage;
 import model.object.Terminal;
 
 /**
@@ -21,6 +25,24 @@ public class TerminalController {
 	private static int anonymousUserId;
 	private static RentSummary rentSummary;
 	private static ReturnSummary returnSummary;
+	private static ArrayList<Integer> idBikeUsagesToResetEndDate = new ArrayList<>();
+	private static ArrayList<Integer> idBikeUsagesToDelete = new ArrayList<>();
+
+	public static ArrayList<Integer> getIdBikeUsagesToResetEndDate() {
+		return idBikeUsagesToResetEndDate;
+	}
+
+	public static void setIdBikeUsagesToResetEndDate(ArrayList<Integer> BikeUsagesToResetEndDate) {
+		TerminalController.idBikeUsagesToResetEndDate = BikeUsagesToResetEndDate;
+	}
+
+	public static ArrayList<Integer> getIdBikeUsagesToDelete() {
+		return idBikeUsagesToDelete;
+	}
+
+	public static void setIdBikeUsagesToDelete(ArrayList<Integer> BikeUsagesToDelete) {
+		TerminalController.idBikeUsagesToDelete = BikeUsagesToDelete;
+	}
 
 	public static int getAnonymousUserId() {
 		return anonymousUserId;
