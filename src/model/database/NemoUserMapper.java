@@ -91,7 +91,7 @@ public class NemoUserMapper extends AbstractMapper {
 		ArrayList<NemoUser> results = null;
 
 		query = "SELECT ";
-		query += DataBaseElements.NemoUserColSet.MIN;
+		query += DataBaseElements.NemoUserColSet.DISTINCTID;
 		query += " FROM ";
 		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
 		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + ", ";
