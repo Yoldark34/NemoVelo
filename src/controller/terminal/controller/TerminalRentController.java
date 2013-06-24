@@ -4,12 +4,9 @@
  */
 package controller.terminal.controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
 import model.database.PriceMapper;
@@ -112,7 +109,6 @@ public class TerminalRentController {
 			if (ok) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CANCEL);
 			}
-
 		}
 	}
 
