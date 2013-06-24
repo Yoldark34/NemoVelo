@@ -38,7 +38,7 @@ public class TerminalRentSummaryController {
 
 	public void doPay() {
 		boolean rentSuccess = false;
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_PAY)) {
+		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_ASK_PAY)) {
 			Timestamp today = Helper.getSqlDateNow();
 			RentSummary amountToPay = TerminalController.getRentSummary();
 			PaymentMapper pm = new PaymentMapper();
@@ -60,7 +60,7 @@ public class TerminalRentSummaryController {
 			}
 
 			if (rentSuccess) {
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_PAY);
+				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
 			}
 		}
 	}

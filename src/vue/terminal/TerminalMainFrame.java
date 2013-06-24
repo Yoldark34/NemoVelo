@@ -5,6 +5,7 @@
 package vue.terminal;
 
 import controller.terminal.interfacesGUI.TerminalMainVue;
+import controller.terminal.interfacesGUI.TerminalPay;
 import controller.terminal.interfacesGUI.TerminalRentSummary;
 import controller.terminal.interfacesGUI.TerminalRent;
 import controller.terminal.interfacesGUI.TerminalReturn;
@@ -37,6 +38,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	private static final String CARD_RENT_SUMMARY = "RENT_SUMMARY";
 	private static final String CARD_RETURN = "RETURN";
 	private static final String CARD_RETURN_SUMMARY = "RETURN_SUMMARY";
+	private static final String CARD_PAY = "PAY";
 	//The banner of application
 	JPanel banner;
 	//Vues are managed as cards
@@ -45,9 +47,10 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	//Vues
 	private TerminalWelcomePanel welcomeVue;
 	private TerminalRentPanel rentVue;
-	private TerminalRentSummaryPanel payVue;
+	private TerminalRentSummaryPanel rentSummaryVue;
 	private TerminalReturnPanel returnVue;
 	private TerminalReturnSummaryPanel returnSummaryVue;
+	private TerminalPayPanel payVue;
 
 	public TerminalMainFrame() throws HeadlessException {
 		initialize();
@@ -95,8 +98,8 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 			this.cards.add(this.rentVue, CARD_RENT);
 
 			//Rent summary vue
-			this.payVue = new TerminalRentSummaryPanel();
-			this.cards.add(this.payVue, CARD_RENT_SUMMARY);
+			this.rentSummaryVue = new TerminalRentSummaryPanel();
+			this.cards.add(this.rentSummaryVue, CARD_RENT_SUMMARY);
 
 			//Return vue
 			this.returnVue = new TerminalReturnPanel();
@@ -105,6 +108,10 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 			//ReturnSummary vue
 			this.returnSummaryVue = new TerminalReturnSummaryPanel();
 			this.cards.add(this.returnSummaryVue, CARD_RETURN_SUMMARY);
+
+			//Pay vue
+			this.payVue = new TerminalPayPanel();
+			this.cards.add(this.payVue, CARD_PAY);
 		}
 		this.add(this.cards, BorderLayout.CENTER);
 
@@ -138,6 +145,11 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	}
 
 	@Override
+	public void displayTerminalPay() {
+		this.cardsLayout.show(this.cards, CARD_PAY);
+	}
+
+	@Override
 	public TerminalWelcome getTerminalWelcome() {
 		return this.welcomeVue;
 	}
@@ -149,7 +161,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
 	@Override
 	public TerminalRentSummary getTerminalRentSummary() {
-		return this.payVue;
+		return this.rentSummaryVue;
 	}
 
 	@Override
@@ -160,6 +172,11 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	@Override
 	public TerminalReturnSummary getTerminalReturnSummary() {
 		return returnSummaryVue;
+	}
+
+	@Override
+	public TerminalPay getTerminalPay() {
+		return payVue;
 	}
 
 	@Override

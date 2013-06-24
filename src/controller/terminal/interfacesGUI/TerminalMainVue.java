@@ -21,6 +21,8 @@ public interface TerminalMainVue {
 
 	public TerminalReturnSummary getTerminalReturnSummary();
 
+	public TerminalPay getTerminalPay();
+
 	//Display a vue
 
 	public void displayTerminalWelcome();
@@ -32,6 +34,8 @@ public interface TerminalMainVue {
 	public void displayTerminalReturn();
 
 	public void displayTerminalReturnSummary();
+
+	public void displayTerminalPay();
 
 	//Other possibilities
 	public void showInformation(String msg);

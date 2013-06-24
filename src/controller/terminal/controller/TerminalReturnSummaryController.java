@@ -37,7 +37,7 @@ public class TerminalReturnSummaryController {
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
 		} else {
 			//TODO : Actions to return
-			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
+			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_FINISH);
 		}
 	}
 }
