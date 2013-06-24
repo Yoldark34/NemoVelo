@@ -115,6 +115,8 @@ public class NemoUserMapper extends AbstractMapper {
 		query += " ) ";
 		query += " AND ";
 		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
 
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();

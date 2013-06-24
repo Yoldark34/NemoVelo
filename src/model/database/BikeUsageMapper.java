@@ -162,18 +162,15 @@ public class BikeUsageMapper extends AbstractMapper {
 				bu.setIdNemoUser(-1);
 
 				BikeUsageTypeMapper btm = new BikeUsageTypeMapper();
-				try {
-					bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.BOOKING).getId());
-					bu.setIdNemoUser(nemoUserId);
-					TerminalController.setAnonymousUserId(nemoUserId);
-					bu.setStartDate(sqlToday);
-					bu.setEndDate(null);
 
-					int newId = this.save(bu);
-					TerminalController.getIdBikeUsagesToDelete().add(newId);
-				} catch (SQLException | ClassNotFoundException ex) {
-					ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
-				}
+				bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.BOOKING).getId());
+				bu.setIdNemoUser(nemoUserId);
+				TerminalController.setAnonymousUserId(nemoUserId);
+				bu.setStartDate(sqlToday);
+				bu.setEndDate(null);
+
+				int newId = this.save(bu);
+				TerminalController.getIdBikeUsagesToDelete().add(newId);
 				
 			}
 			return true;
@@ -225,19 +222,15 @@ public class BikeUsageMapper extends AbstractMapper {
 				bu.setId(-1);
 
 				BikeUsageTypeMapper btm = new BikeUsageTypeMapper();
-				try {
-					bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.RENTING).getId());
-					bu.setStartDate(today);
-					bu.setEndDate(null);
+				bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.RENTING).getId());
+				bu.setStartDate(today);
+				bu.setEndDate(null);
 
-					int newId = this.save(bu);
-					if (newId <= 0) {
-						error = true;
-					} else {
-						TerminalController.getIdBikeUsagesToDelete().add(newId);
-					}
-				} catch (SQLException | ClassNotFoundException ex) {
-					ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+				int newId = this.save(bu);
+				if (newId <= 0) {
+					error = true;
+				} else {
+					TerminalController.getIdBikeUsagesToDelete().add(newId);
 				}
 
 			}
@@ -387,5 +380,43 @@ public class BikeUsageMapper extends AbstractMapper {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean returnBike(int serialNumber, Timestamp today) {
+		BikeUsageTypeMapper butm = new BikeUsageTypeMapper();
+		String query;
+		BikeUsage result;
+
+		query = "SELECT ";
+		query += DataBaseElements.BikeUsageColSet.FULL;
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + " ";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKE + " = " + serialNumber;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (BikeUsage) adapter.getModelFromRequest(this);
+			result.setEndDate(today);
+			this.save(result);
+			result.setId(-1);
+			result.setIdBikeUsageType(butm.getBikeUsagesType(DataBaseElements.BikeUsageType.STOCKING).getId());
+			result.setStartDate(today);
+			result.setEndDate(null);
+			this.save(result);
+			return true;
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+		}
+
+		return false;
 	}
 }

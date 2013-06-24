@@ -4,6 +4,10 @@
  */
 package controller.terminal.controller;
 
+import java.sql.Timestamp;
+import model.database.BikeUsageMapper;
+import tools.Helper;
+
 /**
  *
  * @author Valentin SEITZ
@@ -31,12 +35,20 @@ public class TerminalReturnSummaryController {
 	}
 
 	public void doConfirm() {
+		boolean success = true;
 		//TODO : Know if a rest is to pay
 		if (this.getReturnSummary().supplementAmount() > 0) {
 			//TODO : Actions to do before person pays
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
 		} else {
-			//TODO : Actions to return
+			BikeUsageMapper bum = new BikeUsageMapper();
+			Timestamp today = Helper.getSqlDateNow();
+			ReturnSummary tes = this.getReturnSummary();
+			for (int i = 0; i < this.getReturnSummary().size(); i++) {
+				if (!bum.returnBike(this.getReturnSummary().get(i).getSerialNumber(), today)) {
+					success = false;
+				}
+			}
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
 		}
 	}

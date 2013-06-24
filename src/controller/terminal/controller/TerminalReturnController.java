@@ -107,7 +107,6 @@ public class TerminalReturnController {
 					ra = new ReturnAmount();
 					ra.setIdSubscription(subscriptions.get(i).getId());
 					boolean first = true;
-					BikeReturnSummary brs = new BikeReturnSummary();
 					int finalDuration = -1;
 					for (int j = 0; j < bikes.size(); j++) {
 						if (first) {
@@ -120,7 +119,8 @@ public class TerminalReturnController {
 							
 							ra.setReturnDate(today);
 						}
-						
+
+						BikeReturnSummary brs = new BikeReturnSummary();
 						brs.setDurationUnit(p.getPriceDurationUnit());
 						brs.setInitialDuration(p.getPriceDuration());
 						brs.setInitialAmount(p.getAmount());
