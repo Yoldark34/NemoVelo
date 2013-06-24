@@ -24,6 +24,7 @@ public class TerminalController {
 	private static boolean doAlertBeforeAutoCancel;
 	private static int anonymousUserId;
 	private static RentSummary rentSummary;
+	private static ReturnSummary returnSummary;
 	private static ArrayList<Integer> idBikeUsagesToResetEndDate = new ArrayList<>();
 	private static ArrayList<Integer> idBikeUsagesToDelete = new ArrayList<>();
 
