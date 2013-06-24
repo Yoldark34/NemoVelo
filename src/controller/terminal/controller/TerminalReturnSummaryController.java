@@ -43,7 +43,6 @@ public class TerminalReturnSummaryController {
 		} else {
 			BikeUsageMapper bum = new BikeUsageMapper();
 			Timestamp today = Helper.getSqlDateNow();
-			ReturnSummary tes = this.getReturnSummary();
 			for (int i = 0; i < this.getReturnSummary().size(); i++) {
 				if (!bum.returnBike(this.getReturnSummary().get(i).getSerialNumber(), today)) {
 					success = false;
