@@ -244,7 +244,6 @@ public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements T
 			});
 		}
 		this.getPanelActions().add(this.btnPay);
-		//TODO : Add Sign in button
 	}
 
 	@Override

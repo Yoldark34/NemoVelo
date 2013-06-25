@@ -136,9 +136,6 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				this.cboDuration = new JComboBox();
 				{
 					{
-						//TODO : Add model / listener
-					}
-					{
 						gbc = new GridBagConstraints();
 						gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 						gbc.fill = GridBagConstraints.BOTH;
@@ -210,7 +207,6 @@ public class TerminalRentPanel extends AbstractTerminalPanel implements Terminal
 				});
 			}
 			this.getPanelActions().add(this.btnRent);
-			//TODO : Add Sign in button
 		}
 	}
 
