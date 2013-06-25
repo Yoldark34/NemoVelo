@@ -36,20 +36,22 @@ public class TerminalReturnSummaryController {
 
 	public void doConfirm() {
 		boolean success = true;
-		//TODO : Know if a rest is to pay
 		if (this.getReturnSummary().supplementAmount() > 0) {
-			//TODO : Actions to do before person pays
 			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
 		} else {
 			BikeUsageMapper bum = new BikeUsageMapper();
 			Timestamp today = Helper.getSqlDateNow();
 			ReturnSummary tes = this.getReturnSummary();
-			for (int i = 0; i < this.getReturnSummary().size(); i++) {
-				if (!bum.returnBike(this.getReturnSummary().get(i).getSerialNumber(), today)) {
+			for (int i = 0; i < tes.size(); i++) {
+				if (!bum.returnBike(tes.get(i).getSerialNumber(), today)) {
 					success = false;
 				}
 			}
-			TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
+			if (success) {
+				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_FINISH);
+			} else {
+				TerminalController.getMainVue().showError("Erreur de validation du rendu des vélos.");
+			}
 		}
 	}
 }
