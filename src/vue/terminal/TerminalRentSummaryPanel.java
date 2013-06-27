@@ -239,12 +239,11 @@ public class TerminalRentSummaryPanel extends AbstractTerminalPanel implements T
 			this.btnPay.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent ae) {
-					TerminalRentSummaryController.getTerminalPayController().doPay();
+					TerminalRentSummaryController.getTerminalPayController().askPay();
 				}
 			});
 		}
 		this.getPanelActions().add(this.btnPay);
-		//TODO : Add Sign in button
 	}
 
 	@Override

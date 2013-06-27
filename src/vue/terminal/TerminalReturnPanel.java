@@ -126,7 +126,6 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 				this.btnReturn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
-						//TODO : Construct the list of bike serial numbers
 						Set bikeSerialNumbers;
 						bikeSerialNumbers = panelBikes.getBikeSerialNumbers();
 						if (bikeSerialNumbers.size() == panelBikes.getBikeQuantity()) {
