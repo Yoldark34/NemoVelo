@@ -119,10 +119,32 @@ public class TerminalPayController {
 		}
 	}
 
+	/**
+	 * Returns the summary of the rental
+	 *
+	 * @return summary of the rental
+	 */
+	public ReturnSummary getReturnSummary() {
+		ReturnSummary summary = TerminalController.getReturnSummary();
+
+		return summary;
+	}
+
 	private void doPayReturn() {
-		boolean returnSuccess = false;
+		boolean returnSuccess = true;
 		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_PAY)) {
-			//TODO : Do here what needs to be done to pay return
+			BikeUsageMapper bum = new BikeUsageMapper();
+			Timestamp today = Helper.getSqlDateNow();
+			ReturnSummary returnSummary = this.getReturnSummary();
+			if (returnSummary.size() <= 0) {
+				returnSuccess = false;
+			} else {
+			for (int i = 0; i < returnSummary.size(); i++) {
+				if (!bum.returnBike(returnSummary.get(i).getSerialNumber(), today)) {
+					returnSuccess = false;
+				}
+				}
+			}
 			if (returnSuccess) {
 				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_PAY);
 			}
