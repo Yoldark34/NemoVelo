@@ -58,7 +58,7 @@ public class TerminalReturnSummaryPanel extends AbstractTerminalPanel implements
 		{//Content
 			gbl = new GridBagLayout();
 			{
-				gbl.columnWidths = new int[]{0, 0, 0, 0};
+				gbl.columnWidths = new int[]{0, 2 * TerminalMainFrame.ROW_HEIGHT, 2 * TerminalMainFrame.ROW_HEIGHT, 0};
 				gbl.rowHeights = new int[]{0, TerminalMainFrame.ROW_HEIGHT, TerminalMainFrame.ROW_HEIGHT, 0};
 				gbl.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 				gbl.rowWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -84,7 +84,7 @@ public class TerminalReturnSummaryPanel extends AbstractTerminalPanel implements
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.EAST;
-				gbc.fill = GridBagConstraints.VERTICAL;
+				gbc.fill = GridBagConstraints.BOTH;
 				gbc.insets = new Insets(0, 0, TerminalMainFrame.VERTICAL_GAP, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 1;
 				gbc.gridy = 1;
@@ -109,7 +109,7 @@ public class TerminalReturnSummaryPanel extends AbstractTerminalPanel implements
 			{//Position
 				gbc = new GridBagConstraints();
 				gbc.anchor = GridBagConstraints.EAST;
-				gbc.fill = GridBagConstraints.VERTICAL;
+				gbc.fill = GridBagConstraints.BOTH;
 				gbc.insets = new Insets(0, 0, 0, TerminalMainFrame.HORIZONTAL_GAP);
 				gbc.gridx = 1;
 				gbc.gridy = 2;

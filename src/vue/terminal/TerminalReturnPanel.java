@@ -83,8 +83,13 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 				this.cboNbBikes.addItemListener(new ItemListener() {
 					@Override
 					public void itemStateChanged(ItemEvent ie) {
-						panelBikes.setBikeQuantity(((Integer) cboNbBikes.getSelectedItem()).intValue());
+						if (cboNbBikes.getModel().getSize() > 0) {
+							panelBikes.setBikeQuantity(((Integer) cboNbBikes.getSelectedItem()).intValue());
+						} else {
+							panelBikes.setBikeQuantity(0);
+						}
 						scrollPane.validate();
+						scrollPane.repaint();
 					}
 				});
 				{//Position
@@ -146,5 +151,7 @@ public class TerminalReturnPanel extends AbstractTerminalPanel implements Termin
 		for (int i = 1; i <= TerminalReturnController.getTerminalReturnController().getMaxAvailableStorages(); i++) {
 			this.cboNbBikes.addItem(new Integer(i));
 		}
+		panelBikes.setBikeQuantity(1);
+		scrollPane.validate();
 	}
 }
