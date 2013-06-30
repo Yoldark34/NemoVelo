@@ -38,6 +38,8 @@ public interface TerminalMainVue {
 	public void displayTerminalPay();
 
 	//Other possibilities
+	public void setVisible(boolean visible);
+
 	public void showInformation(String msg);
 
 	public void showWarning(String msg);
