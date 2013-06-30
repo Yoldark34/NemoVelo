@@ -13,6 +13,7 @@ import controller.terminal.interfacesGUI.TerminalReturnSummary;
 import controller.terminal.interfacesGUI.TerminalWelcome;
 import java.util.Collection;
 import java.util.HashSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -133,23 +134,17 @@ public class TerminalMultiMainVue extends HashSet<TerminalMainVue> implements Te
 
 	@Override
 	public void showInformation(String msg) {
-		for (TerminalMainVue mainVueInstance : this) {
-			mainVueInstance.showInformation(msg);
-		}
-	}
-
-	@Override
-	public void showWarning(String msg) {
-		for (TerminalMainVue mainVueInstance : this) {
-			mainVueInstance.showWarning(msg);
-		}
+		JOptionPane.showMessageDialog(null, msg, "Information", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override
 	public void showError(String msg) {
-		for (TerminalMainVue mainVueInstance : this) {
-			mainVueInstance.showError(msg);
-		}
+		JOptionPane.showMessageDialog(null, msg, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void showWarning(String msg) {
+		JOptionPane.showMessageDialog(null, msg, "Avertissement", JOptionPane.WARNING_MESSAGE);
 	}
 
 	@Override
