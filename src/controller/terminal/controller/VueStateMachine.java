@@ -10,7 +10,7 @@ import controller.terminal.interfacesGUI.TerminalSubVue;
  *
  * @author Valentin SEITZ
  */
-class TerminalVueStateMachine {
+class VueStateMachine {
 
 	//The vues, first dimensions of possibilites array
 	public static final int IMPOSSIBLE = -2;
@@ -86,7 +86,7 @@ class TerminalVueStateMachine {
 		switch (state) {
 			case VUE_WELCOME:
 				//case VUE_END: (Same as welcome)
-				TerminalVueStateMachine.doCancel(); //Cancel all processed data
+				VueStateMachine.doCancel(); //Cancel all processed data
 				TerminalController.getMainVue().displayTerminalWelcome();
 				currentVue = TerminalController.getMainVue().getTerminalWelcome();
 				break;

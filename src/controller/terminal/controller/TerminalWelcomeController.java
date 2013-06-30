@@ -20,10 +20,10 @@ public class TerminalWelcomeController {
 	}
 
 	public void askRent() {
-		TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_RENT);
+		VueStateMachine.doAction(VueStateMachine.ACTION_ASK_RENT);
 	}
 
 	public void askReturn() {
-		TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_RETURN);
+		VueStateMachine.doAction(VueStateMachine.ACTION_ASK_RETURN);
 	}
 }

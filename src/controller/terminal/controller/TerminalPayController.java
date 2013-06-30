@@ -4,6 +4,8 @@
  */
 package controller.terminal.controller;
 
+import controller.terminal.controller.data.ReturnSummary;
+import controller.terminal.controller.data.RentSummary;
 import java.sql.Timestamp;
 import model.database.BikeUsageMapper;
 import model.database.PaymentMapper;
@@ -32,12 +34,12 @@ public class TerminalPayController {
 
 	public float getAmount() {
 		float amount;
-		switch (TerminalVueStateMachine.getState()) {
-			case TerminalVueStateMachine.VUE_RENT_PAY:
-				amount = TerminalController.getRentSummary().getTotalAmount();
+		switch (VueStateMachine.getState()) {
+			case VueStateMachine.VUE_RENT_PAY:
+				amount = ProcessedData.getRentSummary().getTotalAmount();
 				break;
-			case TerminalVueStateMachine.VUE_RETURN_PAY:
-				amount = TerminalController.getReturnSummary().supplementAmount();
+			case VueStateMachine.VUE_RETURN_PAY:
+				amount = ProcessedData.getReturnSummary().supplementAmount();
 				break;
 			default:
 				amount = 0;
@@ -47,11 +49,11 @@ public class TerminalPayController {
 
 	public boolean isMustConfirmUseTerms() {
 		boolean confirm;
-		switch (TerminalVueStateMachine.getState()) {
-			case TerminalVueStateMachine.VUE_RENT_PAY:
+		switch (VueStateMachine.getState()) {
+			case VueStateMachine.VUE_RENT_PAY:
 				confirm = true;
 				break;
-			case TerminalVueStateMachine.VUE_RETURN_PAY:
+			case VueStateMachine.VUE_RETURN_PAY:
 				confirm = false;
 				break;
 			default:
@@ -62,11 +64,11 @@ public class TerminalPayController {
 
 	public boolean isMustConfirmPurchaseTerms() {
 		boolean confirm;
-		switch (TerminalVueStateMachine.getState()) {
-			case TerminalVueStateMachine.VUE_RENT_PAY:
+		switch (VueStateMachine.getState()) {
+			case VueStateMachine.VUE_RENT_PAY:
 				confirm = true;
 				break;
-			case TerminalVueStateMachine.VUE_RETURN_PAY:
+			case VueStateMachine.VUE_RETURN_PAY:
 				confirm = false;
 				break;
 			default:
@@ -76,12 +78,12 @@ public class TerminalPayController {
 	}
 
 	public void doPay() {
-		switch (TerminalVueStateMachine.getState()) {
-			case TerminalVueStateMachine.VUE_RENT_PAY:
+		switch (VueStateMachine.getState()) {
+			case VueStateMachine.VUE_RENT_PAY:
 				//Here user pays after a rent
 				this.doPayRent();
 				break;
-			case TerminalVueStateMachine.VUE_RETURN_PAY:
+			case VueStateMachine.VUE_RETURN_PAY:
 				//Here user pays after a return
 				this.doPayReturn();
 				break;
@@ -92,29 +94,29 @@ public class TerminalPayController {
 
 	private void doPayRent() {
 		boolean rentSuccess = false;
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_PAY)) {
+		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_PAY)) {
 			Timestamp today = Helper.getSqlDateNow();
-			RentSummary amountToPay = TerminalController.getRentSummary();
+			RentSummary amountToPay = ProcessedData.getRentSummary();
 			PaymentMapper pm = new PaymentMapper();
 			SubscriptionMapper sm = new SubscriptionMapper();
 			PriceMapper prm = new PriceMapper();
 			Subscription subscription = new Subscription();
-			subscription.setIdNemoUser(TerminalController.getAnonymousUserId());
+			subscription.setIdNemoUser(ProcessedData.getAnonymousUserId());
 			int priceId = prm.getPriceId(amountToPay.getDurationUnit(), amountToPay.getDuration());
 			subscription.setIdPrice(priceId);
 			subscription.setAmount(amountToPay.getRentAmount());
 			subscription.setStartDate(today);
 			int idSubscription = sm.save(subscription);
 			if (idSubscription > 0) {
-				boolean paymentSuccess = pm.payAmountForNemoUser(TerminalController.getAnonymousUserId(), amountToPay.getTotalAmount(), today, idSubscription);
+				boolean paymentSuccess = pm.payAmountForNemoUser(ProcessedData.getAnonymousUserId(), amountToPay.getTotalAmount(), today, idSubscription);
 				if (paymentSuccess) {
 					BikeUsageMapper bum = new BikeUsageMapper();
-					rentSuccess = bum.rentBookedBikesForNemoUser(TerminalController.getAnonymousUserId(), today);
+					rentSuccess = bum.rentBookedBikesForNemoUser(ProcessedData.getAnonymousUserId(), today, ProcessedData.getIdBikeUsagesToDelete());
 				}
 			}
 
 			if (rentSuccess) {
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_PAY);
+				VueStateMachine.doAction(VueStateMachine.ACTION_DO_PAY);
 			}
 		}
 	}
@@ -125,14 +127,14 @@ public class TerminalPayController {
 	 * @return summary of the rental
 	 */
 	public ReturnSummary getReturnSummary() {
-		ReturnSummary summary = TerminalController.getReturnSummary();
+		ReturnSummary summary = ProcessedData.getReturnSummary();
 
 		return summary;
 	}
 
 	private void doPayReturn() {
 		boolean returnSuccess = true;
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_PAY)) {
+		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_PAY)) {
 			BikeUsageMapper bum = new BikeUsageMapper();
 			Timestamp today = Helper.getSqlDateNow();
 			ReturnSummary returnSummary = this.getReturnSummary();
@@ -146,7 +148,7 @@ public class TerminalPayController {
 				}
 			}
 			if (returnSuccess) {
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_PAY);
+				VueStateMachine.doAction(VueStateMachine.ACTION_DO_PAY);
 			}
 		}
 	}

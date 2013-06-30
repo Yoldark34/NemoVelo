@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.terminal.controller;
+package controller.terminal.controller.data;
 
 /**
  *

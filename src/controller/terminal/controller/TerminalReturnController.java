@@ -4,6 +4,9 @@
  */
 package controller.terminal.controller;
 
+import controller.terminal.controller.data.ReturnSummary;
+import controller.terminal.controller.data.RentSummary;
+import controller.terminal.controller.data.BikeReturnSummary;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,7 +50,7 @@ public class TerminalReturnController {
 	public int getMaxAvailableStorages() {
 		int result;
 		StorageMapper sm = new StorageMapper();
-		result = sm.getAvailableStoragesForTerminal(TerminalController.getTerminal().getId());
+		result = sm.getAvailableStoragesForTerminal(ProcessedData.getTerminal().getId());
 		if (result == 0) {
 			doAutoCancel("Aucun emplacement disponible sur ce terminal.");
 		}
@@ -62,7 +65,7 @@ public class TerminalReturnController {
 	public Set<Integer> getRentedBikeSerialNumbers() {
 		Set<Integer> result = new HashSet<>();
 		BikeMapper bm = new BikeMapper();
-		ArrayList<Bike> resultBikes = bm.getRentedBikesForThisTerminal(TerminalController.getTerminal().getId());
+		ArrayList<Bike> resultBikes = bm.getRentedBikesForThisTerminal(ProcessedData.getTerminal().getId());
 		if (resultBikes.size() > 0) {
 			for (int i = 0; i < resultBikes.size(); ++i) {
 				result.add(resultBikes.get(i).getId());
@@ -78,7 +81,7 @@ public class TerminalReturnController {
 	 * @param bikeSerialNumbers Set of Serial numbers of the returned bikes
 	 */
 	public void doReturn(Set<Integer> bikeSerialNumbers) {
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RETURN)) {
+		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_RETURN)) {
 			Timestamp today = Helper.getSqlDateNow();
 			BikeUsageMapper bum = new BikeUsageMapper();
 			SubscriptionMapper sm = new SubscriptionMapper();
@@ -133,8 +136,8 @@ public class TerminalReturnController {
 					ram.save(ra);
 				}
 				summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
-				TerminalController.setReturnSummary(summary);
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RETURN);
+				ProcessedData.setReturnSummary(summary);
+				VueStateMachine.doAction(VueStateMachine.ACTION_DO_RETURN);
 			} else {
 				doAutoCancel("Ces vélos ne sont pas attribué au meme NemoUser.");
 			}
@@ -143,10 +146,10 @@ public class TerminalReturnController {
 
 	private void doCancel() {
 		boolean ok = true;
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_CANCEL)) {
+		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_CANCEL)) {
 			//TODO : Implement Cancel
 			if (ok) {
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CANCEL);
+				VueStateMachine.doAction(VueStateMachine.ACTION_DO_CANCEL);
 			}
 		}
 	}

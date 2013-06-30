@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import model.database.BikeMapper;
 import model.database.BikeUsageMapper;
+import model.database.NemoUserMapper;
 import model.database.PriceMapper;
 import model.object.Price;
 import model.object.Terminal;
@@ -22,7 +23,7 @@ public class TerminalRentController {
 	private static TerminalRentController terminalRentController;
 	private BikeMapper bikeMapper = new BikeMapper();
 	private BikeUsageMapper bikeUsageMapper = new BikeUsageMapper();
-	private Terminal terminal = TerminalController.getTerminal();
+	private Terminal terminal = ProcessedData.getTerminal();
 
 	public static TerminalRentController getTerminalRentController() {
 		if (terminalRentController == null) {
@@ -89,25 +90,30 @@ public class TerminalRentController {
 	 * @param durationUnit duration unit of retnal that next has to be payed
 	 */
 	public void doRent(int nbBikes, int duration, String durationUnit) {
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_RENT)) {
-			if (this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), nbBikes)) {
-				TerminalController.getRentSummary().setBikeQuantity(nbBikes);
-				TerminalController.getRentSummary().setDuration(duration);
-				TerminalController.getRentSummary().setDurationUnit(durationUnit);
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_RENT);
+		NemoUserMapper num;
+		int nemoUserId;
+		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_RENT)) {
+			num = new NemoUserMapper();
+			nemoUserId = num.createAnonymousUser();
+			if (this.bikeUsageMapper.bookAvailableBikesForTerminal(this.terminal.getId(), nemoUserId, nbBikes, ProcessedData.getIdBikeUsagesToResetEndDate(), ProcessedData.getIdBikeUsagesToDelete())) {
+				ProcessedData.setAnonymousUserId(nemoUserId);
+				ProcessedData.getRentSummary().setBikeQuantity(nbBikes);
+				ProcessedData.getRentSummary().setDuration(duration);
+				ProcessedData.getRentSummary().setDurationUnit(durationUnit);
+				VueStateMachine.doAction(VueStateMachine.ACTION_DO_RENT);
 			}
 		}
 	}
 
 	private void doCancel() {
 		boolean ok;
-		if (TerminalVueStateMachine.possibleAction(TerminalVueStateMachine.ACTION_DO_CANCEL)) {
+		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_CANCEL)) {
 
 			BikeUsageMapper bum = new BikeUsageMapper();
-			ok = bum.resetBikesLocationProcess(TerminalController.getIdBikeUsagesToResetEndDate(), TerminalController.getIdBikeUsagesToDelete());
+			ok = bum.resetBikesLocationProcess(ProcessedData.getIdBikeUsagesToResetEndDate(), ProcessedData.getIdBikeUsagesToDelete());
 			//TODO : Implement Cancel
 			if (ok) {
-				TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_DO_CANCEL);
+				VueStateMachine.doAction(VueStateMachine.ACTION_DO_CANCEL);
 			}
 		}
 	}

@@ -4,6 +4,8 @@
  */
 package controller.terminal.controller;
 
+import controller.terminal.controller.data.ReturnSummary;
+import controller.terminal.controller.data.RentSummary;
 import controller.terminal.interfacesGUI.TerminalMainVue;
 import java.util.ArrayList;
 import model.database.TerminalMapper;
@@ -16,46 +18,8 @@ import model.object.Terminal;
 public class TerminalController {
 
 	private static TerminalMainVue mainVue;
-	private static Terminal terminal;
 	private static boolean doAutoCancel;
 	private static boolean doAlertBeforeAutoCancel;
-	private static int anonymousUserId;
-	private static RentSummary rentSummary;
-	private static ReturnSummary returnSummary;
-	private static ArrayList<Integer> idBikeUsagesToResetEndDate = new ArrayList<>();
-	private static ArrayList<Integer> idBikeUsagesToDelete = new ArrayList<>();
-
-	public static ArrayList<Integer> getIdBikeUsagesToResetEndDate() {
-		return idBikeUsagesToResetEndDate;
-	}
-
-	public static void setIdBikeUsagesToResetEndDate(ArrayList<Integer> BikeUsagesToResetEndDate) {
-		TerminalController.idBikeUsagesToResetEndDate = BikeUsagesToResetEndDate;
-	}
-
-	public static ArrayList<Integer> getIdBikeUsagesToDelete() {
-		return idBikeUsagesToDelete;
-	}
-
-	public static void setIdBikeUsagesToDelete(ArrayList<Integer> BikeUsagesToDelete) {
-		TerminalController.idBikeUsagesToDelete = BikeUsagesToDelete;
-	}
-
-	public static int getAnonymousUserId() {
-		return anonymousUserId;
-	}
-
-	public static void setAnonymousUserId(int anonymousUserId) {
-		TerminalController.anonymousUserId = anonymousUserId;
-	}
-
-	public static RentSummary getRentSummary() {
-		return rentSummary;
-	}
-
-	private static void setRentSummary(RentSummary rentSummary) {
-		TerminalController.rentSummary = rentSummary;
-	}
 
 	public static void setDoAutoCancel(boolean doAutoCancel) {
 		TerminalController.doAutoCancel = doAutoCancel;
@@ -73,36 +37,21 @@ public class TerminalController {
 		return doAlertBeforeAutoCancel;
 	}
 
-	public static TerminalMainVue getMainVue() {
-		return TerminalController.mainVue;
-	}
-
-	public static Terminal getTerminal() {
-		return TerminalController.terminal;
-	}
-
 	private static void setMainVue(TerminalMainVue mainVue) {
 		TerminalController.mainVue = mainVue;
 	}
 
-	public static ReturnSummary getReturnSummary() {
-		return returnSummary;
-	}
-
-	public static void setReturnSummary(ReturnSummary rentSummary) {
-		TerminalController.returnSummary = rentSummary;
+	public static TerminalMainVue getMainVue() {
+		return TerminalController.mainVue;
 	}
 
 	public TerminalController(TerminalMainVue mainVue) {
-		TerminalMapper terminalMapper = new TerminalMapper();
-		terminal = terminalMapper.getTerminal(1);
-		setRentSummary(new RentSummary());
 		setMainVue(mainVue);
 		mainVue.displayTerminalWelcome();
 	}
 
 	public static void doExit() {
-		TerminalVueStateMachine.doCancel();
+		VueStateMachine.doCancel();
 		System.exit(0);
 	}
 }

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import resource.log.ProjectLogger;
@@ -109,7 +110,7 @@ public class BikeUsageMapper extends AbstractMapper {
 
 	}
 
-	public boolean bookAvailableBikesForTerminal(int terminalId, int numberOfBikes) {
+	public boolean bookAvailableBikesForTerminal(int terminalId, int nemoUserId, int numberOfBikes, List<Integer> idBikeUsagesToResetEndDate, List<Integer> idBikeUsagesToDelete) {
 		boolean result;
 		String query;
 		ArrayList<BikeUsage> requestResult = null;
@@ -146,12 +147,10 @@ public class BikeUsageMapper extends AbstractMapper {
 
 		if (requestResult != null && !requestResult.isEmpty()) {
 			java.sql.Timestamp sqlToday = Helper.getSqlDateNow();
-			NemoUserMapper num = new NemoUserMapper();
-			int nemoUserId = num.createAnonymousUser();
-
+			
 			for (int i = 0; i < numberOfBikes; i++) {
 				bu = requestResult.get(i);
-				TerminalController.getIdBikeUsagesToResetEndDate().add(bu.getId());
+				idBikeUsagesToResetEndDate.add(bu.getId());
 				bu.setEndDate(sqlToday);
 				//TODO ask user to login before or create anonymous user
 				//bu.setIdNemoUser();
@@ -164,12 +163,11 @@ public class BikeUsageMapper extends AbstractMapper {
 
 				bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.BOOKING).getId());
 				bu.setIdNemoUser(nemoUserId);
-				TerminalController.setAnonymousUserId(nemoUserId);
 				bu.setStartDate(sqlToday);
 				bu.setEndDate(null);
 
 				int newId = this.save(bu);
-				TerminalController.getIdBikeUsagesToDelete().add(newId);
+				idBikeUsagesToDelete.add(newId);
 			}
 			result = true;
 		} else {
@@ -178,7 +176,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		return result;
 	}
 
-	public boolean rentBookedBikesForNemoUser(int anonymousUserId, Timestamp today) {
+	public boolean rentBookedBikesForNemoUser(int anonymousUserId, Timestamp today, List<Integer> idBikeUsagesToDelete) {
 		boolean result;
 		String query;
 		ArrayList<BikeUsage> requestResult = null;
@@ -229,9 +227,8 @@ public class BikeUsageMapper extends AbstractMapper {
 				if (newId <= 0) {
 					error = true;
 				} else {
-					TerminalController.getIdBikeUsagesToDelete().add(newId);
+					idBikeUsagesToDelete.add(newId);
 				}
-
 			}
 			result = !error;
 		} else {

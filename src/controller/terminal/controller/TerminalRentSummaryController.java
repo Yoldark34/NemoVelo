@@ -4,6 +4,7 @@
  */
 package controller.terminal.controller;
 
+import controller.terminal.controller.data.RentSummary;
 import model.database.PriceMapper;
 
 /**
@@ -23,14 +24,14 @@ public class TerminalRentSummaryController {
 
 	public RentSummary getRentSummary() {
 		PriceMapper pm = new PriceMapper();
-		TerminalController.getRentSummary().setGuaranteePerBikeAmount(pm.getFirstGuarantee().getAmount());
-		TerminalController.getRentSummary().setDurationPricePerUnit(pm.getPriceAmountForUnitAndDuration(TerminalController.getRentSummary().getDuration(), TerminalController.getRentSummary().getDurationUnit()));
-		RentSummary result = TerminalController.getRentSummary();
+		ProcessedData.getRentSummary().setGuaranteePerBikeAmount(pm.getFirstGuarantee().getAmount());
+		ProcessedData.getRentSummary().setDurationPricePerUnit(pm.getPriceAmountForUnitAndDuration(ProcessedData.getRentSummary().getDuration(), ProcessedData.getRentSummary().getDurationUnit()));
+		RentSummary result = ProcessedData.getRentSummary();
 
 		return result;
 	}
 
 	public void askPay() {
-		TerminalVueStateMachine.doAction(TerminalVueStateMachine.ACTION_ASK_PAY);
+		VueStateMachine.doAction(VueStateMachine.ACTION_ASK_PAY);
 	}
 }

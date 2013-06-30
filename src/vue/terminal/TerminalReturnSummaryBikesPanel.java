@@ -4,7 +4,7 @@
  */
 package vue.terminal;
 
-import controller.terminal.controller.BikeReturnSummary;
+import controller.terminal.controller.data.BikeReturnSummary;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

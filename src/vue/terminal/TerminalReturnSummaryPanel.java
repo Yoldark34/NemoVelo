@@ -4,7 +4,7 @@
  */
 package vue.terminal;
 
-import controller.terminal.controller.ReturnSummary;
+import controller.terminal.controller.data.ReturnSummary;
 import controller.terminal.controller.TerminalReturnSummaryController;
 import controller.terminal.interfacesGUI.TerminalReturnSummary;
 import java.awt.GridBagConstraints;
