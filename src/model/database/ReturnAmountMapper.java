@@ -4,10 +4,8 @@
  */
 package model.database;
 
-import model.object.Payment;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import model.object.ReturnAmount;

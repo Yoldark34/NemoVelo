@@ -101,8 +101,8 @@ public class TerminalController {
 		mainVue.displayTerminalWelcome();
 	}
 
-	public void doExit() {
-		//TODO : cancel current operation
+	public static void doExit() {
+		TerminalVueStateMachine.doCancel();
 		System.exit(0);
 	}
 }

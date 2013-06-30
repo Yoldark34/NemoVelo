@@ -5,7 +5,6 @@
 package vue.terminal;
 
 import controller.terminal.controller.RentSummary;
-import controller.terminal.controller.TerminalController;
 import controller.terminal.controller.TerminalRentSummaryController;
 import controller.terminal.interfacesGUI.TerminalRentSummary;
 import java.awt.GridBagConstraints;
@@ -16,7 +15,6 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 

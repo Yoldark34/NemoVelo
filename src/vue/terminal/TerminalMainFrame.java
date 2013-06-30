@@ -4,6 +4,7 @@
  */
 package vue.terminal;
 
+import controller.terminal.controller.TerminalController;
 import controller.terminal.interfacesGUI.TerminalMainVue;
 import controller.terminal.interfacesGUI.TerminalPay;
 import controller.terminal.interfacesGUI.TerminalRentSummary;
@@ -16,6 +17,8 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -116,7 +119,14 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 		this.add(this.cards, BorderLayout.CENTER);
 
 		//Just exit application
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				TerminalController.doExit();
+			}
+		});
 	}
 
 	@Override

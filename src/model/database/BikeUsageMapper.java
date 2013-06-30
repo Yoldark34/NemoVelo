@@ -10,11 +10,9 @@ import model.object.BikeUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import resource.log.ProjectLogger;
 
 
@@ -112,9 +110,10 @@ public class BikeUsageMapper extends AbstractMapper {
 	}
 
 	public boolean bookAvailableBikesForTerminal(int terminalId, int numberOfBikes) {
+		boolean result;
 		String query;
-		ArrayList<BikeUsage> result = null;
-		BikeUsage bu = null;
+		ArrayList<BikeUsage> requestResult = null;
+		BikeUsage bu;
 
 		query = "SELECT ";
 		query += DataBaseElements.BikeUsageColSet.FULL;
@@ -140,18 +139,18 @@ public class BikeUsageMapper extends AbstractMapper {
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();
 			adapter.executeSelectQuery(query);
-			result = (ArrayList<BikeUsage>) adapter.getModelsFromRequest(this);
+			requestResult = (ArrayList<BikeUsage>) adapter.getModelsFromRequest(this);
 		} catch (SQLException | ClassNotFoundException ex) {
 			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
 		}
 
-		if (!result.isEmpty()) {
+		if (requestResult != null && !requestResult.isEmpty()) {
 			java.sql.Timestamp sqlToday = Helper.getSqlDateNow();
 			NemoUserMapper num = new NemoUserMapper();
 			int nemoUserId = num.createAnonymousUser();
 
 			for (int i = 0; i < numberOfBikes; i++) {
-				bu = result.get(i);
+				bu = requestResult.get(i);
 				TerminalController.getIdBikeUsagesToResetEndDate().add(bu.getId());
 				bu.setEndDate(sqlToday);
 				//TODO ask user to login before or create anonymous user
@@ -171,17 +170,18 @@ public class BikeUsageMapper extends AbstractMapper {
 
 				int newId = this.save(bu);
 				TerminalController.getIdBikeUsagesToDelete().add(newId);
-				
 			}
-			return true;
+			result = true;
+		} else {
+			result = false;
 		}
-
-		return false;
+		return result;
 	}
 
 	public boolean rentBookedBikesForNemoUser(int anonymousUserId, Timestamp today) {
+		boolean result;
 		String query;
-		ArrayList<BikeUsage> result = null;
+		ArrayList<BikeUsage> requestResult = null;
 		BikeUsage bu;
 		boolean error = false;
 		int nbRow;
@@ -203,14 +203,14 @@ public class BikeUsageMapper extends AbstractMapper {
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();
 			adapter.executeSelectQuery(query);
-			result = (ArrayList<BikeUsage>) adapter.getModelsFromRequest(this);
+			requestResult = (ArrayList<BikeUsage>) adapter.getModelsFromRequest(this);
 		} catch (SQLException | ClassNotFoundException ex) {
 			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
 		}
 
-		if (!result.isEmpty()) {
-			for (int i = 0; i < result.size(); i++) {
-				bu = result.get(i);
+		if (requestResult != null && !requestResult.isEmpty()) {
+			for (int i = 0; i < requestResult.size(); i++) {
+				bu = requestResult.get(i);
 				bu.setEndDate(today);
 				//TODO ask user to login before or create anonymous user
 				//bu.setIdNemoUser();
@@ -218,7 +218,6 @@ public class BikeUsageMapper extends AbstractMapper {
 				if (nbRow <= 0) {
 					error = true;
 				}
-
 				bu.setId(-1);
 
 				BikeUsageTypeMapper btm = new BikeUsageTypeMapper();
@@ -234,9 +233,11 @@ public class BikeUsageMapper extends AbstractMapper {
 				}
 
 			}
-			return !error;
+			result = !error;
+		} else {
+			result = false;
 		}
-		return false;
+		return result;
 	}
 
 	public ArrayList<BikeUsage> getBikesFromNemoUserAndDateForBikes(int idNemoUser, Timestamp startDate, Set<Integer> bikeSerialNumbers) {

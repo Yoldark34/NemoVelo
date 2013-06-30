@@ -86,7 +86,7 @@ class TerminalVueStateMachine {
 		switch (state) {
 			case VUE_WELCOME:
 				//case VUE_END: (Same as welcome)
-				//TODO : Reinit all processed data
+				TerminalVueStateMachine.doCancel(); //Cancel all processed data
 				TerminalController.getMainVue().displayTerminalWelcome();
 				currentVue = TerminalController.getMainVue().getTerminalWelcome();
 				break;
@@ -118,5 +118,8 @@ class TerminalVueStateMachine {
 		if (currentVue != null) {
 			currentVue.init();
 		}
+	}
+
+	public static void doCancel() {
 	}
 }

@@ -50,7 +50,7 @@ class TerminalReturnBikesPanel extends JPanel {
 
 	private void initialize() {
 		this.bikePanels = new ArrayList<>();
-		this.rentedBikeSerialNumbers = new Vector<Integer>();
+		this.rentedBikeSerialNumbers = new Vector<>();
 	}
 
 	public void setBikeQuantity(int quantity) {
@@ -118,7 +118,7 @@ class TerminalReturnBikesPanel extends JPanel {
 
 	public Set<Integer> getBikeSerialNumbers() {
 		Set<Integer> result;
-		result = new HashSet<Integer>();
+		result = new HashSet<>();
 		for (TerminalReturnBikePanel bikePanel : this.bikePanels) {
 			result.add(bikePanel.getBikeSerialNumber());
 		}
