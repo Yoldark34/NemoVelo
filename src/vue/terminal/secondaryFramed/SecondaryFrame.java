@@ -42,7 +42,6 @@ public class SecondaryFrame extends JFrame {
 		this.addWindowListener(new WindowListener() {
 			@Override
 			public void windowOpened(WindowEvent we) {
-				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 			}
 
 			@Override
@@ -52,27 +51,22 @@ public class SecondaryFrame extends JFrame {
 
 			@Override
 			public void windowClosed(WindowEvent we) {
-				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 			}
 
 			@Override
 			public void windowIconified(WindowEvent we) {
-				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent we) {
-				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 			}
 
 			@Override
 			public void windowActivated(WindowEvent we) {
-				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent we) {
-				throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 			}
 		});
 	}
