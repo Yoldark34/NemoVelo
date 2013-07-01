@@ -133,7 +133,8 @@ public class TerminalReturnController {
 					}
 					rs.setBikeQuantity(bikes.size());
 					ra.setAmount(rs.getRentAmount());
-					ram.save(ra);
+					int newId = ram.save(ra);
+					ProcessedData.getIdReturnAmountToDelete().add(newId);
 				}
 				summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
 				ProcessedData.setReturnSummary(summary);

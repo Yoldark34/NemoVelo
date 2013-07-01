@@ -27,6 +27,7 @@ public class ReturnAmountMapper extends AbstractMapper {
 	public int save(ReturnAmount returnAmount) {
 		int nbRows = 0;
 		String query;
+		int idResult = -1;
 
 		if (returnAmount.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.RETURNAMOUNT + "` SET ";
@@ -49,6 +50,13 @@ public class ReturnAmountMapper extends AbstractMapper {
 			}
 
 			query += " WHERE `" + DataBaseElements.RETURNAMOUNT_ID + "` = '" + returnAmount.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.RETURNAMOUNT + " (";
 			//query +=  "`" + DataBaseElements.RETURNAMOUNT_ID + "`,";
@@ -75,14 +83,16 @@ public class ReturnAmountMapper extends AbstractMapper {
 			}
 
 			query += ")";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
-		}
-		return nbRows;
+		
 	}
 
 	public float GetAmountOfReturnForSubscription(int subscriptionId) {
@@ -131,5 +141,38 @@ public class ReturnAmountMapper extends AbstractMapper {
 	@Override
 	Object getEmptyModel() {
 		return new ReturnAmount();
+	}
+
+	public boolean deleteReturnAmountById(ArrayList<Integer> idReturnAmountToDelete) {
+		String query;
+		int nbRows = 0;
+
+		query = "DELETE";
+		query += " FROM ";
+		query += DataBaseElements.RETURNAMOUNT;
+		query += " WHERE ";
+		query += DataBaseElements.RETURNAMOUNT_ID;
+		query += " IN ";
+		query += " ( ";
+		int size = idReturnAmountToDelete.size() - 1;
+		for (Integer idReturnAmount : idReturnAmountToDelete) {
+			query += "'" + idReturnAmount + "'";
+			if (size != 0) {
+				query += ", ";
+			}
+			size--;
+		}
+		query += " ) ";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+		} catch (Exception e) {
+		}
+
+		if (nbRows <= 0) {
+			return false;
+		}
+		return true;
 	}
 }
