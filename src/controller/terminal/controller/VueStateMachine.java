@@ -73,7 +73,10 @@ class VueStateMachine {
 			possible = (nextState != IMPOSSIBLE);
 			if (possible) {
 				if (validate) {
-				state = nextState;
+					if (action == ACTION_DO_CANCEL) {
+						doCancel();
+					}
+					state = nextState;
 					displayVue(state);
 				}
 			} else {
@@ -88,7 +91,6 @@ class VueStateMachine {
 		switch (state) {
 			case VUE_WELCOME:
 				//case VUE_END: (Same as welcome)
-				VueStateMachine.doCancel(); //Cancel all processed data
 				TerminalController.getMainVue().displayTerminalWelcome();
 				currentVue = TerminalController.getMainVue().getTerminalWelcome();
 				break;
@@ -122,21 +124,21 @@ class VueStateMachine {
 		}
 	}
 
-	public static void doCancel() {
+	private static void doCancel() {
 		switch (VueStateMachine.getState()) {
+			case VUE_RENT:
 			case VUE_RENT_SUMMARY:
 			case VUE_RENT_PAY:
 				BikeUsageMapper bum = new BikeUsageMapper();
 				bum.resetBikesLocationProcess(ProcessedData.getIdBikeUsagesToResetEndDate(), ProcessedData.getIdBikeUsagesToDelete());
 				break;
+			case VUE_RETURN:
 			case VUE_RETURN_SUMMARY:
 			case VUE_RETURN_PAY:
 				ReturnAmountMapper ram = new ReturnAmountMapper();
 				ram.deleteReturnAmountById(ProcessedData.getIdReturnAmountToDelete());
 				break;
 			case VUE_WELCOME:
-			case VUE_RENT:
-			case VUE_RETURN:
 				//Nothing to do
 				break;
 			default:
