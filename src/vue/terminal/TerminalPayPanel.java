@@ -76,6 +76,7 @@ public class TerminalPayPanel extends AbstractTerminalPanel implements TerminalP
 
 			this.txtAmount = new JTextField();
 			{
+				this.txtAmount.setEnabled(false);
 				this.txtAmount.setColumns(10);
 				{//Position
 					gbc = new GridBagConstraints();

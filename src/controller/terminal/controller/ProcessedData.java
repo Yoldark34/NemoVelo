@@ -26,6 +26,16 @@ class ProcessedData {
 	private static ArrayList<Integer> idReturnAmountToDelete = new ArrayList<>();
 	private static ArrayList<Payment> paymentToProcess = new ArrayList<>();
 
+	public static void setTerminal(int terminalId) {
+		doResetData();
+		TerminalMapper terminalMapper = new TerminalMapper();
+		terminal = terminalMapper.getTerminal(terminalId);
+	}
+
+	public static Terminal getTerminal() {
+		return ProcessedData.terminal;
+	}
+
 	public static ArrayList<Payment> getPaymentToProcess() {
 		return paymentToProcess;
 	}
@@ -68,14 +78,6 @@ class ProcessedData {
 
 	public static RentSummary getRentSummary() {
 		return rentSummary;
-	}
-
-	public static Terminal getTerminal() {
-		if (ProcessedData.terminal == null) {
-			TerminalMapper terminalMapper = new TerminalMapper();
-			terminal = terminalMapper.getTerminal(2);
-		}
-		return ProcessedData.terminal;
 	}
 
 	public static ReturnSummary getReturnSummary() {
