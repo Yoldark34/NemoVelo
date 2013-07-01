@@ -105,25 +105,12 @@ public class TerminalRentController {
 		}
 	}
 
-	private void doCancel() {
-		boolean ok;
-		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_CANCEL)) {
-
-			BikeUsageMapper bum = new BikeUsageMapper();
-			ok = bum.resetBikesLocationProcess(ProcessedData.getIdBikeUsagesToResetEndDate(), ProcessedData.getIdBikeUsagesToDelete());
-			//TODO : Implement Cancel
-			if (ok) {
-				VueStateMachine.doAction(VueStateMachine.ACTION_DO_CANCEL);
-			}
-		}
-	}
-
 	private void doAutoCancel(String msg) {
 		if (TerminalController.isDoAutoCancel()) {
 			if (TerminalController.isDoAlertBeforeAutoCancel()) {
 				TerminalController.getMainVue().showWarning(msg);
 			}
-			doCancel();
+			TerminalController.doCancel();
 		}
 	}
 }

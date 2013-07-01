@@ -53,8 +53,12 @@ public class TerminalController {
 		return doAlertBeforeAutoCancel;
 	}
 
+	public static void doCancel() {
+		VueStateMachine.doAction(VueStateMachine.ACTION_DO_CANCEL);
+	}
+
 	public static void doExit() {
-		VueStateMachine.doCancel();
+		doCancel();
 		System.exit(0);
 	}
 

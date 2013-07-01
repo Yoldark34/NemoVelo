@@ -154,22 +154,12 @@ public class TerminalReturnController {
 		}
 	}
 
-	private void doCancel() {
-		boolean ok = true;
-		if (VueStateMachine.possibleAction(VueStateMachine.ACTION_DO_CANCEL)) {
-			//TODO : Implement Cancel
-			if (ok) {
-				VueStateMachine.doAction(VueStateMachine.ACTION_DO_CANCEL);
-			}
-		}
-	}
-
 	private void doAutoCancel(String msg) {
 		if (TerminalController.isDoAutoCancel()) {
 			if (TerminalController.isDoAlertBeforeAutoCancel()) {
 				TerminalController.getMainVue().showWarning(msg);
 			}
-			doCancel();
+			TerminalController.doCancel();
 		}
 	}
 }
