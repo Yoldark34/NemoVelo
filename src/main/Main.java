@@ -48,6 +48,7 @@ public class Main {
 		nbFrames = selectNbFrames();
 
 		mainVue = getVue(nbFrames);
+		controller = new TerminalController(mainVue);
 
 		//Realy instanciate program
 		
