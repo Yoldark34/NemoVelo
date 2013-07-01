@@ -7,6 +7,7 @@ package model.database;
 import model.object.Subscription;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import resource.log.ProjectLogger;
@@ -97,6 +98,28 @@ public class SubscriptionMapper extends AbstractMapper {
 		}
 	}
 
+	public Subscription getSubscription(int idSubscription) {
+		String query;
+		Subscription result = new Subscription();
+
+		query = "SELECT ";
+		query += "*";
+		query += " FROM ";
+		query += DataBaseElements.SUBSCRIPTION + " " + DataBaseElements.ALIAS_SUBSCRIPTION;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_SUBSCRIPTION + "." + DataBaseElements.SUBSCRIPTION_ID + " = '" + idSubscription + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (Subscription) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getUniquePriceDurationUnitForRent", ex);
+		}
+
+		return result;
+	}
+
 	public ArrayList<Subscription> getSubscriptionsFromNemoUser(int idNemoUser) {
 		String query;
 		ArrayList<Subscription> results = new ArrayList<>();
@@ -147,5 +170,15 @@ public class SubscriptionMapper extends AbstractMapper {
 	@Override
 	Object getEmptyModel() {
 		return new Subscription();
+	}
+
+	void closeSubscriptionIfFinish(int idSubscription, Timestamp today) {
+		Subscription sub = this.getSubscription(idSubscription);
+		BikeUsageMapper bum = new BikeUsageMapper();
+		int bikeUsageQuantity = bum.getNumberOfRentedBikes(sub.getIdNemoUser(), sub.getStartDate());
+		if (bikeUsageQuantity == 0) {
+			sub.setEndDate(today);
+			this.save(sub);
+		}
 	}
 }

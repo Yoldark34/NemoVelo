@@ -23,6 +23,15 @@ public class BikeUsage {
 	private Timestamp startDate;
 	private Timestamp endDate;
 	private String comments;
+	private int numberOfBikeUsages;
+
+	public int getNumberOfBikeUsages() {
+		return numberOfBikeUsages;
+	}
+
+	public void setNumberOfBikeUsages(int numberOfBikeUsages) {
+		this.numberOfBikeUsages = numberOfBikeUsages;
+	}
 
 	public int getId() {
 		return id;
