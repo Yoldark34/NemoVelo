@@ -12,13 +12,26 @@ import java.sql.Timestamp;
  */
 public class Helper {
 
+	/**
+	 * get the actual time
+	 *
+	 * @return Timestamp
+	 */
 	public static Timestamp getSqlDateNow() {
 		Timestamp timestamp = new java.sql.Timestamp(java.util.Calendar.getInstance().getTime().getTime());
-		//java.sql.Date sqlToday = new Date();
 
 		return timestamp;
 	}
 
+	/**
+	 * calculate difference between duration to calc overtime and min time for a
+	 * location
+	 *
+	 * @param t1 start date
+	 * @param t2 end date
+	 * @param unit hour, day ... for DataBaseElements.PriceDurationUnit
+	 * @return int
+	 */
 	public static int getDifference(Timestamp t1, Timestamp t2, String unit) {
 		int result;
 		double unitDivision = -1;

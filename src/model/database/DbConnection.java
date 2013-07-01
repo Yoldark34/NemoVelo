@@ -38,6 +38,12 @@ public class DbConnection {
 		return results;
 	}
 
+	/**
+	 * execute a selecy query and store result in resultset.
+	 *
+	 * @param select
+	 * @return true of false
+	 */
 	public boolean executeSelectQuery(String select) {
 		/* Connexion à la base de données */
 		boolean resultat;
@@ -62,6 +68,13 @@ public class DbConnection {
 		return resultat;
 	}
 
+	/**
+	 * execute an update query and return the number of rows
+	 *
+	 * @param update
+	 * @return -1 in fail 0 if no row updated and the number of row in case of
+	 * success
+	 */
 	public int executeUpdateQuery(String update) {
 		/* Connexion à la base de données */
 		boolean resultat;
@@ -87,6 +100,13 @@ public class DbConnection {
 		return -1;
 	}
 
+	/**
+	 * execute the insert query
+	 *
+	 * @param insert
+	 * @return return the new id of inserted row, -1 if fail, 0 if nothing
+	 * inserted
+	 */
 	public int executeInsertQuery(String insert) {
 		/* Connexion à la base de données */
 		boolean settingsOk;
@@ -122,6 +142,11 @@ public class DbConnection {
 		return -1;
 	}
 
+	/**
+	 * close the connection with the database
+	 *
+	 * @return
+	 */
 	public boolean closeConnection() {
 		if (this.connection != null) {
 			try {
@@ -134,6 +159,15 @@ public class DbConnection {
 		return false;
 	}
 
+	/**
+	 * transform resultsets in objects
+	 *
+	 * @param callClass the class wich implement populateModel to convert
+	 * resultSet in object
+	 * @return a collection of object from callclass
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public Collection<?> getModelsFromRequest(AbstractMapper callClass) throws SQLException, ClassNotFoundException {
 		ArrayList<Object> myCol = new ArrayList<>();
 		while (this.results.next()) {
@@ -143,6 +177,15 @@ public class DbConnection {
 		return myCol;
 	}
 
+	/**
+	 * transform resultset in object
+	 *
+	 * @param callClass the class wich implement populateModel to convert
+	 * resultSet in object
+	 * @return an object from callclass
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public Object getModelFromRequest(AbstractMapper callClass) throws SQLException, ClassNotFoundException {
 		Object myObj;
 

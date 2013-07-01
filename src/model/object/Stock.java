@@ -21,18 +21,38 @@ public class Stock {
 	private float latitude;
 	private float longitude;
 
+	/**
+	 * getId
+	 *
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * setId
+	 *
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * getCode
+	 *
+	 * @return
+	 */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+	 * setCode
+	 *
+	 * @param code
+	 */
 	public void setCode(String code) {
 		if (code.length() <= DataBaseElements.SIZEOF_STOCK_CODE) {
 			this.code = code;
@@ -42,10 +62,20 @@ public class Stock {
 		}
 	}
 
+	/**
+	 * getName
+	 *
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * setName
+	 *
+	 * @param name
+	 */
 	public void setName(String name) {
 		if (name.length() <= DataBaseElements.SIZEOF_STOCK_NAME) {
 			this.name = name;
@@ -55,10 +85,20 @@ public class Stock {
 		}
 	}
 
+	/**
+	 * getDescription
+	 *
+	 * @return
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * setDescription
+	 *
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		if (description.length() <= DataBaseElements.SIZEOF_STOCK_DESCRIPTION) {
 			this.description = description;
@@ -68,18 +108,38 @@ public class Stock {
 		}
 	}
 
+	/**
+	 * getLatitude
+	 *
+	 * @return
+	 */
 	public float getLatitude() {
 		return latitude;
 	}
 
+	/**
+	 * setLatitude
+	 *
+	 * @param latitude
+	 */
 	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 
+	/**
+	 * getLongitude
+	 *
+	 * @return
+	 */
 	public float getLongitude() {
 		return longitude;
 	}
 
+	/**
+	 * setLongitude
+	 *
+	 * @param longitude
+	 */
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}

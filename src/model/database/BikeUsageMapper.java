@@ -23,12 +23,25 @@ import resource.log.ProjectLogger;
  */
 public class BikeUsageMapper extends AbstractMapper {
 
+	/**
+	 * get all bike usages from the database
+	 *
+	 * @return ArrayList<BikeUsage>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<BikeUsage> getAllBikeUsages() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.BIKEUSAGE);
 		return (ArrayList<BikeUsage>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert bikeUsage if id == -1 or update bikeUsage instead
+	 *
+	 * @param bikeUsage
+	 * @return int number of rows
+	 */
 	public int save(BikeUsage bikeUsage) {
 		int nbRows = 0;
 		int idResult = -1;
@@ -110,6 +123,16 @@ public class BikeUsageMapper extends AbstractMapper {
 
 	}
 
+	/**
+	 * book a number of bikes until the payment or the cancel process.
+	 *
+	 * @param terminalId
+	 * @param nemoUserId
+	 * @param numberOfBikes
+	 * @param idBikeUsagesToResetEndDate
+	 * @param idBikeUsagesToDelete
+	 * @return true if book if ok, no if not
+	 */
 	public boolean bookAvailableBikesForTerminal(int terminalId, int nemoUserId, int numberOfBikes, List<Integer> idBikeUsagesToResetEndDate, List<Integer> idBikeUsagesToDelete) {
 		boolean result;
 		String query;
@@ -178,6 +201,14 @@ public class BikeUsageMapper extends AbstractMapper {
 		return result;
 	}
 
+	/**
+	 * rent previously booked bikes for a user
+	 *
+	 * @param anonymousUserId
+	 * @param today
+	 * @param idBikeUsagesToDelete
+	 * @return true if ok, false if not
+	 */
 	public boolean rentBookedBikesForNemoUser(int anonymousUserId, Timestamp today, List<Integer> idBikeUsagesToDelete) {
 		boolean result;
 		String query;
@@ -240,6 +271,14 @@ public class BikeUsageMapper extends AbstractMapper {
 		return result;
 	}
 
+	/**
+	 * retrive bike usages from a start date and an id nemo user
+	 *
+	 * @param idNemoUser
+	 * @param startDate
+	 * @param bikeSerialNumbers
+	 * @return ArrayList<BikeUsage>
+	 */
 	public ArrayList<BikeUsage> getBikesFromNemoUserAndDateForBikes(int idNemoUser, Timestamp startDate, Set<Integer> bikeSerialNumbers) {
 		String query;
 		ArrayList<BikeUsage> result = null;
@@ -321,6 +360,13 @@ public class BikeUsageMapper extends AbstractMapper {
 		return new BikeUsage();
 	}
 
+	/**
+	 * reset bikes location process ( cancel book and set available bikes)
+	 *
+	 * @param idBikeUsagesToResetEndDate
+	 * @param idBikeUsagesToDelete
+	 * @return
+	 */
 	public boolean resetBikesLocationProcess(ArrayList<Integer> idBikeUsagesToResetEndDate, ArrayList<Integer> idBikeUsagesToDelete) {
 		boolean error = false;
 		boolean result;
@@ -341,6 +387,12 @@ public class BikeUsageMapper extends AbstractMapper {
 		return !error;
 	}
 
+	/**
+	 * reset end date for bike usage (in case of cancel)
+	 *
+	 * @param id
+	 * @return boolean
+	 */
 	private boolean resetEndDateForBikeUsage(Integer id) {
 		String query;
 		int nbRows = 0;
@@ -364,6 +416,12 @@ public class BikeUsageMapper extends AbstractMapper {
 		return true;
 	}
 
+	/**
+	 * delete a bike usage from id
+	 *
+	 * @param id
+	 * @return boolean
+	 */
 	private boolean deleteBikeUsage(Integer id) {
 		String query;
 		int nbRows = 0;
@@ -386,6 +444,15 @@ public class BikeUsageMapper extends AbstractMapper {
 		return true;
 	}
 
+	/**
+	 * return bike (after a renting) after a return of a bike.(in a storage)
+	 *
+	 * @param serialNumber
+	 * @param today
+	 * @param terminalId
+	 * @param payments
+	 * @return boolean
+	 */
 	public boolean returnBikeForTerminal(int serialNumber, Timestamp today, int terminalId, List<Payment> payments) {
 		BikeUsageTypeMapper butm = new BikeUsageTypeMapper();
 		String query;
@@ -412,7 +479,7 @@ public class BikeUsageMapper extends AbstractMapper {
 			DbConnection adapter = DbConnection.getDbConnection();
 			adapter.executeSelectQuery(query);
 			result = (BikeUsage) adapter.getModelFromRequest(this);
-			int availableStorage = sm.getFirstAvailableStoragesForTerminal(terminalId);
+			int availableStorage = sm.getFirstAvailableStorageForTerminal(terminalId);
 			result.setEndDate(today);
 			this.save(result);
 			result.setId(-1);
@@ -437,6 +504,13 @@ public class BikeUsageMapper extends AbstractMapper {
 		return false;
 	}
 
+	/**
+	 * get number of rented bikes for a user from a start date
+	 *
+	 * @param idNemoUser
+	 * @param startDate
+	 * @return number of rented bikes
+	 */
 	int getNumberOfRentedBikes(int idNemoUser, Timestamp startDate) {
 		BikeUsageTypeMapper butm = new BikeUsageTypeMapper();
 		String query;

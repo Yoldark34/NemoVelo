@@ -16,12 +16,27 @@ import java.util.ArrayList;
  */
 public class NemoUserTypeMapper extends AbstractMapper {
 
+	/**
+	 * get all nemo user from the database
+	 *
+	 * @return ArrayList<NemoUserType>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<NemoUserType> getAllNemoUserTypes() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.NEMOUSERTYPE);
 		return (ArrayList<NemoUserType>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * save a new nemo user type or insert it
+	 *
+	 * @param nemoUserType the nemo user type to insert or update
+	 * @param updateMode if it is from update or insert
+	 * @param updateIdUser if change id user or not
+	 * @return nbRows
+	 */
 	public int save(NemoUserType nemoUserType, boolean updateMode, boolean updateIdUser) {
 		int nbRows = 0;
 		String query = "";

@@ -16,12 +16,25 @@ import java.util.ArrayList;
  */
 public class StockMapper extends AbstractMapper {
 
+	/**
+	 * get all stock from the database
+	 *
+	 * @return ArrayList<Stock>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<Stock> getAllStocks() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.STOCK);
 		return (ArrayList<Stock>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert stock if id == -1 or update stock instead
+	 *
+	 * @param stock
+	 * @return int number of rows
+	 */
 	public int save(Stock stock) {
 		int nbRows = 0;
 		String query;

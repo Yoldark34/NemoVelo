@@ -18,26 +18,56 @@ public class Terminal {
 	private int idStock;
 	private String ip;
 
+	/**
+	 * getId
+	 *
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * setId
+	 *
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * getIdStock
+	 *
+	 * @return
+	 */
 	public int getIdStock() {
 		return idStock;
 	}
 
+	/**
+	 * setIdStock
+	 *
+	 * @param idStock
+	 */
 	public void setIdStock(int idStock) {
 		this.idStock = idStock;
 	}
 
+	/**
+	 * getIp
+	 *
+	 * @return
+	 */
 	public String getIp() {
 		return ip;
 	}
 
+	/**
+	 * setIp
+	 *
+	 * @param ip
+	 */
 	public void setIp(String ip) {
 		if (ip.length() <= DataBaseElements.SIZEOF_TERMINAL_IP) {
 			this.ip = ip;

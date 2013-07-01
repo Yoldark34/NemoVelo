@@ -16,12 +16,27 @@ import java.util.ArrayList;
  */
 public class UsagePossibilityMapper extends AbstractMapper {
 
+	/**
+	 * get all usages possibility from the database
+	 *
+	 * @return ArrayList<UsagePossibility>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<UsagePossibility> getAllUsagePossibilitys() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.USAGEPOSSIBILITY);
 		return (ArrayList<UsagePossibility>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * update usage possibility id update mode and ids = -1, insert if insert
+	 * mode
+	 *
+	 * @param usagePossibility
+	 * @param updateMode
+	 * @return nbRows
+	 */
 	public int save(UsagePossibility usagePossibility, boolean updateMode) {
 		int nbRows = 0;
 		String query = "";

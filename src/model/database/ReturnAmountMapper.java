@@ -18,12 +18,25 @@ import resource.log.ProjectLogger;
  */
 public class ReturnAmountMapper extends AbstractMapper {
 
+	/**
+	 * get all return amount from a database
+	 *
+	 * @return ArrayList<ReturnAmount>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<ReturnAmount> getAllReturnAmount() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.RETURNAMOUNT);
 		return (ArrayList<ReturnAmount>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert returnAmount if id == -1 or update returnAmount instead
+	 *
+	 * @param returnAmount
+	 * @return int number of rows
+	 */
 	public int save(ReturnAmount returnAmount) {
 		int nbRows = 0;
 		String query;
@@ -95,6 +108,11 @@ public class ReturnAmountMapper extends AbstractMapper {
 		
 	}
 
+	/**
+	 *
+	 * @param subscriptionId
+	 * @return
+	 */
 	public float GetAmountOfReturnForSubscription(int subscriptionId) {
 		String query;
 		ReturnAmount result = new ReturnAmount();
@@ -143,6 +161,12 @@ public class ReturnAmountMapper extends AbstractMapper {
 		return new ReturnAmount();
 	}
 
+	/**
+	 * delete a return amount
+	 *
+	 * @param idReturnAmountToDelete
+	 * @return boolean
+	 */
 	public boolean deleteReturnAmountById(ArrayList<Integer> idReturnAmountToDelete) {
 		String query;
 		int nbRows = 0;

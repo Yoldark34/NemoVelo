@@ -23,9 +23,23 @@ public class NemoUser {
 	private Timestamp birthDate;
 	private Timestamp createDate;
 
+	/**
+	 * constructor
+	 */
 	public NemoUser() {
 	}
 
+	/**
+	 * constructor
+	 *
+	 * @param id
+	 * @param lastName
+	 * @param firstName
+	 * @param email
+	 * @param cryptedPassword
+	 * @param birthDate
+	 * @param createDate
+	 */
 	public NemoUser(int id, String lastName, String firstName, String email, String cryptedPassword, Timestamp birthDate, Timestamp createDate) {
 		this.id = id;
 		this.lastName = lastName;
@@ -36,18 +50,38 @@ public class NemoUser {
 		this.createDate = createDate;
 	}
 
+	/**
+	 * getId
+	 *
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * setId
+	 *
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * getLastName
+	 *
+	 * @return
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
+	/**
+	 * setLastName
+	 *
+	 * @param lastName
+	 */
 	public void setLastName(String lastName) {
 		if (lastName.length() <= DataBaseElements.SIZEOF_NEMOUSER_LASTNAME) {
 			this.lastName = lastName;
@@ -57,10 +91,20 @@ public class NemoUser {
 		}
 	}
 
+	/**
+	 * getFirstName
+	 *
+	 * @return
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * setFirstName
+	 *
+	 * @param firstName
+	 */
 	public void setFirstName(String firstName) {
 		if (firstName.length() <= DataBaseElements.SIZEOF_NEMOUSER_FIRSTNAME) {
 			this.firstName = firstName;
@@ -70,10 +114,20 @@ public class NemoUser {
 		}
 	}
 
+	/**
+	 * getEmail
+	 *
+	 * @return
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * setEmail
+	 *
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		if (email.length() <= DataBaseElements.SIZEOF_NEMOUSER_EMAIL) {
 			this.email = email;
@@ -83,10 +137,20 @@ public class NemoUser {
 		}
 	}
 
+	/**
+	 * getCryptedPassword
+	 *
+	 * @return
+	 */
 	public String getCryptedPassword() {
 		return cryptedPassword;
 	}
 
+	/**
+	 * setCryptedPassword
+	 *
+	 * @param cryptedPassword
+	 */
 	public void setCryptedPassword(String cryptedPassword) {
 		if (cryptedPassword.length() <= DataBaseElements.SIZEOF_NEMOUSER_CRYPTEDPASSWORD) {
 			this.cryptedPassword = cryptedPassword;
@@ -96,18 +160,38 @@ public class NemoUser {
 		}
 	}
 
+	/**
+	 * getBirthDate
+	 *
+	 * @return
+	 */
 	public Timestamp getBirthDate() {
 		return birthDate;
 	}
 
+	/**
+	 * setBirthDate
+	 *
+	 * @param birthDate
+	 */
 	public void setBirthDate(Timestamp birthDate) {
 		this.birthDate = birthDate;
 	}
 
+	/**
+	 * getCreateDate
+	 *
+	 * @return
+	 */
 	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
+	/**
+	 * setCreateDate
+	 *
+	 * @param createDate
+	 */
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}

@@ -19,26 +19,56 @@ public class BikeUsageType {
 	private String name;
 	private String description;
 
+	/**
+	 * getId
+	 *
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * setId
+	 *
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * getId_parent_bike_usage_type
+	 *
+	 * @return
+	 */
 	public int getId_parent_bike_usage_type() {
 		return id_parent_bike_usage_type;
 	}
 
+	/**
+	 * setId_parent_bike_usage_type
+	 *
+	 * @param id_parent_bike_usage_type
+	 */
 	public void setId_parent_bike_usage_type(int id_parent_bike_usage_type) {
 		this.id_parent_bike_usage_type = id_parent_bike_usage_type;
 	}
 
+	/**
+	 * getName
+	 *
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * setName
+	 *
+	 * @param name
+	 */
 	public void setName(String name) {
 		if (name.length() <= DataBaseElements.SIZEOF_BIKEUSAGETYPE_NAME) {
 			this.name = name;
@@ -48,10 +78,20 @@ public class BikeUsageType {
 		}
 	}
 
+	/**
+	 * getDescription
+	 *
+	 * @return
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * setDescription
+	 *
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		if (description.length() <= DataBaseElements.SIZEOF_BIKEUSAGETYPE_DESCRIPTION) {
 			this.description = description;

@@ -19,12 +19,25 @@ import resource.log.ProjectLogger;
  */
 public class SubscriptionMapper extends AbstractMapper {
 
+	/**
+	 * get all subscriptions from the database
+	 *
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<Subscription> getAllSubscriptions() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.SUBSCRIPTION);
 		return (ArrayList<Subscription>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert subscription if id == -1 or update subscription instead
+	 *
+	 * @param subscription
+	 * @return int number of rows
+	 */
 	public int save(Subscription subscription) {
 		int nbRows = 0;
 		int idResult = -1;
@@ -98,6 +111,12 @@ public class SubscriptionMapper extends AbstractMapper {
 		}
 	}
 
+	/**
+	 * get subscription from an id
+	 *
+	 * @param idSubscription
+	 * @return Subscription
+	 */
 	public Subscription getSubscription(int idSubscription) {
 		String query;
 		Subscription result = new Subscription();
@@ -120,6 +139,12 @@ public class SubscriptionMapper extends AbstractMapper {
 		return result;
 	}
 
+	/**
+	 * get all subscriptions from a nemouser id
+	 *
+	 * @param idNemoUser
+	 * @return ArrayList<Subscription>
+	 */
 	public ArrayList<Subscription> getSubscriptionsFromNemoUser(int idNemoUser) {
 		String query;
 		ArrayList<Subscription> results = new ArrayList<>();
@@ -172,6 +197,12 @@ public class SubscriptionMapper extends AbstractMapper {
 		return new Subscription();
 	}
 
+	/**
+	 * close a subscription when there is no bikes rented for it.
+	 *
+	 * @param idSubscription
+	 * @param today
+	 */
 	void closeSubscriptionIfFinish(int idSubscription, Timestamp today) {
 		Subscription sub = this.getSubscription(idSubscription);
 		BikeUsageMapper bum = new BikeUsageMapper();

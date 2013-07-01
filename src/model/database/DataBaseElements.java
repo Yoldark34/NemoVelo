@@ -139,6 +139,9 @@ public class DataBaseElements {
 	public static final int SIZEOF_USERTYPE_CODE = 128;
 	public static final int SIZEOF_USERTYPE_NAME = 20;
 
+	/**
+	 * PriceDurationUnit
+	 */
 	public class PriceDurationUnit{
 		public static final String MINUTE = "minute";
 		public static final String HOUR = "hour";
@@ -147,22 +150,34 @@ public class DataBaseElements {
 		public static final String MONTH = "month";
 	}
 
+	/**
+	 * BikeUsageType
+	 */
 	public class BikeUsageType {
 		public static final String STOCKING = "Stockage";
 		public static final String BOOKING = "Réservation";
 		public static final String RENTING = "Location";
 	}
 
+	/**
+	 * UserType
+	 */
 	public class UserType {
 		public static final String TEST = "Test";
 		public static final String ANONYMOUS = "Anonyme";
 	}
 
+	/**
+	 * PriceTypeCode
+	 */
 	public class PriceTypeCode {
 		public static final String GUARANTEE = "guarantee";
 		public static final String RENT = "rent";
 	}
 
+	/**
+	 * BikeUsageColSet
+	 */
 	public class BikeUsageColSet {
 
 		public static final String FULL = DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ID + ", "
@@ -175,6 +190,9 @@ public class DataBaseElements {
 				+ DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_COMMENTS;
 	}
 
+	/**
+	 * NemoUserColSet
+	 */
 	public class NemoUserColSet {
 
 		public static final String FULL = DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID + ", "
@@ -188,6 +206,9 @@ public class DataBaseElements {
 		public static final String DISTINCTID = "DISTINCT ( " + DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID + ")";
 	}
 
+	/**
+	 * StorageColSet
+	 */
 	public class StorageColSet {
 
 		public static final String MIN = DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_ID;

@@ -18,12 +18,25 @@ import resource.log.ProjectLogger;
  */
 public class BikeUsageTypeMapper extends AbstractMapper {
 
+	/**
+	 * retriev all bike usages type from the database
+	 *
+	 * @return ArrayList<BikeUsageType>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<BikeUsageType> getAllBikeUsagesType() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.BIKEUSAGETYPE);
 		return (ArrayList<BikeUsageType>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * get bike usage type from a string
+	 *
+	 * @param String name of bike usage type
+	 * @return BikeUsageType
+	 */
 	public BikeUsageType getBikeUsagesType(String bikeUsageType) {
 		String query;
 		BikeUsageType result = null;
@@ -46,6 +59,12 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 		return result;
 	}
 
+	/**
+	 * Insert bikeUsageType if id == -1 or update bikeUsageType instead
+	 *
+	 * @param bikeUsageType
+	 * @return int number of rows
+	 */
 	public int save(BikeUsageType bikeUsageType) {
 		int nbRows = 0;
 		String query;

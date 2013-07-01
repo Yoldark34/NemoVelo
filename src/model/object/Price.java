@@ -22,34 +22,74 @@ public class Price {
 	private int priceDuration;
 	private String priceDurationUnit;
 
+	/**
+	 * getId
+	 *
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * setId
+	 *
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * getAmount
+	 *
+	 * @return
+	 */
 	public float getAmount() {
 		return amount;
 	}
 
+	/**
+	 * setAmount
+	 *
+	 * @param amount
+	 */
 	public void setAmount(float amount) {
 		this.amount = amount;
 	}
 
+	/**
+	 * getTypeCode
+	 *
+	 * @return
+	 */
 	public String getTypeCode() {
 		return typeCode;
 	}
 
+	/**
+	 * setTypeCode
+	 *
+	 * @param typeCode
+	 */
 	public void setTypeCode(String typeCode) {
 		this.typeCode = typeCode;
 	}
 
+	/**
+	 * getName
+	 *
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * setName
+	 *
+	 * @param name
+	 */
 	public void setName(String name) {
 		if (name.length() <= DataBaseElements.SIZEOF_PRICE_NAME) {
 			this.name = name;
@@ -59,10 +99,20 @@ public class Price {
 		}
 	}
 
+	/**
+	 * getDescription
+	 *
+	 * @return
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * setDescription
+	 *
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		if (description.length() <= DataBaseElements.SIZEOF_PRICE_DESCRIPTION) {
 			this.description = description;
@@ -72,18 +122,38 @@ public class Price {
 		}
 	}
 
+	/**
+	 * getPriceDuration
+	 *
+	 * @return
+	 */
 	public int getPriceDuration() {
 		return priceDuration;
 	}
 
+	/**
+	 * setPriceDuration
+	 *
+	 * @param priceDuration
+	 */
 	public void setPriceDuration(int priceDuration) {
 		this.priceDuration = priceDuration;
 	}
 
+	/**
+	 * getPriceDurationUnit
+	 *
+	 * @return
+	 */
 	public String getPriceDurationUnit() {
 		return priceDurationUnit;
 	}
 
+	/**
+	 * setPriceDurationUnit
+	 *
+	 * @param priceDurationUnit
+	 */
 	public void setPriceDurationUnit(String priceDurationUnit) {
 		this.priceDurationUnit = priceDurationUnit;
 	}

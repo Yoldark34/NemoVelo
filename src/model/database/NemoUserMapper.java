@@ -27,6 +27,12 @@ public class NemoUserMapper extends AbstractMapper {
 		return (ArrayList<NemoUser>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert nemoUser if id == -1 or update nemoUser instead
+	 *
+	 * @param nemoUser
+	 * @return int number of rows
+	 */
 	public int save(NemoUser nemoUser) {
 		int nbRows = 0;
 		String query;
@@ -86,6 +92,13 @@ public class NemoUserMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	/**
+	 * get NemoUsers from bikes to check if all bikes returned is from the same
+	 * NemoUser
+	 *
+	 * @param bikeSerialNumbers
+	 * @return ArrayList<NemoUser>
+	 */
 	public ArrayList<NemoUser> getNemoUsersFromBikes(Set<Integer> bikeSerialNumbers) {
 		String query;
 		ArrayList<NemoUser> results = null;
@@ -129,6 +142,11 @@ public class NemoUserMapper extends AbstractMapper {
 		return results;
 	}
 
+	/**
+	 * get the last user id from the database
+	 *
+	 * @return int
+	 */
 	public int getLastUser() {
 		String query;
 		NemoUser result = new NemoUser();
@@ -152,6 +170,11 @@ public class NemoUserMapper extends AbstractMapper {
 		return result.getId();
 	}
 
+	/**
+	 * create an anonymous user for the rent process
+	 *
+	 * @return id of nemo user created
+	 */
 	public int createAnonymousUser() {
 		java.sql.Timestamp sqlToday = Helper.getSqlDateNow();
 		NemoUser user = new NemoUser(-1, "Anonymous", "Anonymous", "Anonymous@Anonymous.fr", "Anonymous", sqlToday, sqlToday);

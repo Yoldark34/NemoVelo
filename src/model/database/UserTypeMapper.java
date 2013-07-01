@@ -18,12 +18,25 @@ import resource.log.ProjectLogger;
  */
 public class UserTypeMapper extends AbstractMapper {
 
+	/**
+	 * retrieve all user types from the database
+	 *
+	 * @return ArrayList<UserType>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<UserType> getAllUserTypes() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.USERTYPE);
 		return (ArrayList<UserType>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert userType if id == -1 or update userType instead
+	 *
+	 * @param userType
+	 * @return int number of rows
+	 */
 	public int save(UserType userType) {
 		int nbRows = 0;
 		String query;
@@ -69,6 +82,12 @@ public class UserTypeMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	/**
+	 * get user type from the type code
+	 *
+	 * @param userTypeCode
+	 * @return nemouser id
+	 */
 	int getIdUserType(String userTypeCode) {
 		String query;
 		UserType result = new UserType();
