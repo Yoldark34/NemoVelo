@@ -139,6 +139,9 @@ public class ReturnAmountMapper extends AbstractMapper {
 	 * @return boolean
 	 */
 	public boolean deleteReturnAmountById(ArrayList<Integer> idReturnAmountToDelete) {
+		if (idReturnAmountToDelete.size() <= 0) {
+			return true;
+		}
 		String query;
 		int nbRows = 0;
 
