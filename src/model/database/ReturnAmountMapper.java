@@ -108,35 +108,6 @@ public class ReturnAmountMapper extends AbstractMapper {
 		
 	}
 
-	/**
-	 *
-	 * @param subscriptionId
-	 * @return
-	 */
-	public float GetAmountOfReturnForSubscription(int subscriptionId) {
-		String query;
-		ReturnAmount result = new ReturnAmount();
-
-		query = "SELECT ";
-		query += DataBaseElements.ALIAS_RETURNAMOUNT + "." + DataBaseElements.RETURNAMOUNT_AMOUNT;
-		query += " FROM ";
-		query += DataBaseElements.RETURNAMOUNT + " " + DataBaseElements.ALIAS_RETURNAMOUNT;
-		query += " WHERE ";
-		query += DataBaseElements.ALIAS_RETURNAMOUNT + "." + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION + " = '" + subscriptionId + "'";
-		query += " GROUP BY ";
-		query += DataBaseElements.ALIAS_RETURNAMOUNT + "." + DataBaseElements.RETURNAMOUNT_IDSUBSCRIPTION;
-
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			adapter.executeSelectQuery(query);
-			result = (ReturnAmount) adapter.getModelFromRequest(this);
-		} catch (SQLException | ClassNotFoundException ex) {
-			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
-		}
-
-		return result.getAmount();
-	}
-
 	@Override
 	public Object populateModel(ResultSet row) throws SQLException {
 		ReturnAmount obj = new ReturnAmount();
