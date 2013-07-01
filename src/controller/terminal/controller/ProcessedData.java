@@ -95,5 +95,6 @@ class ProcessedData {
 		ProcessedData.returnSummary = null;
 		ProcessedData.idReturnAmountToDelete = new ArrayList<>();
 		ProcessedData.paymentToProcess = new ArrayList<>();
+		ProcessedData.anonymousUserId = -1;
 	}
 }
