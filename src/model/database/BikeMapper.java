@@ -18,12 +18,25 @@ import resource.log.ProjectLogger;
  */
 public class BikeMapper extends AbstractMapper {
 
+	/**
+	 * Return all bikes in database
+	 *
+	 * @return ArrayList<Bike>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<Bike> getAllBikes() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.BIKE);
 		return (ArrayList<Bike>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert bike if id == -1 or update bikes instead
+	 *
+	 * @param bike
+	 * @return int number of rows
+	 */
 	public int save(Bike bike) {
 		int nbRows = 0;
 		String query = "";
@@ -45,6 +58,12 @@ public class BikeMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	/**
+	 * get all bikes stocked in the storage belong to this terminal
+	 *
+	 * @param terminalId
+	 * @return int nuumber of bikes
+	 */
 	public int getAvailableBikesForThisTerminal(int terminalId) {
 		String query;
 		Bike result = new Bike();
@@ -83,6 +102,11 @@ public class BikeMapper extends AbstractMapper {
 		return result.getNumberOfBikes();
 	}
 
+	/**
+	 * get rented all rented bikes for now
+	 *
+	 * @return ArrayList<Bike>
+	 */
 	public ArrayList<Bike> getRentedBikes() {
 		String query;
 		ArrayList<Bike> results = new ArrayList<>();

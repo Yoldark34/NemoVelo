@@ -18,12 +18,25 @@ import resource.log.ProjectLogger;
  */
 public class PriceMapper extends AbstractMapper {
 
+	/**
+	 * get all prices from the database
+	 *
+	 * @return ArrayList<Price>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<Price> getAllNemoUsers() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.PRICE);
 		return (ArrayList<Price>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert price if id == -1 or update price instead
+	 *
+	 * @param price
+	 * @return int number of rows
+	 */
 	public int save(Price price) {
 		int nbRows = 0;
 		String query;
@@ -67,6 +80,11 @@ public class PriceMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	/**
+	 * get all unique duration unit for renting
+	 *
+	 * @return ArrayList<Price>
+	 */
 	public ArrayList<Price> getUniquePriceDurationUnitForRent() {
 		String query;
 		ArrayList<Price> results = new ArrayList<>();
@@ -91,6 +109,12 @@ public class PriceMapper extends AbstractMapper {
 		return results;
 	}
 
+	/**
+	 * get All price durantion for rent
+	 *
+	 * @param durationUnit
+	 * @return ArrayList<Price>
+	 */
 	public ArrayList<Price> getPriceDurationForRent(String durationUnit) {
 		String query;
 		ArrayList<Price> results = new ArrayList<>();
@@ -115,6 +139,13 @@ public class PriceMapper extends AbstractMapper {
 		return results;
 	}
 
+	/**
+	 * retrieve the price amount for a duration and a duration unit
+	 *
+	 * @param duration
+	 * @param durationUnit
+	 * @return float
+	 */
 	public float getPriceAmountForUnitAndDuration(int duration, String durationUnit) {
 		String query;
 		Price result = new Price();
@@ -141,6 +172,11 @@ public class PriceMapper extends AbstractMapper {
 		return result.getAmount();
 	}
 
+	/**
+	 * return the first guarantee from the database
+	 *
+	 * @return Price
+	 */
 	public Price getFirstGuarantee() {
 		String query;
 		Price result = null;
@@ -163,6 +199,13 @@ public class PriceMapper extends AbstractMapper {
 		return result;
 	}
 
+	/**
+	 * retirn the price id from a duration unit and a duration
+	 *
+	 * @param durationUnit
+	 * @param duration
+	 * @return int
+	 */
 	public int getPriceId(String durationUnit, int duration) {
 		String query;
 		Price result = new Price();
@@ -187,6 +230,12 @@ public class PriceMapper extends AbstractMapper {
 		return result.getId();
 	}
 
+	/**
+	 * return a price from an id
+	 *
+	 * @param idPrice
+	 * @return Price
+	 */
 	public Price GetPriceFromId(int idPrice) {
 		String query;
 		Price result = new Price();

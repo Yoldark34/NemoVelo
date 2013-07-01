@@ -18,12 +18,25 @@ import resource.log.ProjectLogger;
  */
 public class TerminalMapper extends AbstractMapper {
 
+	/**
+	 * get all terminal from the database
+	 *
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<Terminal> getAllTerminals() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.TERMINAL);
 		return (ArrayList<Terminal>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert terminal if id == -1 or update terminal instead
+	 *
+	 * @param terminal
+	 * @return int number of rows
+	 */
 	public int save(Terminal terminal) {
 		int nbRows = 0;
 		String query;
@@ -77,6 +90,12 @@ public class TerminalMapper extends AbstractMapper {
 		return new Terminal();
 	}
 
+	/**
+	 * get terminal from id
+	 *
+	 * @param numero
+	 * @return Terminal
+	 */
 	public Terminal getTerminal(int numero) {
 		DbConnection adapter = DbConnection.getDbConnection();
 		Terminal myTerminal = null;

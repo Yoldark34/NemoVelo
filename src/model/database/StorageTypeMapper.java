@@ -16,12 +16,25 @@ import java.util.ArrayList;
  */
 public class StorageTypeMapper extends AbstractMapper {
 
+	/**
+	 * Get all storages types from the database
+	 *
+	 * @return ArrayList<StorageType>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<StorageType> getAllStorageTypes() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.STORAGETYPE);
 		return (ArrayList<StorageType>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert storageType if id == -1 or update storageType instead
+	 *
+	 * @param storageType
+	 * @return int number of rows
+	 */
 	public int save(StorageType storageType) {
 		int nbRows = 0;
 		String query;

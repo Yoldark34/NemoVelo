@@ -22,6 +22,12 @@ public class ContactMapper extends AbstractMapper {
 		return (ArrayList<Contact>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert contact if id == -1 or update contact instead
+	 *
+	 * @param contact
+	 * @return int number of rows
+	 */
 	public int save(Contact contact) {
 		int nbRows = 0;
 		String query;

@@ -18,12 +18,25 @@ import resource.log.ProjectLogger;
  */
 public class StorageMapper extends AbstractMapper {
 
+	/**
+	 * get all storages from the database
+	 *
+	 * @return ArrayList<Storage>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<Storage> getAllStorages() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.STORAGE);
 		return (ArrayList<Storage>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert storage if id == -1 or update storage instead
+	 *
+	 * @param storage
+	 * @return int number of rows
+	 */
 	public int save(Storage storage) {
 		int nbRows = 0;
 		String query;
@@ -65,6 +78,12 @@ public class StorageMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	/**
+	 * get all available storages for a terminal
+	 *
+	 * @param terminalId
+	 * @return int
+	 */
 	public int getAvailableStoragesForTerminal(int terminalId) {
 		String query;
 		Storage result = new Storage();
@@ -92,7 +111,13 @@ public class StorageMapper extends AbstractMapper {
 		return result.getNumberOfStorages();
 	}
 
-	public int getFirstAvailableStoragesForTerminal(int terminalId) {
+	/**
+	 * get first available storage for a terminal (for the return process)
+	 *
+	 * @param terminalId
+	 * @return int
+	 */
+	public int getFirstAvailableStorageForTerminal(int terminalId) {
 		String query;
 		Storage result = null;
 
@@ -122,6 +147,12 @@ public class StorageMapper extends AbstractMapper {
 		return result.getId();
 	}
 
+	/**
+	 * set the storage not available
+	 *
+	 * @param idStorage
+	 * @return boolean
+	 */
 	public boolean setStorageUsed(int idStorage) {
 		String query;
 		int nbRows;
@@ -142,6 +173,12 @@ public class StorageMapper extends AbstractMapper {
 		return false;
 	}
 
+	/**
+	 * set storage available
+	 *
+	 * @param idStorage
+	 * @return boolean
+	 */
 	public boolean setStorageAvailable(int idStorage) {
 		String query;
 		int nbRows;

@@ -22,26 +22,56 @@ public class Contact {
 	private String country;
 	private String phoneNumber;
 
+	/**
+	 * getId
+	 *
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * setId
+	 *
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * getStreetNumber
+	 *
+	 * @return
+	 */
 	public int getStreetNumber() {
 		return streetNumber;
 	}
 
+	/**
+	 * setStreetNumber
+	 *
+	 * @param streetNumber
+	 */
 	public void setStreetNumber(int streetNumber) {
 		this.streetNumber = streetNumber;
 	}
 
+	/**
+	 * getStreetName
+	 *
+	 * @return
+	 */
 	public String getStreetName() {
 		return streetName;
 	}
 
+	/**
+	 * setStreetName
+	 *
+	 * @param streetName
+	 */
 	public void setStreetName(String streetName) {
 		if (streetName.length() <= DataBaseElements.SIZEOF_CONTACT_STREETNAME) {
 			this.streetName = streetName;
@@ -51,10 +81,20 @@ public class Contact {
 		}
 	}
 
+	/**
+	 * getZipCode
+	 *
+	 * @return
+	 */
 	public String getZipCode() {
 		return zipCode;
 	}
 
+	/**
+	 * setZipCode
+	 *
+	 * @param zipCode
+	 */
 	public void setZipCode(String zipCode) {
 		if (zipCode.length() <= DataBaseElements.SIZEOF_CONTACT_ZIPCODE) {
 			this.zipCode = zipCode;
@@ -64,10 +104,20 @@ public class Contact {
 		}
 	}
 
+	/**
+	 * getCity
+	 *
+	 * @return
+	 */
 	public String getCity() {
 		return city;
 	}
 
+	/**
+	 * setCity
+	 *
+	 * @param city
+	 */
 	public void setCity(String city) {
 		if (city.length() <= DataBaseElements.SIZEOF_CONTACT_CITY) {
 			this.city = city;
@@ -77,10 +127,20 @@ public class Contact {
 		}
 	}
 
+	/**
+	 * getCountry
+	 *
+	 * @return
+	 */
 	public String getCountry() {
 		return country;
 	}
 
+	/**
+	 * setCountry
+	 *
+	 * @param country
+	 */
 	public void setCountry(String country) {
 		if (country.length() <= DataBaseElements.SIZEOF_CONTACT_COUNTRY) {
 			this.country = country;
@@ -90,10 +150,20 @@ public class Contact {
 		}
 	}
 
+	/**
+	 * getPhoneNumber
+	 *
+	 * @return
+	 */
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
+	/**
+	 * setPhoneNumber
+	 *
+	 * @param phoneNumber
+	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}

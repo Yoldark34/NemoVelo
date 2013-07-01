@@ -17,12 +17,25 @@ import java.util.ArrayList;
  */
 public class PaymentMapper extends AbstractMapper {
 
+	/**
+	 * get all payments from the database
+	 *
+	 * @return ArrayList<Payment>
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ArrayList<Payment> getAllPayments() throws SQLException, ClassNotFoundException {
 		DbConnection adapter = DbConnection.getDbConnection();
 		adapter.executeSelectQuery("Select * from " + DataBaseElements.PAYMENT);
 		return (ArrayList<Payment>) adapter.getModelsFromRequest(this);
 	}
 
+	/**
+	 * Insert payment if id == -1 or update payment instead
+	 *
+	 * @param payment
+	 * @return int number of rows
+	 */
 	public int save(Payment payment) {
 		int nbRows = 0;
 		int validated = 0;
@@ -90,6 +103,15 @@ public class PaymentMapper extends AbstractMapper {
 		return nbRows;
 	}
 
+	/**
+	 * do a payment for a nemouser id
+	 *
+	 * @param anonymousUserId
+	 * @param totalAmount
+	 * @param today
+	 * @param idSubscription
+	 * @return true or false
+	 */
 	public boolean payAmountForNemoUser(int anonymousUserId, float totalAmount, Timestamp today, int idSubscription) {
 		Payment payment = new Payment();
 		payment.setAmount(totalAmount);

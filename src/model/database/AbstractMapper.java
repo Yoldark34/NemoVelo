@@ -14,10 +14,30 @@ import java.sql.SQLException;
  */
 public abstract class AbstractMapper {
 
+	/**
+	 * transform resulset into object
+	 *
+	 * @param row
+	 * @return Object
+	 * @throws SQLException
+	 */
 	abstract Object populateModel(ResultSet row) throws SQLException;
 
+	/**
+	 * return empty model
+	 *
+	 * @return Object
+	 */
 	abstract Object getEmptyModel();
 
+	/**
+	 * check if a result set have a column by name
+	 *
+	 * @param columnName
+	 * @param res
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public boolean hasColumn(String columnName, ResultSet res) throws SQLException {
 		ResultSetMetaData rsmd = res.getMetaData();
 		int columns = rsmd.getColumnCount();
