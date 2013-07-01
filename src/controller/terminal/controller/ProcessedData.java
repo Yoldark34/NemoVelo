@@ -54,7 +54,7 @@ class ProcessedData {
 	public static Terminal getTerminal() {
 		if (ProcessedData.terminal == null) {
 			TerminalMapper terminalMapper = new TerminalMapper();
-			terminal = terminalMapper.getTerminal(1);
+			terminal = terminalMapper.getTerminal(2);
 		}
 		return ProcessedData.terminal;
 	}

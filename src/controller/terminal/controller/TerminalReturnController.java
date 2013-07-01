@@ -65,7 +65,7 @@ public class TerminalReturnController {
 	public Set<Integer> getRentedBikeSerialNumbers() {
 		Set<Integer> result = new HashSet<>();
 		BikeMapper bm = new BikeMapper();
-		ArrayList<Bike> resultBikes = bm.getRentedBikesForThisTerminal(ProcessedData.getTerminal().getId());
+		ArrayList<Bike> resultBikes = bm.getRentedBikes();
 		if (resultBikes.size() > 0) {
 			for (int i = 0; i < resultBikes.size(); ++i) {
 				result.add(resultBikes.get(i).getId());

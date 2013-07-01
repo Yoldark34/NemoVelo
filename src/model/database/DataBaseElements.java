@@ -87,6 +87,7 @@ public class DataBaseElements {
 	public static final String STORAGE_ID = "id";
 	public static final String STORAGE_IDSTOCK = "id_stock";
 	public static final String STORAGE_IDSTORAGETYPE = "id_storage_type";
+	public static final String STORAGE_AVAILABLE = "available";
 	public static final String STORAGETYPE = "storage_type";
 	public static final String STORAGETYPE_ID = "id";
 	public static final String STORAGETYPE_CODE = "code";
@@ -185,5 +186,10 @@ public class DataBaseElements {
 				+ DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_CREATEDATE;
 		public static final String MIN = DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID;
 		public static final String DISTINCTID = "DISTINCT ( " + DataBaseElements.ALIAS_NEMOUSER + "." + DataBaseElements.NEMOUSER_ID + ")";
+	}
+
+	public class StorageColSet {
+
+		public static final String MIN = DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_ID;
 	}
 }

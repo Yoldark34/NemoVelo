@@ -27,23 +27,32 @@ public class StorageMapper extends AbstractMapper {
 	public int save(Storage storage) {
 		int nbRows = 0;
 		String query;
+
+		int available = 0;
+		if (storage.isAvailable()) {
+			available = 1;
+		}
+
 		if (storage.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.STORAGE + "` SET ";
 			//query += "`" + DataBaseElements.STORAGE_ID +"` = '"+storage.getId() + "',";Can't be updated because used in where
 			query += "`" + DataBaseElements.STORAGE_IDSTOCK + "` = '" + storage.getIdStock() + "',";
-			query += "`" + DataBaseElements.STORAGE_IDSTORAGETYPE + "` = '" + storage.getIdStorageType() + "' ";
+			query += "`" + DataBaseElements.STORAGE_IDSTORAGETYPE + "` = '" + storage.getIdStorageType() + "',";
+			query += "`" + DataBaseElements.STORAGE_AVAILABLE + "` = '" + available + "' ";
 
 			query += "WHERE `" + DataBaseElements.STORAGE_ID + "` = '" + storage.getId() + "';";
 		} else {
 			query = "INSERT INTO " + DataBaseElements.STORAGE + " (";
 			//query +=  "`" + DataBaseElements.STORAGE_ID + "`,";
 			query += "`" + DataBaseElements.STORAGE_IDSTOCK + "`,";
-			query += "`" + DataBaseElements.STORAGE_IDSTORAGETYPE + "` ";
+			query += "`" + DataBaseElements.STORAGE_IDSTORAGETYPE + "`,";
+			query += "`" + DataBaseElements.STORAGE_AVAILABLE + "` ";
 
 			query += ") VALUES (";
 			//query += "'" + storage.getId() + "',";
 			query += "'" + storage.getIdStock() + "',";
-			query += "'" + storage.getIdStorageType() + "' ";
+			query += "'" + storage.getIdStorageType() + "',";
+			query += "'" + available + "' ";
 
 			query += ")";
 		}
@@ -64,42 +73,13 @@ public class StorageMapper extends AbstractMapper {
 		query += "count( * ) AS 'numberOfStorages'";
 		query += " FROM ";
 		query += DataBaseElements.TERMINAL + " " + DataBaseElements.ALIAS_TERMINAL + ", ";
-		query += DataBaseElements.STOCK + " " + DataBaseElements.ALIAS_STOCK + ", ";
-		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + ", ";
-		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
 		query += DataBaseElements.STORAGE + " " + DataBaseElements.ALIAS_STORAGE;
 		query += " WHERE ";
-		query += DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID + " = " + DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_IDSTOCK;
-		query += " AND ";
-		query += DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_IDSTOCK + " = " + DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID;
+		query += DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_IDSTOCK + " = " + DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_IDSTOCK;
 		query += " AND ";
 		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
 		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDENDSTORAGE + " = " + DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_ID;
-		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
-		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
-		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
-		query += " AND ";
-		query += " NOT EXISTS ";
-		query += " ( ";
-		query += " SELECT *";
-		query += " FROM ";
-		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + "2" + ", ";
-		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + "2";
-		query += " WHERE ";
-		query += DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
-		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_IDENDSTORAGE + " = " + DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_ID;
-		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "2" + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
-		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "2" + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.STOCKING + "'";
-		query += " AND ";
-		query += DataBaseElements.ALIAS_BIKEUSAGE + "2" + "." + DataBaseElements.BIKEUSAGE_STARTDATE + " > " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_STARTDATE;
-		query += " ) ";
+		query += DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_AVAILABLE + " = " + 1;
 
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();
@@ -110,6 +90,76 @@ public class StorageMapper extends AbstractMapper {
 		}
 
 		return result.getNumberOfStorages();
+	}
+
+	public int getFirstAvailableStoragesForTerminal(int terminalId) {
+		String query;
+		Storage result = null;
+
+		query = "SELECT ";
+		query += " MIN( ";
+		query += DataBaseElements.StorageColSet.MIN;
+		query += " ) as ";
+		query += DataBaseElements.STORAGE_ID;
+		query += " FROM ";
+		query += DataBaseElements.TERMINAL + " " + DataBaseElements.ALIAS_TERMINAL + ", ";
+		query += DataBaseElements.STORAGE + " " + DataBaseElements.ALIAS_STORAGE;
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_IDSTOCK + " = " + DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_IDSTOCK;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_STORAGE + "." + DataBaseElements.STORAGE_AVAILABLE + " = " + 1;
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (Storage) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction getAvailableBikesForThisTerminal", ex);
+		}
+
+		return result.getId();
+	}
+
+	public boolean setStorageUsed(int idStorage) {
+		String query;
+		int nbRows;
+
+		query = "UPDATE `" + DataBaseElements.STORAGE + "` SET ";
+		query += "`" + DataBaseElements.STORAGE_AVAILABLE + "` = '" + 0 + "' ";
+
+		query += "WHERE `" + DataBaseElements.STORAGE_ID + "` = '" + idStorage + "';";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+			if (nbRows > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+		}
+		return false;
+	}
+
+	public boolean setStorageAvailable(int idStorage) {
+		String query;
+		int nbRows;
+
+		query = "UPDATE `" + DataBaseElements.STORAGE + "` SET ";
+		query += "`" + DataBaseElements.STORAGE_AVAILABLE + "` = '" + 1 + "' ";
+
+		query += "WHERE `" + DataBaseElements.STORAGE_ID + "` = '" + idStorage + "';";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			nbRows = adapter.executeUpdateQuery(query);
+			if (nbRows > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+		}
+		return false;
 	}
 
 	@Override
@@ -126,6 +176,9 @@ public class StorageMapper extends AbstractMapper {
 		}
 		if (this.hasColumn("numberOfStorages", row)) {
 			obj.setNumberOfStorages(row.getInt("numberOfStorages"));
+		}
+		if (this.hasColumn(DataBaseElements.STORAGE_AVAILABLE, row)) {
+			obj.setAvailable(row.getBoolean(DataBaseElements.STORAGE_AVAILABLE));
 		}
 
 		return obj;

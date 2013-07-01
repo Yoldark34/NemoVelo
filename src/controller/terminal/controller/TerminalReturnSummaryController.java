@@ -44,7 +44,7 @@ public class TerminalReturnSummaryController {
 			Timestamp today = Helper.getSqlDateNow();
 			ReturnSummary returnSummary = this.getReturnSummary();
 			for (int i = 0; i < returnSummary.size(); i++) {
-				if (!bum.returnBike(returnSummary.get(i).getSerialNumber(), today)) {
+				if (!bum.returnBikeForTerminal(returnSummary.get(i).getSerialNumber(), today, ProcessedData.getTerminal().getId())) {
 					success = false;
 				}
 			}
