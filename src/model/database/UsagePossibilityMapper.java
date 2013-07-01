@@ -39,6 +39,8 @@ public class UsagePossibilityMapper extends AbstractMapper {
 	 */
 	public int save(UsagePossibility usagePossibility, boolean updateMode) {
 		int nbRows = 0;
+		int idResult = -1;
+
 		String query = "";
 		if (updateMode && usagePossibility.getIdBikeUsageType() != -1 && usagePossibility.getIdUserType() != -1 && usagePossibility.getIdStorageType() != -1) {
 			if (usagePossibility.getIdRent() != -1 && usagePossibility.getIdGuarantee() != -1) {
@@ -59,6 +61,13 @@ public class UsagePossibilityMapper extends AbstractMapper {
 				query += "`" + DataBaseElements.USAGEPOSSIBILITY_IDSTORAGETYPE + "` = '" + usagePossibility.getIdStorageType() + "'";
 				query += ")";
 				query += ";";
+
+				try {
+					DbConnection adapter = DbConnection.getDbConnection();
+					nbRows = adapter.executeUpdateQuery(query);
+				} catch (Exception e) {
+				}
+				return nbRows;
 			} else {
 				return 0;
 			}
@@ -86,14 +95,16 @@ public class UsagePossibilityMapper extends AbstractMapper {
 				query += "NULL,";
 			}
 			query += ")";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
-		}
-		return nbRows;
+		return -1;
 	}
 
 	@Override

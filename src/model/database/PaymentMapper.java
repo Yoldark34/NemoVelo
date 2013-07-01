@@ -39,6 +39,7 @@ public class PaymentMapper extends AbstractMapper {
 	public int save(Payment payment) {
 		int nbRows = 0;
 		int validated = 0;
+		int idResult = -1;
 		if (payment.isValidated()) {
 			validated = 1;
 		}
@@ -65,6 +66,13 @@ public class PaymentMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.PAYMENT_VALIDATED + "` = '" + validated + "' ";
 
 			query += "WHERE `" + DataBaseElements.PAYMENT_ID + "` = '" + payment.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.PAYMENT + " (";
 			//query +=  "`" + DataBaseElements.PAYMENT_ID + "`,";
@@ -93,14 +101,14 @@ public class PaymentMapper extends AbstractMapper {
 			query += "'" + validated + "' ";
 
 			query += ")";
-		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
-		return nbRows;
 	}
 
 	/**

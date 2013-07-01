@@ -39,6 +39,7 @@ public class UserTypeMapper extends AbstractMapper {
 	 */
 	public int save(UserType userType) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (userType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.USERTYPE + "` SET ";
@@ -51,6 +52,13 @@ public class UserTypeMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.USERTYPE_DESCRIPTION + "` = '" + userType.getDescription() + "' ";
 
 			query += "WHERE `" + DataBaseElements.USERTYPE_ID + "` = '" + userType.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.USERTYPE + " (";
 			//query +=  "`" + DataBaseElements.USERTYPE_ID + "`,";
@@ -72,14 +80,14 @@ public class UserTypeMapper extends AbstractMapper {
 			query += "'" + userType.getDescription() + "' ";
 
 			query += ")";
-		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
-		return nbRows;
 	}
 
 	/**

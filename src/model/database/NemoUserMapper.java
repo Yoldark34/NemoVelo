@@ -35,6 +35,7 @@ public class NemoUserMapper extends AbstractMapper {
 	 */
 	public int save(NemoUser nemoUser) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (nemoUser.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.NEMOUSER + "` SET ";
@@ -55,6 +56,13 @@ public class NemoUserMapper extends AbstractMapper {
 			}
 
 			query += "WHERE `" + DataBaseElements.NEMOUSER_ID + "` = '" + nemoUser.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.NEMOUSER + " (";
 			//query +=  "`" + DataBaseElements.NEMOUSER_ID + "`,";
@@ -82,14 +90,16 @@ public class NemoUserMapper extends AbstractMapper {
 			}
 
 			query += ")";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
-		}
-		return nbRows;
+		
 	}
 
 	/**

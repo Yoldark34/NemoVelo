@@ -39,6 +39,7 @@ public class PriceMapper extends AbstractMapper {
 	 */
 	public int save(Price price) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (price.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.PRICE + "` SET ";
@@ -51,6 +52,13 @@ public class PriceMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.PRICE_DURATIONUNIT + "` = '" + price.getPriceDurationUnit() + "' ";
 
 			query += "WHERE `" + DataBaseElements.PRICE_ID + "` = '" + price.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.PRICE + " (";
 			//query +=  "`" + DataBaseElements.PRICE_ID + "`,";
@@ -70,14 +78,16 @@ public class PriceMapper extends AbstractMapper {
 			query += "'" + price.getPriceDurationUnit() + "' ";
 
 			query += ")";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
-		}
-		return nbRows;
+		
 	}
 
 	/**

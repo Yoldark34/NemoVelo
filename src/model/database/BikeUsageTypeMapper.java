@@ -67,6 +67,7 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 	 */
 	public int save(BikeUsageType bikeUsageType) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (bikeUsageType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.BIKEUSAGETYPE + "` SET ";
@@ -81,6 +82,13 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.BIKEUSAGETYPE_DESCRIPTION + "` = '" + bikeUsageType.getDescription() + "' ";
 
 			query += "WHERE `" + DataBaseElements.BIKEUSAGETYPE_ID + "` = '" + bikeUsageType.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.BIKEUSAGETYPE + " (";
 			//query +=  "`" + DataBaseElements.BIKEUSAGETYPE_ID + "`,";
@@ -99,14 +107,14 @@ public class BikeUsageTypeMapper extends AbstractMapper {
 			query += "'" + bikeUsageType.getDescription() + "' ";
 
 			query += ")";
-		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
-		return nbRows;
 	}
 
 	@Override

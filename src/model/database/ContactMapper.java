@@ -30,6 +30,7 @@ public class ContactMapper extends AbstractMapper {
 	 */
 	public int save(Contact contact) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (contact.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.CONTACT + "` SET ";
@@ -42,6 +43,13 @@ public class ContactMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.CONTACT_PHONENUMBER + "` = '" + contact.getPhoneNumber() + "' ";
 
 			query += "WHERE `" + DataBaseElements.CONTACT_ID + "` = '" + contact.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.CONTACT + " (";
 			//query +=  "`" + DataBaseElements.CONTACT_ID + "`,";
@@ -61,14 +69,14 @@ public class ContactMapper extends AbstractMapper {
 			query += "'" + contact.getPhoneNumber() + "' ";
 
 			query += ")";
-		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
-		return nbRows;
 	}
 
 	@Override
