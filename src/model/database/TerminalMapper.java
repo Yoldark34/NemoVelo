@@ -39,6 +39,7 @@ public class TerminalMapper extends AbstractMapper {
 	 */
 	public int save(Terminal terminal) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (terminal.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.TERMINAL + "` SET ";
@@ -47,6 +48,13 @@ public class TerminalMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.TERMINAL_IP + "` = '" + terminal.getIp() + "' ";
 
 			query += "WHERE `" + DataBaseElements.TERMINAL_ID + "` = '" + terminal.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.TERMINAL + " (";
 			//query +=  "`" + DataBaseElements.TERMINAL_ID + "`,";
@@ -59,14 +67,14 @@ public class TerminalMapper extends AbstractMapper {
 			query += "'" + terminal.getIp() + "' ";
 
 			query += ")";
-		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
-		return nbRows;
 	}
 
 	@Override

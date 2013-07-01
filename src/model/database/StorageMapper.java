@@ -39,6 +39,7 @@ public class StorageMapper extends AbstractMapper {
 	 */
 	public int save(Storage storage) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 
 		int available = 0;
@@ -54,6 +55,13 @@ public class StorageMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.STORAGE_AVAILABLE + "` = '" + available + "' ";
 
 			query += "WHERE `" + DataBaseElements.STORAGE_ID + "` = '" + storage.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.STORAGE + " (";
 			//query +=  "`" + DataBaseElements.STORAGE_ID + "`,";
@@ -68,14 +76,15 @@ public class StorageMapper extends AbstractMapper {
 			query += "'" + available + "' ";
 
 			query += ")";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
-		}
-		return nbRows;
 	}
 
 	/**

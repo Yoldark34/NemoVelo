@@ -37,6 +37,7 @@ public class StockMapper extends AbstractMapper {
 	 */
 	public int save(Stock stock) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (stock.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.STOCK + "` SET ";
@@ -48,6 +49,13 @@ public class StockMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.STOCK_LONGITUDE + "` = '" + stock.getLongitude() + "' ";
 
 			query += "WHERE `" + DataBaseElements.STOCK_ID + "` = '" + stock.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.STOCK + " (";
 			//query +=  "`" + DataBaseElements.STOCK_ID + "`,";
@@ -66,14 +74,16 @@ public class StockMapper extends AbstractMapper {
 			query += "'" + stock.getLongitude() + "' ";
 
 			query += ")";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
-		}
-		return nbRows;
+		
 	}
 
 	@Override

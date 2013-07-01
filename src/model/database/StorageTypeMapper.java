@@ -37,6 +37,7 @@ public class StorageTypeMapper extends AbstractMapper {
 	 */
 	public int save(StorageType storageType) {
 		int nbRows = 0;
+		int idResult = -1;
 		String query;
 		if (storageType.getId() != -1) {
 			query = "UPDATE `" + DataBaseElements.STORAGETYPE + "` SET ";
@@ -46,6 +47,13 @@ public class StorageTypeMapper extends AbstractMapper {
 			query += "`" + DataBaseElements.STORAGETYPE_DESCRIPTION + "` = '" + storageType.getDescription() + "' ";
 
 			query += "WHERE `" + DataBaseElements.STORAGETYPE_ID + "` = '" + storageType.getId() + "';";
+
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				nbRows = adapter.executeUpdateQuery(query);
+			} catch (Exception e) {
+			}
+			return nbRows;
 		} else {
 			query = "INSERT INTO " + DataBaseElements.STORAGETYPE + " (";
 			//query +=  "`" + DataBaseElements.STORAGETYPE_ID + "`,";
@@ -60,14 +68,14 @@ public class StorageTypeMapper extends AbstractMapper {
 			query += "'" + storageType.getDescription() + "' ";
 
 			query += ")";
-		}
 
-		try {
-			DbConnection adapter = DbConnection.getDbConnection();
-			nbRows = adapter.executeUpdateQuery(query);
-		} catch (Exception e) {
+			try {
+				DbConnection adapter = DbConnection.getDbConnection();
+				idResult = adapter.executeInsertQuery(query);
+			} catch (Exception e) {
+			}
+			return idResult;
 		}
-		return nbRows;
 	}
 
 	@Override
