@@ -7,7 +7,6 @@ package controller.terminal.controller;
 import controller.terminal.interfacesGUI.TerminalSubVue;
 import model.database.BikeUsageMapper;
 import model.database.ReturnAmountMapper;
-import model.object.ReturnAmount;
 
 /**
  *
@@ -125,14 +124,11 @@ class VueStateMachine {
 
 	public static void doCancel() {
 		switch (VueStateMachine.getState()) {
-
 			case VUE_RENT_SUMMARY:
 			case VUE_RENT_PAY:
 				BikeUsageMapper bum = new BikeUsageMapper();
 				bum.resetBikesLocationProcess(ProcessedData.getIdBikeUsagesToResetEndDate(), ProcessedData.getIdBikeUsagesToDelete());
-
 				break;
-			
 			case VUE_RETURN_SUMMARY:
 			case VUE_RETURN_PAY:
 				ReturnAmountMapper ram = new ReturnAmountMapper();

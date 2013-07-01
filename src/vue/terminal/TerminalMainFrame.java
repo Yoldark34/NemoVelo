@@ -17,8 +17,11 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -44,6 +47,7 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 	private static final String CARD_PAY = "PAY";
 	//The banner of application
 	JPanel banner;
+	JButton btnCancel;
 	//Vues are managed as cards
 	JPanel cards;
 	CardLayout cardsLayout;
@@ -76,16 +80,33 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
 	private void initialize() {
 		BorderLayout bdl = new BorderLayout();
+		JPanel top;
 		bdl.setVgap(BANNERSOUTH_MARGIN);
 		this.setLayout(bdl);
 		this.setPreferredSize(new Dimension(640, 480));
 
-		//Initialize banner
-		this.banner = new BannerPanel();
+		top = new JPanel();
 		{
-			this.banner.setPreferredSize(new Dimension((int) (this.banner.getPreferredSize().getWidth()), BANNER_HEIGHT));
+			top.setLayout(new BorderLayout());
+			//Initialize banner
+			this.banner = new BannerPanel();
+			{
+				this.banner.setPreferredSize(new Dimension((int) (this.banner.getPreferredSize().getWidth()), BANNER_HEIGHT));
+			}
+			top.add(this.banner, BorderLayout.CENTER);
+
+			this.btnCancel = new JButton("Annuler");
+			{
+				this.btnCancel.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent ae) {
+						TerminalController.doCancel();
+					}
+				});
+			}
+			top.add(this.btnCancel, BorderLayout.WEST);
 		}
-		this.add(this.banner, BorderLayout.NORTH);
+		this.add(top, BorderLayout.NORTH);
 
 		//Initialize cards
 		this.cards = new JPanel();
@@ -131,31 +152,37 @@ public class TerminalMainFrame extends JFrame implements TerminalMainVue {
 
 	@Override
 	public void displayTerminalWelcome() {
+		this.btnCancel.setVisible(false);
 		this.cardsLayout.show(this.cards, CARD_WELCOME);
 	}
 
 	@Override
 	public void displayTerminalRent() {
+		this.btnCancel.setVisible(true);
 		this.cardsLayout.show(this.cards, CARD_RENT);
 	}
 
 	@Override
 	public void displayTerminalRentSummary() {
+		this.btnCancel.setVisible(true);
 		this.cardsLayout.show(this.cards, CARD_RENT_SUMMARY);
 	}
 
 	@Override
 	public void displayTerminalReturn() {
+		this.btnCancel.setVisible(true);
 		this.cardsLayout.show(this.cards, CARD_RETURN);
 	}
 
 	@Override
 	public void displayTerminalReturnSummary() {
+		this.btnCancel.setVisible(true);
 		this.cardsLayout.show(this.cards, CARD_RETURN_SUMMARY);
 	}
 
 	@Override
 	public void displayTerminalPay() {
+		this.btnCancel.setVisible(true);
 		this.cardsLayout.show(this.cards, CARD_PAY);
 	}
 
