@@ -69,6 +69,8 @@ public class BikeMapper extends AbstractMapper {
 		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
 		query += " AND ";
 		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_IDSTOCK + " = " + DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID;
 
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();
@@ -81,7 +83,7 @@ public class BikeMapper extends AbstractMapper {
 		return result.getNumberOfBikes();
 	}
 
-	public ArrayList<Bike> getRentedBikesForThisTerminal(int terminalId) {
+	public ArrayList<Bike> getRentedBikes() {
 		String query;
 		ArrayList<Bike> results = new ArrayList<>();
 
@@ -106,8 +108,6 @@ public class BikeMapper extends AbstractMapper {
 		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
 		query += " AND ";
 		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
-		query += " AND ";
-		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
 
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();

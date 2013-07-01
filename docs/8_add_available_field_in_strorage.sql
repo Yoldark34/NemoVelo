@@ -1,0 +1,1 @@
+ALTER TABLE `storage` ADD `available` TINYINT NOT NULL DEFAULT '1';

@@ -8,6 +8,7 @@ import controller.terminal.controller.data.RentSummary;
 import controller.terminal.controller.data.ReturnSummary;
 import java.util.ArrayList;
 import model.database.TerminalMapper;
+import model.object.Payment;
 import model.object.Terminal;
 
 /**
@@ -22,6 +23,24 @@ class ProcessedData {
 	private static ReturnSummary returnSummary;
 	private static ArrayList<Integer> idBikeUsagesToResetEndDate = new ArrayList<>();
 	private static ArrayList<Integer> idBikeUsagesToDelete = new ArrayList<>();
+	private static ArrayList<Integer> idReturnAmountToDelete = new ArrayList<>();
+	private static ArrayList<Payment> paymentToProcess = new ArrayList<>();
+
+	public static ArrayList<Payment> getPaymentToProcess() {
+		return paymentToProcess;
+	}
+
+	public static void setPaymentToProcess(ArrayList<Payment> paymentToProcess) {
+		ProcessedData.paymentToProcess = paymentToProcess;
+	}
+
+	public static ArrayList<Integer> getIdReturnAmountToDelete() {
+		return idReturnAmountToDelete;
+	}
+
+	public static void setIdReturnAmountToDelete(ArrayList<Integer> idReturnAmountToDelete) {
+		ProcessedData.idReturnAmountToDelete = idReturnAmountToDelete;
+	}
 
 	public static ArrayList<Integer> getIdBikeUsagesToResetEndDate() {
 		return idBikeUsagesToResetEndDate;
@@ -54,7 +73,7 @@ class ProcessedData {
 	public static Terminal getTerminal() {
 		if (ProcessedData.terminal == null) {
 			TerminalMapper terminalMapper = new TerminalMapper();
-			terminal = terminalMapper.getTerminal(1);
+			terminal = terminalMapper.getTerminal(2);
 		}
 		return ProcessedData.terminal;
 	}
@@ -65,5 +84,14 @@ class ProcessedData {
 
 	public static void setReturnSummary(ReturnSummary rentSummary) {
 		ProcessedData.returnSummary = rentSummary;
+	}
+
+	public static void doResetData() {
+		ProcessedData.idBikeUsagesToResetEndDate = new ArrayList<>();
+		ProcessedData.idBikeUsagesToDelete = new ArrayList<>();
+		ProcessedData.rentSummary = new RentSummary();
+		ProcessedData.returnSummary = null;
+		ProcessedData.idReturnAmountToDelete = new ArrayList<>();
+		ProcessedData.paymentToProcess = new ArrayList<>();
 	}
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import model.object.Payment;
 import resource.log.ProjectLogger;
 
 
@@ -135,6 +136,8 @@ public class BikeUsageMapper extends AbstractMapper {
 		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
 		query += " AND ";
 		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_ID + " = " + terminalId;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_TERMINAL + "." + DataBaseElements.TERMINAL_IDSTOCK + " = " + DataBaseElements.ALIAS_STOCK + "." + DataBaseElements.STOCK_ID;
 
 		try {
 			DbConnection adapter = DbConnection.getDbConnection();
@@ -146,7 +149,7 @@ public class BikeUsageMapper extends AbstractMapper {
 
 		if (requestResult != null && !requestResult.isEmpty()) {
 			java.sql.Timestamp sqlToday = Helper.getSqlDateNow();
-			
+			StorageMapper sm = new StorageMapper();
 			for (int i = 0; i < numberOfBikes; i++) {
 				bu = requestResult.get(i);
 				idBikeUsagesToResetEndDate.add(bu.getId());
@@ -164,7 +167,7 @@ public class BikeUsageMapper extends AbstractMapper {
 				bu.setIdNemoUser(nemoUserId);
 				bu.setStartDate(sqlToday);
 				bu.setEndDate(null);
-
+				sm.setStorageUsed(bu.getIdEndStorage());
 				int newId = this.save(bu);
 				idBikeUsagesToDelete.add(newId);
 			}
@@ -206,6 +209,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		}
 
 		if (requestResult != null && !requestResult.isEmpty()) {
+			StorageMapper sm = new StorageMapper();
 			for (int i = 0; i < requestResult.size(); i++) {
 				bu = requestResult.get(i);
 				bu.setEndDate(today);
@@ -221,7 +225,7 @@ public class BikeUsageMapper extends AbstractMapper {
 				bu.setIdBikeUsageType(btm.getBikeUsagesType(DataBaseElements.BikeUsageType.RENTING).getId());
 				bu.setStartDate(today);
 				bu.setEndDate(null);
-
+				sm.setStorageAvailable(bu.getIdEndStorage());
 				int newId = this.save(bu);
 				if (newId <= 0) {
 					error = true;
@@ -379,7 +383,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		return true;
 	}
 
-	public boolean returnBike(int serialNumber, Timestamp today) {
+	public boolean returnBikeForTerminal(int serialNumber, Timestamp today, int terminalId, List<Payment> payments) {
 		BikeUsageTypeMapper butm = new BikeUsageTypeMapper();
 		String query;
 		BikeUsage result;
@@ -399,16 +403,24 @@ public class BikeUsageMapper extends AbstractMapper {
 		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
 
 		try {
+			PaymentMapper pm = new PaymentMapper();
+			StorageMapper sm = new StorageMapper();
 			DbConnection adapter = DbConnection.getDbConnection();
 			adapter.executeSelectQuery(query);
 			result = (BikeUsage) adapter.getModelFromRequest(this);
+			int availableStorage = sm.getFirstAvailableStoragesForTerminal(terminalId);
 			result.setEndDate(today);
 			this.save(result);
 			result.setId(-1);
 			result.setIdBikeUsageType(butm.getBikeUsagesType(DataBaseElements.BikeUsageType.STOCKING).getId());
 			result.setStartDate(today);
 			result.setEndDate(null);
+			result.setIdEndStorage(availableStorage);
 			this.save(result);
+			sm.setStorageUsed(availableStorage);
+			for (Payment payment : payments) {
+				pm.save(payment);
+			}
 			return true;
 		} catch (SQLException | ClassNotFoundException ex) {
 			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);

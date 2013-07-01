@@ -14,6 +14,15 @@ public class Storage {
 	private int idStock;
 	private int idStorageType;
 	private int numberOfStorages;
+	private boolean available;
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
 
 	public int getId() {
 		return id;

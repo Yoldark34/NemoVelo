@@ -22,6 +22,7 @@ import model.database.SubscriptionMapper;
 import model.object.Bike;
 import model.object.BikeUsage;
 import model.object.NemoUser;
+import model.object.Payment;
 import model.object.Price;
 import model.object.ReturnAmount;
 import model.object.Subscription;
@@ -65,7 +66,7 @@ public class TerminalReturnController {
 	public Set<Integer> getRentedBikeSerialNumbers() {
 		Set<Integer> result = new HashSet<>();
 		BikeMapper bm = new BikeMapper();
-		ArrayList<Bike> resultBikes = bm.getRentedBikesForThisTerminal(ProcessedData.getTerminal().getId());
+		ArrayList<Bike> resultBikes = bm.getRentedBikes();
 		if (resultBikes.size() > 0) {
 			for (int i = 0; i < resultBikes.size(); ++i) {
 				result.add(resultBikes.get(i).getId());
@@ -130,10 +131,17 @@ public class TerminalReturnController {
 						brs.setFinalDuration(finalDuration);
 						brs.setSerialNumber(bikes.get(j).getIdBike());
 						summary.add(brs);
+						Payment pay = new Payment();
+						pay.setIdSubscription(subscriptions.get(i).getId());
+						pay.setPaymentDate(today);
+						pay.setValidated(false);
+						pay.setAmount(rs.getRentAmount() - p.getAmount());
+						ProcessedData.getPaymentToProcess().add(pay);
 					}
 					rs.setBikeQuantity(bikes.size());
 					ra.setAmount(rs.getRentAmount());
-					ram.save(ra);
+					int newId = ram.save(ra);
+					ProcessedData.getIdReturnAmountToDelete().add(newId);
 				}
 				summary.setGuaranteePerBike(pm.getFirstGuarantee().getAmount());
 				ProcessedData.setReturnSummary(summary);
