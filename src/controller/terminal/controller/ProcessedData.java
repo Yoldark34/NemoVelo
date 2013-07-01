@@ -8,6 +8,7 @@ import controller.terminal.controller.data.RentSummary;
 import controller.terminal.controller.data.ReturnSummary;
 import java.util.ArrayList;
 import model.database.TerminalMapper;
+import model.object.Payment;
 import model.object.Terminal;
 
 /**
@@ -23,6 +24,15 @@ class ProcessedData {
 	private static ArrayList<Integer> idBikeUsagesToResetEndDate = new ArrayList<>();
 	private static ArrayList<Integer> idBikeUsagesToDelete = new ArrayList<>();
 	private static ArrayList<Integer> idReturnAmountToDelete = new ArrayList<>();
+	private static ArrayList<Payment> paymentToProcess = new ArrayList<>();
+
+	public static ArrayList<Payment> getPaymentToProcess() {
+		return paymentToProcess;
+	}
+
+	public static void setPaymentToProcess(ArrayList<Payment> paymentToProcess) {
+		ProcessedData.paymentToProcess = paymentToProcess;
+	}
 
 	public static ArrayList<Integer> getIdReturnAmountToDelete() {
 		return idReturnAmountToDelete;
@@ -82,5 +92,6 @@ class ProcessedData {
 		ProcessedData.rentSummary = new RentSummary();
 		ProcessedData.returnSummary = null;
 		ProcessedData.idReturnAmountToDelete = new ArrayList<>();
+		ProcessedData.paymentToProcess = new ArrayList<>();
 	}
 }

@@ -22,6 +22,7 @@ import model.database.SubscriptionMapper;
 import model.object.Bike;
 import model.object.BikeUsage;
 import model.object.NemoUser;
+import model.object.Payment;
 import model.object.Price;
 import model.object.ReturnAmount;
 import model.object.Subscription;
@@ -130,6 +131,12 @@ public class TerminalReturnController {
 						brs.setFinalDuration(finalDuration);
 						brs.setSerialNumber(bikes.get(j).getIdBike());
 						summary.add(brs);
+						Payment pay = new Payment();
+						pay.setIdSubscription(subscriptions.get(i).getId());
+						pay.setPaymentDate(today);
+						pay.setValidated(false);
+						pay.setAmount(rs.getRentAmount() - p.getAmount());
+						ProcessedData.getPaymentToProcess().add(pay);
 					}
 					rs.setBikeQuantity(bikes.size());
 					ra.setAmount(rs.getRentAmount());

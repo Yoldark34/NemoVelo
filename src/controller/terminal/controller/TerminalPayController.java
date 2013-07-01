@@ -142,7 +142,7 @@ public class TerminalPayController {
 				returnSuccess = false;
 			} else {
 			for (int i = 0; i < returnSummary.size(); i++) {
-				if (!bum.returnBikeForTerminal(returnSummary.get(i).getSerialNumber(), today, ProcessedData.getTerminal().getId())) {
+				if (!bum.returnBikeForTerminal(returnSummary.get(i).getSerialNumber(), today, ProcessedData.getTerminal().getId(), ProcessedData.getPaymentToProcess())) {
 					returnSuccess = false;
 				}
 				}

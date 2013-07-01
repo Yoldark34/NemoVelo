@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import model.object.Payment;
 import resource.log.ProjectLogger;
 
 
@@ -383,7 +384,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		return true;
 	}
 
-	public boolean returnBikeForTerminal(int serialNumber, Timestamp today, int terminalId) {
+	public boolean returnBikeForTerminal(int serialNumber, Timestamp today, int terminalId, List<Payment> payments) {
 		BikeUsageTypeMapper butm = new BikeUsageTypeMapper();
 		String query;
 		BikeUsage result;
@@ -403,6 +404,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
 
 		try {
+			PaymentMapper pm = new PaymentMapper();
 			StorageMapper sm = new StorageMapper();
 			DbConnection adapter = DbConnection.getDbConnection();
 			adapter.executeSelectQuery(query);
@@ -417,6 +419,9 @@ public class BikeUsageMapper extends AbstractMapper {
 			result.setIdEndStorage(availableStorage);
 			this.save(result);
 			sm.setStorageUsed(availableStorage);
+			for (Payment payment : payments) {
+				pm.save(payment);
+			}
 			return true;
 		} catch (SQLException | ClassNotFoundException ex) {
 			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
