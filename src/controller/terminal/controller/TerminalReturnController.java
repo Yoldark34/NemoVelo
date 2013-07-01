@@ -71,6 +71,8 @@ public class TerminalReturnController {
 			for (int i = 0; i < resultBikes.size(); ++i) {
 				result.add(resultBikes.get(i).getId());
 			}
+		} else {
+			doAutoCancel("Aucun vélo n'est en état de location.");
 		}
 
 		return result;

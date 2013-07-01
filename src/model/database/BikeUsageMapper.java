@@ -309,6 +309,9 @@ public class BikeUsageMapper extends AbstractMapper {
 		if (this.hasColumn(DataBaseElements.BIKEUSAGE_COMMENTS, row)) {
 			obj.setComments(row.getString(DataBaseElements.BIKEUSAGE_COMMENTS));
 		}
+		if (this.hasColumn("number_of_bike_usages", row)) {
+			obj.setNumberOfBikeUsages(row.getInt("number_of_bike_usages"));
+		}
 
 		return obj;
 	}
@@ -405,6 +408,7 @@ public class BikeUsageMapper extends AbstractMapper {
 		try {
 			PaymentMapper pm = new PaymentMapper();
 			StorageMapper sm = new StorageMapper();
+			SubscriptionMapper subM = new SubscriptionMapper();
 			DbConnection adapter = DbConnection.getDbConnection();
 			adapter.executeSelectQuery(query);
 			result = (BikeUsage) adapter.getModelFromRequest(this);
@@ -419,13 +423,47 @@ public class BikeUsageMapper extends AbstractMapper {
 			this.save(result);
 			sm.setStorageUsed(availableStorage);
 			for (Payment payment : payments) {
-				pm.save(payment);
+				if (payment.getAmount() > 0) {
+					pm.save(payment);
+				}
+				subM.closeSubscriptionIfFinish(payment.getIdSubscription(), today);
 			}
+			
 			return true;
 		} catch (SQLException | ClassNotFoundException ex) {
 			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
 		}
 
 		return false;
+	}
+
+	int getNumberOfRentedBikes(int idNemoUser, Timestamp startDate) {
+		BikeUsageTypeMapper butm = new BikeUsageTypeMapper();
+		String query;
+		BikeUsage result = null;
+
+		query = "SELECT ";
+		query += " COUNT(*) as 'number_of_bike_usages'";
+		query += " FROM ";
+		query += DataBaseElements.BIKEUSAGETYPE + " " + DataBaseElements.ALIAS_BIKEUSAGETYPE + ", ";
+		query += DataBaseElements.BIKEUSAGE + " " + DataBaseElements.ALIAS_BIKEUSAGE + " ";
+		query += " WHERE ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_ID + " = " + DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_IDBIKEUSAGETYPE;
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGETYPE + "." + DataBaseElements.BIKEUSAGETYPE_NAME + " = '" + DataBaseElements.BikeUsageType.RENTING + "'";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_ENDDATE + " is NULL";
+		query += " AND ";
+		query += DataBaseElements.ALIAS_BIKEUSAGE + "." + DataBaseElements.BIKEUSAGE_STARTDATE + " = '" + startDate + "'";
+
+		try {
+			DbConnection adapter = DbConnection.getDbConnection();
+			adapter.executeSelectQuery(query);
+			result = (BikeUsage) adapter.getModelFromRequest(this);
+		} catch (SQLException | ClassNotFoundException ex) {
+			ProjectLogger.log(this, Level.SEVERE, "Erreur d'exécution de la requête de la fonction bookFirstAvailableBikeForTerminal", ex);
+		}
+
+		return result.getNumberOfBikeUsages();
 	}
 }
