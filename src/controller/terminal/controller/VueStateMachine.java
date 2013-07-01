@@ -91,6 +91,7 @@ class VueStateMachine {
 		switch (state) {
 			case VUE_WELCOME:
 				//case VUE_END: (Same as welcome)
+				ProcessedData.doResetData();
 				TerminalController.getMainVue().displayTerminalWelcome();
 				currentVue = TerminalController.getMainVue().getTerminalWelcome();
 				break;
