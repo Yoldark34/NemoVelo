@@ -119,7 +119,7 @@ public class StorageMapper extends AbstractMapper {
 	 */
 	public int getFirstAvailableStorageForTerminal(int terminalId) {
 		String query;
-		Storage result = null;
+		Storage result = (Storage) this.getEmptyModel();
 
 		query = "SELECT ";
 		query += " MIN( ";

@@ -514,7 +514,7 @@ public class BikeUsageMapper extends AbstractMapper {
 	int getNumberOfRentedBikes(int idNemoUser, Timestamp startDate) {
 		BikeUsageTypeMapper butm = new BikeUsageTypeMapper();
 		String query;
-		BikeUsage result = null;
+		BikeUsage result = (BikeUsage) this.getEmptyModel();
 
 		query = "SELECT ";
 		query += " COUNT(*) as 'number_of_bike_usages'";

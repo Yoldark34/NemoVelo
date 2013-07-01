@@ -75,9 +75,7 @@ public class TerminalController {
 			for (int i = 0; i < terminals.size(); i++) {
 				possibilities[i] = new Integer(terminals.get(i).getId());
 			}
-		} catch (SQLException ex) {
-			ProjectLogger.log(TerminalController.class, Level.SEVERE, ex.getMessage(), ex);
-		} catch (ClassNotFoundException ex) {
+		} catch (SQLException | ClassNotFoundException ex) {
 			ProjectLogger.log(TerminalController.class, Level.SEVERE, ex.getMessage(), ex);
 		}
 		if (possibilities != null && possibilities.length > 0) {
