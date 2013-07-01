@@ -5,7 +5,6 @@
 package model.database;
 
 import tools.Helper;
-import controller.terminal.controller.TerminalController;
 import model.object.BikeUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;

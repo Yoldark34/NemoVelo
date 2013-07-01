@@ -5,7 +5,6 @@
 package main;
 
 import controller.terminal.controller.TerminalController;
-import controller.terminal.interfacesGUI.TerminalMainVue;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -93,7 +92,7 @@ public class Main {
 		if ((s != null) && (s.length() > 0)) {
 			nbFrames = Integer.parseInt(s);
 		} else {
-			nbFrames = 0;
+			nbFrames = 1;
 		}
 		return nbFrames;
 	}

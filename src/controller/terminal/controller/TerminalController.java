@@ -4,12 +4,7 @@
  */
 package controller.terminal.controller;
 
-import controller.terminal.controller.data.ReturnSummary;
-import controller.terminal.controller.data.RentSummary;
 import controller.terminal.interfacesGUI.TerminalMainVue;
-import java.util.ArrayList;
-import model.database.TerminalMapper;
-import model.object.Terminal;
 
 /**
  *
