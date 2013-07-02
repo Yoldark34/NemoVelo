@@ -9,4 +9,7 @@
 	<section name="log">
 		<param name="unique" value="true" />
 	</section>
+	<section name="gui">
+		<param name="cloned" value="false" />
+	</section>
 </config>

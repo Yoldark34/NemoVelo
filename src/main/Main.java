@@ -46,7 +46,7 @@ public class Main {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 		}
 
-		nbFrames = selectNbFrames();
+		nbFrames = selectNbClonedVues();
 
 		mainVue = getVue(nbFrames);
 		controller = new TerminalController(mainVue);
@@ -59,43 +59,53 @@ public class Main {
 		mainVue.setVisible(true);
 	}
 
-	private static int selectNbFrames() {
-		int nbFrames;
-
+	private static int selectNbClonedVues() {
+		boolean clonedVue;
+		int nbClones;
 		Object[] possibilities = {"1", "2", "3", "4"};
-		String s = (String) JOptionPane.showInputDialog(
-				null,
-				"Nombre de fenêtres ?",
-				"Paramètrage d'interface",
-				JOptionPane.PLAIN_MESSAGE,
-				null,
-				possibilities,
-				"1");
-		if ((s != null) && (s.length() > 0)) {
-			nbFrames = Integer.parseInt(s);
+		String s = null;
+
+		clonedVue = Configuration.getParam(
+				Configuration.CONFIGSECTION_GUI,
+				Configuration.CONFIGPARAM_GUI_CLONED)
+				.equals(Configuration.BooleanTrue);
+		if (clonedVue) {
+			s = (String) JOptionPane.showInputDialog(
+					null,
+					"Nombre de fenêtres ?",
+					"Paramètrage d'interface",
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					possibilities,
+					"1");
+			if ((s != null) && (s.length() > 0)) {
+				nbClones = Integer.parseInt(s);
+			} else {
+				nbClones = 0;
+			}
 		} else {
-			nbFrames = 0;
+			nbClones = 1;
 		}
-		return nbFrames;
+		return nbClones;
 	}
 
-	private static TerminalMainVue getVue(int nbFrames) {
+	private static TerminalMainVue getVue(int nbClones) {
 		TerminalMainVue mainVue;
 
-		if (nbFrames > 1) {
+		if (nbClones > 1) {
 			TerminalMultiMainVue multiMainVue;
 			multiMainVue = new TerminalMultiMainVue();
-			for (int i = 0; i < nbFrames; i++) {
+			for (int i = 0; i < nbClones; i++) {
 				multiMainVue.add(getVue(1));
 			}
 			mainVue = multiMainVue;
 		} else {
-			mainVue = getRandomMainFrame();
+			mainVue = getRandomMainVue();
 		}
 		return mainVue;
 	}
 
-	private static TerminalMainVue getRandomMainFrame() {
+	private static TerminalMainVue getRandomMainVue() {
 		TerminalMainVue mainVue;
 		URL iconUrl;
 		ImageIcon icon;

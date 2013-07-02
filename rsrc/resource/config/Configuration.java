@@ -36,6 +36,8 @@ public final class Configuration {
 	public static final String CONFIGPARAM_DB_PASSWORD = "password";
 	public static final String CONFIGSECTION_LOG = "log";
 	public static final String CONFIGPARAM_LOG_UNIQUE = "unique";
+	public static final String CONFIGSECTION_GUI = "gui";
+	public static final String CONFIGPARAM_GUI_CLONED = "cloned";
 	private static Document document = null;
 
 	/**
