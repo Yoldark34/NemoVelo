@@ -74,7 +74,7 @@
 	<target name="-post-init">
 		<!-- Empty placeholder for easier customization. -->
 		<!-- You can override this target in the ../build.xml file. -->
-		<copy todir="${dist.jar.dir}">
+		<copy todir="${dist.dir}">
 			<fileset dir="rsrc/attachements/config" includes="config.xml"/>
 		</copy>
 		<copy todir="${build.dir}">
