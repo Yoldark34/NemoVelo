@@ -16,9 +16,6 @@ public class Resource {
 
 	private static final String FOLDER_SEPARTOR = "/";
 	private static final String RESOURCE_FOLDER = FOLDER_SEPARTOR + "resource";
-	//CONFIG
-	private static final String CONFIG_FOLDER = RESOURCE_FOLDER + FOLDER_SEPARTOR + "config";
-	public static final String CONFIG_FILE = CONFIG_FOLDER + FOLDER_SEPARTOR + "config.xml";
 	//IMAGES
 	private static final String IMAGE_FOLDER = RESOURCE_FOLDER + FOLDER_SEPARTOR + "image";
 	//LOGO

@@ -2,9 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package resource.config;
+package attachements.config;
 
+import attachements.Attachement;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -49,7 +52,6 @@ public final class Configuration {
 	 * not set
 	 */
 	public static String getParam(String sectionName, String paramName) {
-		URL fileUrl;
 		File file;
 		DocumentBuilderFactory documentBuilderFactory;
 		DocumentBuilder documentBuilder;
@@ -64,14 +66,10 @@ public final class Configuration {
 		try {
 			//Load document only one time
 			if (document == null) {
-				fileUrl = Resource.getResource(Resource.CONFIG_FILE);
-				//Url ok?
-				if (fileUrl != null) {
-					file = new File(fileUrl.toURI());
+				file = new File(Attachement.getPath(Attachement.CONFIG_FILE));
 					documentBuilderFactory = DocumentBuilderFactory.newInstance();
 					documentBuilder = documentBuilderFactory.newDocumentBuilder();
 					Configuration.document = (Document) documentBuilder.parse(file);
-				}
 			}
 
 			//Document loaded?
@@ -84,9 +82,6 @@ public final class Configuration {
 				value = (String) xpathExpression.evaluate(document, XPathConstants.STRING);
 			}
 
-		} catch (URISyntaxException e) {
-			ProjectLogger.log(new Configuration(), Level.SEVERE,
-					String.format("Error in the url '%1$s'", Resource.CONFIG_FILE), e);
 		} catch (ParserConfigurationException e) {
 			ProjectLogger.log(new Configuration(), Level.SEVERE,
 					"Error in the configuration of the parser", e);

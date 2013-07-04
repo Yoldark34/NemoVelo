@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import resource.Resource;
-import resource.config.Configuration;
+import attachements.config.Configuration;
 import resource.log.ProjectLogger;
 import vue.terminal.TerminalMainFrame;
 import vue.terminal.multiview.TerminalMultiMainVue;

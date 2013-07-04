@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config SYSTEM "config.dtd">
 <config>
 	<section name="db">
 		<param name="url" value="jdbc:mysql://localhost:3306/nemovelo" />

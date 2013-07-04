@@ -4,7 +4,7 @@
  */
 package model.database;
 
-import resource.config.Configuration;
+import attachements.config.Configuration;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
