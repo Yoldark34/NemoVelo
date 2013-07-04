@@ -70,5 +70,15 @@
     properties which you can use, check the target you are overriding in the
     nbproject/build-impl.xml file. 
 
-    -->
+	-->
+	<target name="-post-init">
+		<!-- Empty placeholder for easier customization. -->
+		<!-- You can override this target in the ../build.xml file. -->
+		<copy todir="${dist.jar.dir}">
+			<fileset dir="rsrc/attachements/config" includes="config.xml"/>
+		</copy>
+		<copy todir="${build.dir}">
+			<fileset dir="rsrc/attachements/config" includes="config.xml"/>
+		</copy>
+	</target>
 </project>
