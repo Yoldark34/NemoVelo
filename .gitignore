@@ -5,3 +5,4 @@ build.xml
 /bin/
 !/nbproject/build-impl.xml
 /${dist.jar.dir}/config.xml
+/nbproject/
